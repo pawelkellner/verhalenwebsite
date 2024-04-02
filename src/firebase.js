@@ -3,14 +3,16 @@ import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
+require('dotenv').config();
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBJ2NfBO0KcGPN-vieW7uEJAOepzDp-3Bs",
-  authDomain: "verhalenwebsite-c2e81.firebaseapp.com",
-  projectId: "verhalenwebsite-c2e81",
-  storageBucket: "verhalenwebsite-c2e81.appspot.com",
-  messagingSenderId: "986212302070",
-  appId: "1:986212302070:web:b9181921761cc5529400d7"
+  apiKey: process.env.firebase_API_KEY,
+  authDomain: process.env.firebase_authDomain,
+  projectId: process.env.firebase_projectId,
+  storageBucket: process.env.firebase_storageBucket,
+  messagingSenderId: process.env.firebase_messagingSenderId,
+  appId: process.env.firebase_appId
 };
 
 // Initialize Firebase
