@@ -1,10 +1,10 @@
 import styles from "./page.module.scss";
-import { theme } from "../theme";
+import Paragraph from "../components/typography/paragraph";
 
 export default function Home() {
   return (
     <main className={styles.main}>
-      <p style={{ color: theme.black }}>Verhalen Website</p>
+      <Paragraph variant="sm">Hello</Paragraph>
     </main>
   );
 }
