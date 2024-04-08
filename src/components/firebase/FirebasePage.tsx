@@ -8,8 +8,8 @@ export default function FirebasePage() {
         <div>
             <AddItem></AddItem>
             <ShowItem></ShowItem>
-            <DeleteItem></DeleteItem>
             <EditItem></EditItem>
+            <DeleteItem></DeleteItem>
         </div>
     );
 }
