@@ -5,29 +5,40 @@ import { db } from "../../firebase";
 import "./addItem.css"
 
 export default function AddItem() {
-    const [inputValue, setInputValue] = useState("");
+    const [inputName, setInputName] = useState("");
+    const [inputNumber, setInputNumber] = useState("");
 
     const addItem = async (e) => {
         e.preventDefault();
         try {
             const docRef = await addDoc(collection(db, 'verhalen'), {
-                name: inputValue
+                name: inputName,
+                number: inputNumber,
             });
             console.log("Document written with ID: ", docRef.id);
+            setInputName("");
+            setInputNumber("");
         } catch (error) {
             console.error("Error adding document: ", error);
         }
     }
 
-    return(
+    return (
         <div className="container">
             <p>Fill in document name</p>
-            <input 
+            <input
                 type="text"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
+                value={inputName}
+                onChange={(e) => setInputName(e.target.value)}
             />
-            <p>{inputValue}</p>
+            <p>Fill in document number</p>
+            <input
+                type="text"
+                value={inputNumber}
+                onChange={(e) => setInputNumber(e.target.value)}
+            />
+            <p>Name: {inputName}</p>
+            <p>Number: {inputNumber}</p>
             <button onClick={addItem}>Add Item</button>
         </div>
     );
