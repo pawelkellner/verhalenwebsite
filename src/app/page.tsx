@@ -1,13 +1,13 @@
 import styles from "./page.module.scss";
 import Paragraph from "../components/typography/paragraph";
-import AddItem from "../components/firebase/AddItem";
+import FirebasePage from "../components/firebase/FirebasePage";
 
 export default function Home() {
 
   return (
     <main className={styles.main}>
       <Paragraph variant="sm">Hello</Paragraph>
-      <AddItem></AddItem>
+      <FirebasePage></FirebasePage>
     </main>
   );
 }
