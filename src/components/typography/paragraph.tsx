@@ -22,18 +22,21 @@ const Paragraph: FC<ParagraphProps> = ({
       case "md":
         return {
           fontSize: "20px",
+          lineHeight: "20px",
           fontWeight: fontWeight ? fontWeight : 400,
           color: color && color,
         };
       case "sm":
         return {
           fontSize: "18px",
+          lineHeight: "14px",
           fontWeight: fontWeight ? fontWeight : 400,
           color: color && color,
         };
       default:
         return {
           fontSize: "14px",
+          lineHeight: "14px",
           fontWeight: fontWeight ? fontWeight : 400,
           color: color && color,
         };
