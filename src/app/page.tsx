@@ -1,12 +1,14 @@
-import styles from "./page.module.scss";
-import Paragraph from "../components/typography/paragraph";
-import Hero from "../components/hero/hero";
+import React from "react";
+import PageTitle from "../components/page-title/page-title";
+import Navigation from "../components/navigation/navigation";
 
 export default function Home() {
   return (
-    <main className={styles.main}>
-        <Hero></Hero>
-        <Paragraph variant="sm">Hello</Paragraph>
-    </main>
+    <>
+        <Navigation></Navigation>
+        <main className='container'>
+          <PageTitle title="Recente verhalen" />
+        </main>
+    </>
   );
 }

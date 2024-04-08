@@ -38,5 +38,5 @@ next-env.d.ts
 # dotenv
 .env
 
-#php storm dingen
+# editor
 .idea

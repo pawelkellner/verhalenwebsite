@@ -1,21 +1,7 @@
-@mixin mobile {
-  @media (min-width: 768px) {
-    @content;
-  }
-}
-@mixin tablet {
-  @media (min-width: 992px) {
-    @content;
-  }
-}
-@mixin desktop {
-  @media (min-width: 1300px) {
-    @content;
-  }
-}
+@import 'src/app/mixins';
 
 :root {
-  --primary: #3D5A6C;
+  --primary: #48B8D0;
   --black: #2D2D34;
   --white: #FAF9F6;
   --grey-100: #F4F3F0;
@@ -23,7 +9,6 @@
   --grey-300: #E1E0DD;
   --grey-400: #7D7D7B;
 }
-
 
 * {
   box-sizing: border-box;
@@ -37,6 +22,21 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  background: var(--white);
+}
+
+button {
+  outline: none;
+  cursor: pointer;
+  border: solid;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 300;
+  padding: 10px 15px;
+
+  &:hover {
+    opacity: .9 !important;
+  }
 }
 
 a {

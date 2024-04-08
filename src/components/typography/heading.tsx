@@ -15,19 +15,22 @@ const Heading: FC<HeadingProps> = ({
     switch (variant) {
       case "xl":
         return {
-          fontSize: 40,
+          fontSize: "40px",
+          lineHeight: "40px",
           fontWeight: fontWeight ? fontWeight : 500,
         };
 
       case "lg":
         return {
-          fontSize: 28,
+          fontSize: "28px",
+          lineHeight: "28px",
           fontWeight: fontWeight ? fontWeight : 400,
         };
 
       default:
         return {
-          fontSize: 28,
+          fontSize: "28px",
+          lineHeight: "28px",
           fontWeight: fontWeight ? fontWeight : 400,
         };
     }
