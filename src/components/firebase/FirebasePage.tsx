@@ -3,6 +3,7 @@ import ShowItem from "./firestoreComponents/ShowItem";
 import DeleteItem from "./firestoreComponents/DeleteItem";
 import EditItem from "./firestoreComponents/EditItem";
 import AuthCreateAccount from "./authComponents/AuthCreateAccount";
+import AuthShowAccounts from "./authComponents/AuthShowAccount";
 
 export default function FirebasePage() {
     return (
@@ -12,6 +13,7 @@ export default function FirebasePage() {
             <EditItem></EditItem>
             <DeleteItem></DeleteItem>
             <AuthCreateAccount></AuthCreateAccount>
+            <AuthShowAccounts></AuthShowAccounts>
         </div>
     );
 }
