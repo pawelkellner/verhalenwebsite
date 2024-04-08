@@ -1,4 +1,5 @@
 import React from "react";
+import MainLayout from "../../components/main-layout/main-layout";
 import PageTitle from "../../components/page-title/page-title";
 
 export const metadata = {
@@ -8,8 +9,8 @@ export const metadata = {
 
 export default function Write() {
   return (
-    <main>
+    <MainLayout>
       <PageTitle title="Schrijven" />
-    </main>
+    </MainLayout>
   );
 }
