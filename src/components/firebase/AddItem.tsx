@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../firebase";
+import "./addItem.css"
 
 export default function AddItem() {
     const [inputValue, setInputValue] = useState("");
@@ -19,7 +20,7 @@ export default function AddItem() {
     }
 
     return(
-        <div>
+        <div className="container">
             <p>Fill in document name</p>
             <input 
                 type="text"
