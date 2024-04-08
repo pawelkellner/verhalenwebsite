@@ -1,7 +1,7 @@
-import AddItem from "./firebaseComponents/AddItem";
-import ShowItem from "./firebaseComponents/ShowItem";
-import DeleteItem from "./firebaseComponents/DeleteItem";
-import EditItem from "./firebaseComponents/EditItem";
+import AddItem from "./firestoreComponents/AddItem";
+import ShowItem from "./firestoreComponents/ShowItem";
+import DeleteItem from "./firestoreComponents/DeleteItem";
+import EditItem from "./firestoreComponents/EditItem";
 
 export default function FirebasePage() {
     return (
