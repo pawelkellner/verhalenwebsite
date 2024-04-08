@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "../../../firebase";
-import "./addItem.css";
+import "./Firebase.css";
 
 export default function AddItem() {
     const [verhalen, setVerhalen] = useState([]);
@@ -25,14 +25,14 @@ export default function AddItem() {
     }, []);
 
     return (
-        <div className="container">
+        <div className="show_container">
             <h2>Verhalen</h2>
             {loading ? (
                 <p>Loading...</p>
             ) : (
                 <ul>
                     {verhalen.map(verhaal => (
-                        <li key={verhaal.id}>
+                        <li className="show_li" key={verhaal.id}>
                             <p>Name: {verhaal.name}</p>
                             <p>Number: {verhaal.number}</p>
                         </li>

@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore"; // Import serverTimestamp
 import { db } from "../../../firebase";
-import "./addItem.css"
+import "./Firebase.css"
 
 export default function AddItem() {
     const [inputName, setInputName] = useState("");
@@ -25,7 +25,7 @@ export default function AddItem() {
     }
 
     return (
-        <div className="container">
+        <div className="add_container">
             <p>Fill in document name</p>
             <input
                 type="text"
