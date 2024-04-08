@@ -4,16 +4,16 @@ import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "../../../firebase";
 import "./Firebase.css";
 
-export default function AddItem() {
+export default function ShowItem() {
     const [verhalen, setVerhalen] = useState([]);
     const [loading, setLoading] = useState(false);
 
     const fetchVerhalen = async () => {
-        setLoading(true);
         try {
             const querySnapshot = await getDocs(query(collection(db, 'verhalen'), orderBy('createdAt', 'asc')));
             const verhalenData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             setVerhalen(verhalenData);
+            console.log(verhalenData)
         } catch (error) {
             console.error("Error fetching documents: ", error);
         }
@@ -21,6 +21,7 @@ export default function AddItem() {
     };
 
     useEffect(() => {
+        setLoading(true);
         fetchVerhalen();
     }, []);
 
@@ -35,6 +36,7 @@ export default function AddItem() {
                         <li className="show_li" key={verhaal.id}>
                             <p>Name: {verhaal.name}</p>
                             <p>Number: {verhaal.number}</p>
+                            <p>Id: {verhaal.id}</p>
                         </li>
                     ))}
                 </ul>
