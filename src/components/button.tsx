@@ -1,7 +1,8 @@
 import React, { FC, CSSProperties } from "react";
+import { theme } from "../theme";
 
 interface ButtonProps {
-  variant?: "sm" | "md";
+  variant?: "primary" | "secondary" | "neutral" | "disabled";
   children: React.ReactNode;
 }
 
@@ -10,20 +11,43 @@ const Button: FC<ButtonProps> = ({ variant = "default", children }) => {
     switch (variant) {
       case "primary":
         return {
-          fontSize: "20px",
+          background: theme.primary,
+          borderColor: theme.primary,
+          color: theme.white,
         };
       case "secondary":
         return {
-          fontSize: "14px",
+          background: "none",
+          color: theme.primary,
+          borderColor: theme.primary,
+          borderStyle: "solid",
+          border: 1,
+        };
+      case "neutral":
+        return {
+          background: theme.primary,
+          borderColor: theme.primary,
+          color: theme.primary,
+          borderStyle: "solid",
+          border: 1,
+        };
+      case "disabled":
+        return {
+          background: theme.primary,
+          borderColor: theme.primary,
         };
       default:
         return {
-          fontSize: "14px",
+          background: "none",
+          color: theme.primary,
+          borderColor: theme.primary,
+          borderStyle: "solid",
+          border: 1,
         };
     }
   };
 
-  return <p style={getStyle(variant)}>{children}</p>;
+  return <button style={getStyle(variant)}>{children}</button>;
 };
 
 export default Button;
