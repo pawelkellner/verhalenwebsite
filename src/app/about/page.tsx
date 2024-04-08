@@ -1,6 +1,5 @@
 import React from "react";
-import Head from "next/head";
-import Paragraph from "../../components/typography/paragraph";
+import PageTitle from "../../components/page-title/page-title";
 
 export const metadata = {
   title: "Over",
@@ -9,10 +8,8 @@ export const metadata = {
 
 export default function About() {
   return (
-    <>
-      <main>
-        <Paragraph variant="sm">About</Paragraph>
-      </main>
-    </>
+    <main>
+      <PageTitle title="Over Muziek Verhalen" />
+    </main>
   );
 }

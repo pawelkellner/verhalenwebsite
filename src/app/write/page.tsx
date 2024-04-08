@@ -1,5 +1,5 @@
 import React from "react";
-import Paragraph from "../../components/typography/paragraph";
+import PageTitle from "../../components/page-title/page-title";
 
 export const metadata = {
   title: "Schrijf je eigen verhaal",
@@ -9,7 +9,7 @@ export const metadata = {
 export default function Write() {
   return (
     <main>
-      <Paragraph variant="sm">Schrijven</Paragraph>
+      <PageTitle title="Schrijven" />
     </main>
   );
 }
