@@ -1,3 +1,4 @@
+'use client'
 import React from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../firebase";
@@ -18,7 +19,6 @@ export default function AddItem() {
 
     return(
         <div>
-            <p> here: {process.env.test}</p>
             <p>Test</p>
             <button onClick={addItem}>Add Item</button>
         </div>
