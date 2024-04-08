@@ -1,10 +1,9 @@
 import React from "react";
 import Paragraph from "../components/typography/paragraph";
-import Button from "../components/button";
 
 export default function Home() {
   return (
-    <main>
+    <main className="container">
       <Paragraph variant="sm">Hello</Paragraph>
     </main>
   );
