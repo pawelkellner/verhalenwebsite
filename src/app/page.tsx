@@ -3,7 +3,7 @@ import Paragraph from "../components/typography/paragraph";
 
 export default function Home() {
   return (
-    <main className="container">
+    <main>
       <Paragraph variant="sm">Hello</Paragraph>
     </main>
   );
