@@ -25,10 +25,15 @@ body {
 button {
   outline: none;
   cursor: pointer;
+  border: solid;
   border-radius: 10px;
   font-size: 16px;
   font-weight: 300;
   padding: 10px 15px;
+
+  &:hover {
+    opacity: .9 !important;
+  }
 }
 
 a {

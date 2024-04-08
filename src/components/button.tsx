@@ -20,29 +20,24 @@ const Button: FC<ButtonProps> = ({ variant = "default", children }) => {
           background: "none",
           color: theme.primary,
           borderColor: theme.primary,
-          borderStyle: "solid",
-          border: 1,
         };
       case "neutral":
         return {
-          background: theme.primary,
-          borderColor: theme.primary,
-          color: theme.primary,
-          borderStyle: "solid",
-          border: 1,
+          background: theme.grey[100],
+          borderColor: theme.grey[100],
+          color: theme.grey[400],
         };
       case "disabled":
         return {
-          background: theme.primary,
-          borderColor: theme.primary,
+          background: theme.grey[100],
+          borderColor: theme.grey[100],
+          color: theme.grey[300],
         };
       default:
         return {
-          background: "none",
-          color: theme.primary,
-          borderColor: theme.primary,
-          borderStyle: "solid",
-          border: 1,
+          background: theme.grey[100],
+          borderColor: theme.grey[100],
+          color: theme.grey[400],
         };
     }
   };
