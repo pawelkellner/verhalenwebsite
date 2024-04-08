@@ -1,18 +1,4 @@
-@mixin mobile {
-  @media (min-width: 768px) {
-    @content;
-  }
-}
-@mixin tablet {
-  @media (min-width: 992px) {
-    @content;
-  }
-}
-@mixin desktop {
-  @media (min-width: 1300px) {
-    @content;
-  }
-}
+@import 'src/app/mixins';
 
 :root {
   --primary: #48B8D0;
@@ -36,6 +22,7 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  background: var(--white);
 }
 
 button {
