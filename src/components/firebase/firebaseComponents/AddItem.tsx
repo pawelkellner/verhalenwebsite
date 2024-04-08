@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from "react";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore"; // Import serverTimestamp
 import { db } from "../../../firebase";
 import "./addItem.css"
 
@@ -14,6 +14,7 @@ export default function AddItem() {
             const docRef = await addDoc(collection(db, 'verhalen'), {
                 name: inputName,
                 number: inputNumber,
+                createdAt: serverTimestamp(), // Include creation date
             });
             console.log("Document written with ID: ", docRef.id);
             setInputName("");
