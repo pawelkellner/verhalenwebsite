@@ -29,9 +29,9 @@ const Navigation = () => {
     function search(e) {
     }
 
-  function toggleMenu() {
+    function toggleMenu() {
     setIsMenuOpen(!isMenuOpen);
-  }
+    }
 
     function changeScrollHeight() {
         setScrollHeight(window.scrollY);
@@ -47,7 +47,7 @@ const Navigation = () => {
 
     initScroll();
 
-  return (
+    return (
     <>
       <nav className={classString} open={isMenuOpen}>
         <a href="/" className="nav__logo">
@@ -67,20 +67,26 @@ const Navigation = () => {
           <a href="/write">
             <Button variant="primary">Schrijven</Button>
           </a>
-          {isMenuOpen && (
-            <CloseSvg
-              iconClass="close"
-              close={toggleMenu}
-              iconColor="black"
-            ></CloseSvg>
-          )}
-          {!isMenuOpen && (
-            <HamburgerSvg
-              open={toggleMenu}
-              iconClass="open"
-              iconColor="black"
-            ></HamburgerSvg>
-          )}
+        <input onInput={toggleMenu} type="checkbox" id="menu_checkbox"></input>
+        <label className='hamburgercheck' htmlFor="menu_checkbox">
+            <div></div>
+            <div></div>
+            <div></div>
+        </label>
+          {/*{isMenuOpen && (*/}
+          {/*  <CloseSvg*/}
+          {/*    iconClass="close"*/}
+          {/*    close={toggleMenu}*/}
+          {/*    iconColor="black"*/}
+          {/*  ></CloseSvg>*/}
+          {/*)}*/}
+          {/*{!isMenuOpen && (*/}
+          {/*  <HamburgerSvg*/}
+          {/*    open={toggleMenu}*/}
+          {/*    iconClass="open"*/}
+          {/*    iconColor="black"*/}
+          {/*  ></HamburgerSvg>*/}
+          {/*)}*/}
         </div>
       </nav>
       {isMenuOpen && (
@@ -96,7 +102,7 @@ const Navigation = () => {
         </div>
       )}
     </>
-  );
+    );
 };
 
 export default Navigation;
