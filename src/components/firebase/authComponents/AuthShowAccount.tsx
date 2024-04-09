@@ -1,9 +1,16 @@
 'use client'
 import { useEffect, useState } from 'react';
-import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, signOut, User } from 'firebase/auth';
+
+interface IUser {
+    displayName: string | null;
+    email: string | null;
+    uid: string | null;
+    // Add any other properties you expect to have in your User object
+}
 
 export default function AuthShowAccount() {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState<IUser | null>(null); // Specify IUser as the type for user state
     const [loading, setLoading] = useState(true);
     
     useEffect(() => {
