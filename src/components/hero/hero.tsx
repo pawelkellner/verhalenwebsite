@@ -1,6 +1,7 @@
 import './hero.scss';
 import Heading from '../typography/heading';
 import Paragraph from '../typography/paragraph';
+import Button from '../button';
 
 const Hero = () => {
 
@@ -12,7 +13,7 @@ const Hero = () => {
                     <Heading variant='xl'>Verhalen geinspireerd door een liedje</Heading>
                     <Paragraph variant='md'>Van Tiesto tot de Beach Boys, alle genres mogen. Durf jij ook een poging te wagen?</Paragraph>
                 </div>
-                <button>Echte button invoegen</button>
+                <Button variant='primary'>Ontdek meer en doe mee!</Button>
             </div>
         </div>
     );
