@@ -29,9 +29,9 @@ const Navigation = () => {
     function search(e) {
     }
 
-  function toggleMenu() {
+    function toggleMenu() {
     setIsMenuOpen(!isMenuOpen);
-  }
+    }
 
     function changeScrollHeight() {
         setScrollHeight(window.scrollY);
@@ -47,7 +47,7 @@ const Navigation = () => {
 
     initScroll();
 
-  return (
+    return (
     <>
       <nav className={classString} open={isMenuOpen}>
         <a href="/" className="nav__logo">
@@ -96,7 +96,7 @@ const Navigation = () => {
         </div>
       )}
     </>
-  );
+    );
 };
 
 export default Navigation;
