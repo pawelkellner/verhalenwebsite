@@ -12,6 +12,10 @@
   padding-block: 19px;
   z-index: 100000;
 
+  &[open] {
+    background: var(--white)!important;
+  }
+
   @include tablet {
     padding-inline: 35px;
   }
@@ -127,8 +131,11 @@
   }
 
   &__hamburgerMenu {
+    width: 100%;
+    z-index: 99999;
+    background: var(--white);
     padding-top: 30px;
-    position: absolute;
+    position: fixed;
     height: calc(100% - 83px);
     top: 83px;
 
@@ -146,4 +153,8 @@
       margin-top: 25px;
     }
   }
+}
+
+.-white {
+  background: var(--white)!important;
 }

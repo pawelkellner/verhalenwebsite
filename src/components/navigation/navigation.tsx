@@ -7,11 +7,24 @@ import SearchSvg from '../svg/SearchSvg';
 import HamburgerSvg from '../svg/HamburgerSvg';
 import LogoSvg from "../svg/LogoSvg";
 import CloseSvg from '../svg/CloseSvg';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
 
 const Navigation = () => {
 
     const [ isMenuOpen, setIsMenuOpen ] = useState(false);
+    const [ eventAdded, setEventAdded] = useState(false);
+    const [ scrollHeight, setScrollHeight ] = useState(0);
+    const [ classString, setClassString ] = useState('');
+
+    useEffect(() => {
+        if ( scrollHeight >= 367 ) {
+            setClassString('nav -white')
+        } else {
+            setClassString('nav')
+        }
+    }, [scrollHeight])
+
 
     function search(e) {
     }
@@ -20,9 +33,23 @@ const Navigation = () => {
         setIsMenuOpen(!isMenuOpen);
     }
 
+    function changeScrollHeight() {
+        setScrollHeight(window.scrollY);
+    }
+
+    function initScroll(){
+        if ( !eventAdded ) {
+            window.addEventListener('scroll', changeScrollHeight)
+            changeScrollHeight();
+            setEventAdded(true);
+        }
+    }
+
+    initScroll();
+
     return (
         <>
-            <nav className='nav'>
+            <nav className={classString} id='nav' open={isMenuOpen}>
                 <div className='nav__logo'>
                     <LogoSvg></LogoSvg>
                     <Heading variant='lg'>Muziek verhalen</Heading>
@@ -43,13 +70,15 @@ const Navigation = () => {
                 </div>
             </nav>
             { isMenuOpen &&
-                <div className='nav__hamburgerMenu container'>
-                    <a href="#">
-                        <Paragraph variant='sm'>Over Muziek verhalen</Paragraph>
-                    </a>
-                    <a href="">
-                        <Paragraph variant='sm'>Schrijven</Paragraph>
-                    </a>
+                <div className='nav__hamburgerMenu'>
+                    <div className='container'>
+                        <a href="#">
+                            <Paragraph variant='sm'>Over Muziek verhalen</Paragraph>
+                        </a>
+                        <a href="">
+                            <Paragraph variant='sm'>Schrijven</Paragraph>
+                        </a>
+                    </div>
                 </div>
             }
         </>
