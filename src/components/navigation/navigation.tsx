@@ -47,45 +47,9 @@ const Navigation = () => {
 
     initScroll();
 
-    return (
-        <>
-            <nav className={classString} id='nav' open={isMenuOpen}>
-                <div className='nav__logo'>
-                    <LogoSvg></LogoSvg>
-                    <Heading variant='lg'>Muziek verhalen</Heading>
-                </div>
-                <div className='nav__searchWrapper'>
-                    <input onInput={(e) => search(e)} type="text" placeholder="Zoek verhalen"/>
-                    <SearchSvg iconColor='#7D7D7B'></SearchSvg>
-                </div>
-                <div className='nav__buttons'>
-                    <a href="#">Over Muziek verhalen</a>
-                    <Button variant="primary">Schrijven</Button>
-                    { isMenuOpen &&
-                        <CloseSvg iconClass='close' close={toggleMenu} iconColor='black'></CloseSvg>
-                    }
-                    { !isMenuOpen &&
-                        <HamburgerSvg open={toggleMenu} iconClass='open' iconColor='black'></HamburgerSvg>
-                    }
-                </div>
-            </nav>
-            { isMenuOpen &&
-                <div className='nav__hamburgerMenu'>
-                    <div className='container'>
-                        <a href="#">
-                            <Paragraph variant='sm'>Over Muziek verhalen</Paragraph>
-                        </a>
-                        <a href="">
-                            <Paragraph variant='sm'>Schrijven</Paragraph>
-                        </a>
-                    </div>
-                </div>
-            }
-        </>
-    );
   return (
     <>
-      <nav className="nav">
+      <nav className={classString} open={isMenuOpen}>
         <a href="/" className="nav__logo">
           <LogoSvg></LogoSvg>
           <Heading variant="lg">Muziek verhalen</Heading>
@@ -120,13 +84,15 @@ const Navigation = () => {
         </div>
       </nav>
       {isMenuOpen && (
-        <div className="nav__hamburgerMenu container">
-          <a href="/about">
-            <Paragraph variant="sm">Over Muziek verhalen</Paragraph>
-          </a>
-          <a href="/write">
-            <Paragraph variant="sm">Schrijven</Paragraph>
-          </a>
+        <div className="nav__hamburgerMenu">
+            <div className="container">
+              <a href="/about">
+                <Paragraph variant="sm">Over Muziek verhalen</Paragraph>
+              </a>
+              <a href="/write">
+                <Paragraph variant="sm">Schrijven</Paragraph>
+              </a>
+            </div>
         </div>
       )}
     </>
