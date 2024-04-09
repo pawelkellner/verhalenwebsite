@@ -36,6 +36,9 @@ export default function ShowItem() {
                         <li className="show_li" key={verhaal.id}>
                             <p>Name: {verhaal.name}</p>
                             <p>Number: {verhaal.number}</p>
+                            {verhaal.imageUrl && ( // Render image if imageUrl exists
+                                <img src={verhaal.imageUrl} alt="Document" />
+                            )}
                             <p>Id: {verhaal.id}</p>
                         </li>
                     ))}
@@ -45,4 +48,3 @@ export default function ShowItem() {
         </div>
     );
 };
-
