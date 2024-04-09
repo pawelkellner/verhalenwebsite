@@ -1,8 +1,9 @@
 'use client'
 import React, { useState } from "react";
-import { deleteDoc, doc } from "firebase/firestore";
+import { deleteDoc, doc, getDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
-import "./Firebase.css"
+import { getStorage, ref, deleteObject } from "firebase/storage";
+import "./Firebase.css";
 
 export default function DeleteItem() {
     const [inputId, setInputId] = useState("");
@@ -10,9 +11,25 @@ export default function DeleteItem() {
     const deleteItem = async (e) => {
         e.preventDefault();
         try {
-            await deleteDoc(doc(db, 'verhalen', inputId));
-            console.log("Document with ID: ", inputId, " deleted successfully");
-            setInputId("");
+            const docRef = doc(db, 'verhalen', inputId);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+                
+                await deleteDoc(docRef);
+                console.log("Document with ID:", inputId, "deleted successfully");
+
+                if (data.imageUrl) {
+                    const storage = getStorage();
+                    const imageRef = ref(storage, data.imageUrl);
+                    await deleteObject(imageRef);
+                    console.log("Image associated with the document deleted successfully");
+                }
+                
+                setInputId("");
+            } else {
+                console.log('No such document!');
+            }
         } catch (error) {
             console.error("Error deleting document: ", error);
         }
