@@ -2,8 +2,7 @@
 import React, { useState } from "react";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../../../firebase";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"; // Import storage functions
-import "./Firebase.css";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export default function AddItem() {
     const [inputName, setInputName] = useState("");
@@ -19,26 +18,24 @@ export default function AddItem() {
     const addItem = async (e) => {
         e.preventDefault();
         try {
-            // Upload image to Firebase Storage
             let imageUrl = null;
             if (image) {
-                const storage = getStorage(); // Initialize storage instance
-                const storageRef = ref(storage, image.name); // Get reference to the file
-                await uploadBytes(storageRef, image); // Upload file
-                imageUrl = await getDownloadURL(storageRef); // Get download URL
+                const storage = getStorage(); 
+                const storageRef = ref(storage, image.name); 
+                await uploadBytes(storageRef, image); 
+                imageUrl = await getDownloadURL(storageRef); 
             }
 
-            // Add document to Firestore
             const docRef = await addDoc(collection(db, 'verhalen'), {
                 name: inputName,
                 number: inputNumber,
-                imageUrl: imageUrl, // add image URL to Firestore document
+                imageUrl: imageUrl,
                 createdAt: serverTimestamp(),
             });
             console.log("Document written with ID: ", docRef.id);
             setInputName("");
             setInputNumber("");
-            setImage(null); // reset image state after upload
+            setImage(null); 
         } catch (error) {
             console.error("Error adding document: ", error);
         }

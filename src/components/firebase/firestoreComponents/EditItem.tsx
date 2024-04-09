@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
+import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 import "./Firebase.css";
 
 export default function EditItem() {
@@ -9,6 +10,7 @@ export default function EditItem() {
     const [inputId, setInputId] = useState("");
     const [editedName, setEditedName] = useState("");
     const [editedNumber, setEditedNumber] = useState("");
+    const [newImage, setNewImage] = useState(null); 
 
     useEffect(() => {
         if (verhaal) {
@@ -35,15 +37,35 @@ export default function EditItem() {
     const handleEdit = async () => {
         try {
             const docRef = doc(db, 'verhalen', verhaal.id);
+            
+            const oldImageUrl = verhaal.imageUrl;
+    
+            // Update text fields
             await updateDoc(docRef, {
                 name: editedName,
                 number: editedNumber
             });
+    
+            if (newImage) {
+                const storage = getStorage();
+                const storageRef = ref(storage, newImage.name);
+                await uploadBytes(storageRef, newImage);
+                const imageUrl = await getDownloadURL(storageRef);
+    
+                await updateDoc(docRef, { imageUrl: imageUrl });
+
+                if (oldImageUrl) {
+                    const oldImageRef = ref(storage, oldImageUrl);
+                    await deleteObject(oldImageRef);
+                }
+            }
+    
             console.log("Document updated successfully!");
             setVerhaal(null);
             setInputId("");
             setEditedName("");
             setEditedNumber("");
+            setNewImage(null);
         } catch (error) {
             console.error("Error updating document: ", error);
         }
@@ -70,6 +92,7 @@ export default function EditItem() {
                         value={editedNumber}
                         onChange={(e) => setEditedNumber(e.target.value)}
                     />
+                    <input type="file" onChange={(e) => setNewImage(e.target.files[0])} />
                     <button onClick={handleEdit}>Edit</button>
                 </div>
             )}
