@@ -1,5 +1,7 @@
 import React from "react";
 
+import MainLayout from "../../components/main-layout/main-layout";
+
 import PageTitle from "../../components/page-title/page-title";
 import Form from "../../components/form/form";
 
@@ -15,9 +17,9 @@ export default function Write() {
   };
 
   return (
-    <main>
+    <MainLayout>
       <PageTitle title="Schrijf jouw verhaal" />
       <Form formAction={formAction} />
-    </main>
+    </MainLayout>
   );
 }

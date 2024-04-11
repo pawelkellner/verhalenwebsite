@@ -12,15 +12,16 @@
   padding-block: 19px;
   z-index: 100000;
 
+  &[open] {
+    background: var(--white)!important;
+  }
+
   @include tablet {
     padding-inline: 35px;
   }
 
-  & div:not(:nth-child(2)) {
-    width: calc(100% / 3);
-  }
-
   &__logo {
+    width: calc(100% / 3);
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -85,6 +86,7 @@
   }
 
   &__buttons {
+    width: calc(100% / 3);
     height: 100%;
     display: flex;
     align-items: center;
@@ -127,8 +129,11 @@
   }
 
   &__hamburgerMenu {
+    width: 100%;
+    z-index: 99999;
+    background: var(--white);
     padding-top: 30px;
-    position: absolute;
+    position: fixed;
     height: calc(100% - 83px);
     top: 83px;
 
@@ -146,4 +151,76 @@
       margin-top: 25px;
     }
   }
+}
+
+#menu_checkbox {
+  display: none;
+
+  &:checked + .hamburgercheck div:first-child {
+    top: -6px;
+    transform: rotateZ(45deg);
+  }
+
+  &:checked + .hamburgercheck div:last-child {
+    top: 6px;
+    transform: rotateZ(45deg);
+  }
+
+  &:checked + .hamburgercheck div:nth-child(2) {
+    width: 85px;
+    top: 0;
+    right: 13px;
+    transform: rotateZ(-45deg);
+  }
+}
+
+.hamburgercheck {
+  transform: scale(0.6);
+  display: block;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+
+  @include tablet {
+    display: none;
+  }
+
+  &:before {
+    content: "";
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transition: 1.2s cubic-bezier(0, 0.96, 1, 0.02) background-color;
+  }
+
+  & div {
+    position: relative;
+    top: 0;
+    height: 12px;
+    background-color: var(--grey-400);
+    margin-bottom: 12px;
+    transition: 0.3s ease transform, 0.3s ease top, 0.3s ease width,
+    0.3s ease right;
+    border-radius: 2px;
+
+    &:first-child {
+      transform-origin: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+      transform-origin: 60px;
+    }
+
+    &:nth-child(2) {
+      right: 0;
+      width: 60px;
+    }
+  }
+}
+
+.-white {
+  background: var(--white)!important;
 }
