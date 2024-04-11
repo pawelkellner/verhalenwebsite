@@ -54,7 +54,13 @@ const Navigation = () => {
   return (
     <header>
       <nav className={classString} data-open={isMenuOpen}>
-        <LinkButton href="/" className="nav__logo">
+        <LinkButton
+          href="/"
+          className="nav__logo"
+          onClick={() =>
+            dispatch({ type: ActionTypes.TOGGLE_SEARCH_BAR, value: true })
+          }
+        >
           <LogoSvg></LogoSvg>
           <Heading variant="lg">Muziek verhalen</Heading>
         </LinkButton>

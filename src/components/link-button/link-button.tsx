@@ -20,7 +20,7 @@ const LinkButton = ({
     <Link className={className} href={href}>
       <Button
         variant={buttonVariant ? buttonVariant : "unstyled"}
-        onClick={() => onClick}
+        onClick={onClick}
       >
         {children}
       </Button>
