@@ -14,19 +14,38 @@ import Button from "../button";
 import LinkButton from "../link-button/link-button";
 
 import SearchSvg from "../svg/SearchSvg";
-import HamburgerSvg from "../svg/HamburgerSvg";
 import LogoSvg from "../svg/LogoSvg";
-import CloseSvg from "../svg/CloseSvg";
 
 const Navigation = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [eventAdded, setEventAdded] = useState(false);
+  const [scrollHeight, setScrollHeight] = useState(0);
+  const [classString, setClassString] = useState("");
+
+  useEffect(() => {
+    if (scrollHeight >= 367) {
+      setClassString("nav -white");
+    } else {
+      setClassString("nav");
+    }
+  }, [scrollHeight]);
 
   function search(e) {}
 
-  function toggleMenu() {
-    setIsMenuOpen(!isMenuOpen);
+  function changeScrollHeight() {
+    setScrollHeight(window.scrollY);
   }
+
+  function initScroll() {
+    if (!eventAdded) {
+      window.addEventListener("scroll", changeScrollHeight);
+      changeScrollHeight();
+      setEventAdded(true);
+    }
+  }
+
+  initScroll();
 
   useEffect(() => {
     console.log(state.showSearchBar);
@@ -34,7 +53,7 @@ const Navigation = () => {
 
   return (
     <>
-      <nav className="nav">
+      <nav className={classString} data_open={isMenuOpen}>
         <LinkButton href="/" className="nav__logo">
           <LogoSvg></LogoSvg>
           <Heading variant="lg">Muziek verhalen</Heading>
@@ -67,31 +86,12 @@ const Navigation = () => {
           >
             Schrijven
           </LinkButton>
-
-          {isMenuOpen && (
-            <CloseSvg
-              iconClass="close"
-              close={toggleMenu}
-              iconColor="black"
-            ></CloseSvg>
-          )}
-          {!isMenuOpen && (
-            <HamburgerSvg
-              open={toggleMenu}
-              iconClass="open"
-              iconColor="black"
-            ></HamburgerSvg>
-          )}
         </div>
       </nav>
       {isMenuOpen && (
         <div className="nav__hamburgerMenu container">
-          <Link href="/about">
-            <Paragraph variant="sm">Over Muziek verhalen</Paragraph>
-          </Link>
-          <Link href="/write">
-            <Paragraph variant="sm">Schrijven</Paragraph>
-          </Link>
+          <LinkButton href="/about">Over Muziek verhalen</LinkButton>
+          <LinkButton href="/write">Schrijven</LinkButton>
         </div>
       )}
     </>
