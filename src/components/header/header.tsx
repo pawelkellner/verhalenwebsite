@@ -2,12 +2,8 @@
 import { useState, useReducer, useEffect } from "react";
 import Link from "next/link";
 
-import "./navigation.scss";
-import {
-  initialState,
-  reducer,
-  ActionTypes,
-} from "../../store/navigation-reducer";
+import "./header.scss";
+import { initialState, reducer, ActionTypes } from "../../store/header-reducer";
 
 import Heading from "../typography/heading";
 import Paragraph from "../typography/paragraph";
@@ -17,7 +13,7 @@ import LinkButton from "../link-button/link-button";
 import SearchSvg from "../svg/SearchSvg";
 import LogoSvg from "../svg/LogoSvg";
 
-const Navigation = () => {
+const Header = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [eventAdded, setEventAdded] = useState(false);
@@ -123,4 +119,4 @@ const Navigation = () => {
   );
 };
 
-export default Navigation;
+export default Header;
