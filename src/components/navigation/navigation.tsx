@@ -1,5 +1,6 @@
 "use client";
 import { useState, useReducer, useEffect } from "react";
+import Link from "next/link";
 
 import "./navigation.scss";
 import {
@@ -54,16 +55,17 @@ const Navigation = () => {
   return (
     <header>
       <nav className={classString} data-open={isMenuOpen}>
-        <LinkButton
-          href="/"
-          className="nav__logo"
-          onClick={() =>
-            dispatch({ type: ActionTypes.TOGGLE_SEARCH_BAR, value: true })
-          }
-        >
-          <LogoSvg></LogoSvg>
-          <Heading variant="lg">Muziek verhalen</Heading>
-        </LinkButton>
+        <Link href="/" className="nav__logo">
+          <Button
+            onClick={() =>
+              dispatch({ type: ActionTypes.TOGGLE_SEARCH_BAR, value: true })
+            }
+            variant="unstyled"
+          >
+            <LogoSvg />
+            <Heading variant="lg">Muziek verhalen</Heading>
+          </Button>
+        </Link>
         {state.showSearchBar && (
           <div className="nav__searchWrapper">
             <input
@@ -71,7 +73,7 @@ const Navigation = () => {
               type="text"
               placeholder="Zoek verhalen"
             />
-            <SearchSvg iconColor="#7D7D7B"></SearchSvg>
+            <SearchSvg iconColor="#7D7D7B" />
           </div>
         )}
         <div className="nav__buttons">

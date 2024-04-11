@@ -4,12 +4,14 @@ import { theme } from "../theme";
 export interface ButtonProps {
   onClick?: () => void;
   variant?: "primary" | "secondary" | "neutral" | "disabled" | "unstyled";
+  className?: string;
   children: React.ReactNode;
 }
 
 const Button: FC<ButtonProps> = ({
   onClick,
   variant = "default",
+  className,
   children,
 }) => {
   const getStyle = (variant: string): CSSProperties => {
@@ -59,7 +61,7 @@ const Button: FC<ButtonProps> = ({
   };
 
   return (
-    <button onClick={onClick} style={getStyle(variant)}>
+    <button onClick={onClick} style={getStyle(variant)} className={className}>
       {children}
     </button>
   );
