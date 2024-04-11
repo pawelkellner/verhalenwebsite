@@ -47,12 +47,8 @@ const Navigation = () => {
 
   initScroll();
 
-  useEffect(() => {
-    console.log(state.showSearchBar);
-  }, [state.showSearchBar]);
-
   return (
-    <>
+    <header>
       <nav className={classString} data-open={isMenuOpen}>
         <LinkButton href="/" className="nav__logo">
           <LogoSvg></LogoSvg>
@@ -94,7 +90,7 @@ const Navigation = () => {
           <LinkButton href="/write">Schrijven</LinkButton>
         </div>
       )}
-    </>
+    </header>
   );
 };
 
