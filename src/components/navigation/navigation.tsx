@@ -33,6 +33,10 @@ const Navigation = () => {
 
   function search(e) {}
 
+  function toggleMenu() {
+    setIsMenuOpen(!isMenuOpen);
+  }
+
   function changeScrollHeight() {
     setScrollHeight(window.scrollY);
   }
@@ -76,18 +80,35 @@ const Navigation = () => {
 
           <LinkButton
             href="/write"
+            buttonVariant="primary"
             onClick={() =>
               dispatch({ type: ActionTypes.TOGGLE_SEARCH_BAR, value: false })
             }
           >
             Schrijven
           </LinkButton>
+          <input
+            onInput={toggleMenu}
+            type="checkbox"
+            id="menu_checkbox"
+          ></input>
+          <label className="hamburgercheck" htmlFor="menu_checkbox">
+            <div></div>
+            <div></div>
+            <div></div>
+          </label>
         </div>
       </nav>
       {isMenuOpen && (
-        <div className="nav__hamburgerMenu container">
-          <LinkButton href="/about">Over Muziek verhalen</LinkButton>
-          <LinkButton href="/write">Schrijven</LinkButton>
+        <div className="nav__hamburgerMenu">
+          <div className="container">
+            <a href="/about">
+              <Paragraph variant="sm">Over Muziek verhalen</Paragraph>
+            </a>
+            <a href="/write">
+              <Paragraph variant="sm">Schrijven</Paragraph>
+            </a>
+          </div>
         </div>
       )}
     </header>

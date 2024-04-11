@@ -8,15 +8,20 @@ const LinkButton = ({
   href,
   onClick,
   className,
+  buttonVariant,
 }: {
   children: React.ReactNode;
   href: string;
   onClick?: () => void;
   className?: string;
+  buttonVariant?: ButtonProps["variant"];
 }) => {
   return (
     <Link className={className} href={href}>
-      <Button variant="unstyled" onClick={() => onClick}>
+      <Button
+        variant={buttonVariant ? buttonVariant : "unstyled"}
+        onClick={() => onClick}
+      >
         {children}
       </Button>
     </Link>
