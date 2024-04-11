@@ -91,15 +91,11 @@ const Header = () => {
           >
             Schrijven
           </LinkButton>
-          <input
-            onInput={toggleMenu}
-            type="checkbox"
-            id="menu_checkbox"
-          ></input>
+          <input onInput={toggleMenu} type="checkbox" id="menu_checkbox" />
           <label className="hamburgercheck" htmlFor="menu_checkbox">
-            <div></div>
-            <div></div>
-            <div></div>
+            <div />
+            <div />
+            <div />
           </label>
         </div>
       </nav>
