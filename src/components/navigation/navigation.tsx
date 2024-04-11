@@ -53,7 +53,7 @@ const Navigation = () => {
 
   return (
     <>
-      <nav className={classString} data_open={isMenuOpen}>
+      <nav className={classString} data-open={isMenuOpen}>
         <LinkButton href="/" className="nav__logo">
           <LogoSvg></LogoSvg>
           <Heading variant="lg">Muziek verhalen</Heading>
