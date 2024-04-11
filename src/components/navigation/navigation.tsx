@@ -1,6 +1,5 @@
 "use client";
 import { useState, useReducer, useEffect } from "react";
-import Link from "next/link";
 
 import "./navigation.scss";
 import {
@@ -12,6 +11,7 @@ import {
 import Heading from "../typography/heading";
 import Paragraph from "../typography/paragraph";
 import Button from "../button";
+import LinkButton from "../link-button/link-button";
 
 import SearchSvg from "../svg/SearchSvg";
 import HamburgerSvg from "../svg/HamburgerSvg";
@@ -35,10 +35,10 @@ const Navigation = () => {
   return (
     <>
       <nav className="nav">
-        <Link href="/" className="nav__logo">
+        <LinkButton href="/" className="nav__logo">
           <LogoSvg></LogoSvg>
           <Heading variant="lg">Muziek verhalen</Heading>
-        </Link>
+        </LinkButton>
         {state.showSearchBar && (
           <div className="nav__searchWrapper">
             <input
@@ -50,26 +50,24 @@ const Navigation = () => {
           </div>
         )}
         <div className="nav__buttons">
-          <Link href="/about">
-            <Button
-              variant="unstyled"
-              onClick={() =>
-                dispatch({ type: ActionTypes.TOGGLE_SEARCH_BAR, value: false })
-              }
-            >
-              Over Muziek verhalen
-            </Button>
-          </Link>
-          <Link href="/write">
-            <Button
-              onClick={() =>
-                dispatch({ type: ActionTypes.TOGGLE_SEARCH_BAR, value: false })
-              }
-              variant="primary"
-            >
-              Schrijven
-            </Button>
-          </Link>
+          <LinkButton
+            href="/about"
+            onClick={() =>
+              dispatch({ type: ActionTypes.TOGGLE_SEARCH_BAR, value: false })
+            }
+          >
+            Over Muziek verhalen
+          </LinkButton>
+
+          <LinkButton
+            href="/write"
+            onClick={() =>
+              dispatch({ type: ActionTypes.TOGGLE_SEARCH_BAR, value: false })
+            }
+          >
+            Schrijven
+          </LinkButton>
+
           {isMenuOpen && (
             <CloseSvg
               iconClass="close"

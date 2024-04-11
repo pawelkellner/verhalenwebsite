@@ -1,7 +1,7 @@
 import React, { FC, CSSProperties } from "react";
 import { theme } from "../theme";
 
-interface ButtonProps {
+export interface ButtonProps {
   onClick?: () => void;
   variant?: "primary" | "secondary" | "neutral" | "disabled" | "unstyled";
   children: React.ReactNode;
