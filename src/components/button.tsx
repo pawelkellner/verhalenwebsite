@@ -1,12 +1,17 @@
 import React, { FC, CSSProperties } from "react";
 import { theme } from "../theme";
 
-interface ButtonProps {
-  variant?: "primary" | "secondary" | "neutral" | "disabled";
+export interface ButtonProps {
+  onClick?: () => void;
+  variant?: "primary" | "secondary" | "neutral" | "disabled" | "unstyled";
   children: React.ReactNode;
 }
 
-const Button: FC<ButtonProps> = ({ variant = "default", children }) => {
+const Button: FC<ButtonProps> = ({
+  onClick,
+  variant = "default",
+  children,
+}) => {
   const getStyle = (variant: string): CSSProperties => {
     switch (variant) {
       case "primary":
@@ -33,6 +38,17 @@ const Button: FC<ButtonProps> = ({ variant = "default", children }) => {
           borderColor: theme.grey[100],
           color: theme.grey[300],
         };
+      case "unstyled":
+        return {
+          background: "none",
+          color: "inherit",
+          border: "none",
+          padding: 0,
+          font: "inherit",
+          cursor: "pointer",
+          outline: "inherit",
+        };
+
       default:
         return {
           background: theme.grey[100],
@@ -42,7 +58,11 @@ const Button: FC<ButtonProps> = ({ variant = "default", children }) => {
     }
   };
 
-  return <button style={getStyle(variant)}>{children}</button>;
+  return (
+    <button onClick={onClick} style={getStyle(variant)}>
+      {children}
+    </button>
+  );
 };
 
 export default Button;
