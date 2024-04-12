@@ -8,6 +8,11 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: right;
+  margin-bottom: 15px;
+
+  @include mobile {
+    margin-bottom: 50px;
+  }
 
   &__backgroundblur {
     content: '';
