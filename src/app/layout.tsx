@@ -1,5 +1,6 @@
 import React from "react";
 import "./globals.scss";
+import Header from "../components/header/header";
 
 export const metadata = {
   title: "Verhalen website",
@@ -9,7 +10,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Header />
+        {children}
+      </body>
     </html>
   );
 }

@@ -199,7 +199,7 @@
     position: relative;
     top: 0;
     height: 12px;
-    background-color: black;
+    background-color: var(--grey-400);
     margin-bottom: 12px;
     transition: 0.3s ease transform, 0.3s ease top, 0.3s ease width,
     0.3s ease right;
