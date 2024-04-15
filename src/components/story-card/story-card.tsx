@@ -14,8 +14,10 @@ const StoryCard = () => {
 
     useEffect(() => {
         if ( !listenerSet ) {
-            window.addEventListener('resize', (e) => {
-                setScreenWidth(e.target.innerWidth)
+            window.addEventListener('resize', (e: Event) => {
+                if ( e.target instanceof Window) {
+                    setScreenWidth(e.target.innerWidth)
+                }
             })
 
             setScreenWidth(window.innerWidth);
