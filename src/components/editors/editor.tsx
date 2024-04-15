@@ -38,7 +38,6 @@ const editorConfig = {
     ListItemNode,
     QuoteNode,
     CodeNode,
-    CodeHighlightNode,
     TableNode,
     TableCellNode,
     TableRowNode,
@@ -60,7 +59,6 @@ export default function Editor() {
           />
           <HistoryPlugin />
           <AutoFocusPlugin />
-          <CodeHighlightPlugin />
           <ListPlugin />
           <LinkPlugin />
           <AutoLinkPlugin />
