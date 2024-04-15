@@ -35,13 +35,13 @@ const Header = () => {
   }
 
   function changeScrollHeight() {
-    if ( typeof window !== undefined ) {
+    if (typeof window !== "undefined") {
       setScrollHeight(window.scrollY);
     }
   }
 
   function initScroll() {
-    if (!eventAdded && typeof window !== undefined) {
+    if (!eventAdded && typeof window !== "undefined") {
       window.addEventListener("scroll", changeScrollHeight);
       changeScrollHeight();
       setEventAdded(true);
