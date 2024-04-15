@@ -8,6 +8,11 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: right;
+  margin-bottom: 15px;
+
+  @include mobile {
+    margin-bottom: 50px;
+  }
 
   &__backgroundblur {
     content: '';
@@ -42,6 +47,11 @@
 
   h1 {
     line-height: 1;
+    font-size: 28px!important;
+
+    @include mobile {
+      font-size: 38px!important;
+    }
 
     @include tablet{
       padding-bottom: 0;
@@ -51,8 +61,10 @@
 
   p {
     width: 300px;
+    font-size: 18px!important;
 
     @include mobile {
+      font-size: 20px!important;
       width: 400px;
     }
   }

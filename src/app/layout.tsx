@@ -1,6 +1,7 @@
 import React from "react";
 import "./globals.scss";
 import Header from "../components/header/header";
+import Footer from "../components/footer/footer";
 
 export const metadata = {
   title: "Verhalen website",
@@ -13,6 +14,7 @@ export default function RootLayout({ children }) {
       <body>
         <Header />
         {children}
+      <Footer/>
       </body>
     </html>
   );

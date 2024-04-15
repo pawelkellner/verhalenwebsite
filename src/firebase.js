@@ -5,7 +5,7 @@ import { getStorage } from "firebase/storage";
 // https://firebase.google.com/docs/web/setup#available-libraries
 import { getFirestore } from "firebase/firestore";
 
-require('dotenv').config();
+// require('dotenv').config();
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -20,4 +20,4 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
-export const storage = getFirestore(app);
+export const storage = getStorage(app);
