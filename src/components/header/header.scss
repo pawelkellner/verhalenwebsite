@@ -12,9 +12,10 @@
   padding-block: 19px;
   z-index: 100000;
 
-  &[open] {
+  &[data-open=true] {
     background: var(--white)!important;
   }
+
 
   @include tablet {
     padding-inline: 35px;
