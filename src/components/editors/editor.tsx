@@ -54,7 +54,7 @@ export default function Editor({
 }) {
   return (
     <LexicalComposer initialConfig={editorConfig}>
-      <Paragraph variant="sm">
+      <Paragraph>
         {label}
         {required && "*"}
       </Paragraph>
