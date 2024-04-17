@@ -19,6 +19,8 @@ import AutoLinkPlugin from "./plugins/AutoLinkPlugin";
 import ToolbarPlugin from "./plugins/ToolbarPlugin";
 import ExampleTheme from "./themes/ExampleTheme";
 
+import Paragraph from "../typography/paragraph";
+
 import "./editor.scss";
 
 const editorConfig = {
@@ -41,16 +43,28 @@ const editorConfig = {
   ],
 };
 
-export default function Editor() {
+export default function Editor({
+  label,
+  placeholder,
+  required,
+}: {
+  label: string;
+  placeholder: string;
+  required: boolean;
+}) {
   return (
     <LexicalComposer initialConfig={editorConfig}>
+      <Paragraph variant="sm">
+        {label}
+        {required && "*"}
+      </Paragraph>
       <div className="editor-container">
         <ToolbarPlugin />
         <div className="editor-inner">
           <RichTextPlugin
             contentEditable={<ContentEditable className="editor-input" />}
             placeholder={
-              <div className="editor-placeholder">Enter some rich text...</div>
+              <div className="editor-placeholder">{placeholder}</div>
             }
             ErrorBoundary={LexicalErrorBoundary}
           />

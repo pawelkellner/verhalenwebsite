@@ -1,6 +1,5 @@
 h1 {
   font-size: 24px;
-  color: #333;
 }
 
 .ltr {
@@ -12,9 +11,7 @@ h1 {
 }
 
 .editor-container {
-  margin: 20px auto 20px auto;
   border-radius: 2px;
-  max-width: 600px;
   color: var(--black);
   position: relative;
   line-height: 20px;
@@ -286,7 +283,7 @@ pre::-webkit-scrollbar-thumb {
 .toolbar {
   display: flex;
   margin-bottom: 1px;
-  background: #fff;
+  background: var((--grey-100));
   padding: 4px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;

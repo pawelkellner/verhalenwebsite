@@ -1,0 +1,13 @@
+.inputs__group {
+    max-width: 650px;
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+
+    .row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+}
