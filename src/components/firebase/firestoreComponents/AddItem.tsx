@@ -7,7 +7,8 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 export default function AddItem() {
     const [inputName, setInputName] = useState("");
     const [inputNumber, setInputNumber] = useState("");
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState<File | null>(null);
+
 
     const handleImageChange = (e) => {
         if (e.target.files[0]) {
@@ -18,7 +19,7 @@ export default function AddItem() {
     const addItem = async (e) => {
         e.preventDefault();
         try {
-            let imageUrl = null;
+            let imageUrl: string | null = null;
             if (image) {
                 const storage = getStorage(); 
                 const storageRef = ref(storage, image.name); 

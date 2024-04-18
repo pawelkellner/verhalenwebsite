@@ -1,16 +1,23 @@
 'use client'
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 import "./Firebase.css";
 
+interface Verhaal {
+    id: string;
+    name: string;
+    number: string;
+    imageUrl?: string;
+}
+
 export default function EditItem() {
-    const [verhaal, setVerhaal] = useState(null);
+    const [verhaal, setVerhaal] = useState<Verhaal | null>(null);
     const [inputId, setInputId] = useState("");
     const [editedName, setEditedName] = useState("");
     const [editedNumber, setEditedNumber] = useState("");
-    const [newImage, setNewImage] = useState(null); 
+    const [newImage, setNewImage] = useState<File | null>(null); 
 
     useEffect(() => {
         if (verhaal) {
@@ -24,7 +31,7 @@ export default function EditItem() {
             const docRef = doc(db, 'verhalen', inputId);
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
-                setVerhaal({ id: docSnap.id, ...docSnap.data() });
+                setVerhaal({ id: docSnap.id, ...docSnap.data() } as Verhaal);
             } else {
                 console.log('No such document!');
                 setVerhaal(null);
@@ -36,11 +43,12 @@ export default function EditItem() {
 
     const handleEdit = async () => {
         try {
+            if (!verhaal) return;
+
             const docRef = doc(db, 'verhalen', verhaal.id);
             
             const oldImageUrl = verhaal.imageUrl;
-    
-            // Update text fields
+
             await updateDoc(docRef, {
                 name: editedName,
                 number: editedNumber
@@ -92,7 +100,7 @@ export default function EditItem() {
                         value={editedNumber}
                         onChange={(e) => setEditedNumber(e.target.value)}
                     />
-                    <input type="file" onChange={(e) => setNewImage(e.target.files[0])} />
+                    <input type="file" onChange={(e) => setNewImage(e.target.files![0])} />
                     <button onClick={handleEdit}>Edit</button>
                 </div>
             )}
