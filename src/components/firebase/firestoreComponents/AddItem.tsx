@@ -3,20 +3,20 @@ import React, { useState } from "react";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { ChangeEvent } from "react";
 
 export default function AddItem() {
     const [inputName, setInputName] = useState("");
     const [inputNumber, setInputNumber] = useState("");
     const [image, setImage] = useState<File | null>(null);
 
-
-    const handleImageChange = (e) => {
-        if (e.target.files[0]) {
+    const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
             setImage(e.target.files[0]);
         }
     };
 
-    const addItem = async (e) => {
+    const addItem = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
             let imageUrl: string | null = null;
