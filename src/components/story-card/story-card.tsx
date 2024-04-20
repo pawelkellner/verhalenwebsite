@@ -23,10 +23,6 @@ const StoryCard = ({
   const [listenerSet, setListenerSet] = useState(false);
 
   useEffect(() => {
-    shortText(); // Calculate introText on client side
-  }, []);
-
-  useEffect(() => {
     if (!listenerSet) {
       window.addEventListener("resize", (e: Event) => {
         if (e.target instanceof Window) {
