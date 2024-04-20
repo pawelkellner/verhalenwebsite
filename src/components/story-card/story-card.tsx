@@ -1,15 +1,23 @@
 "use client";
-import "./story-card.scss";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+
+import "./story-card.scss";
+import { StoryCardProps } from "./story-card.types";
+
 import Heading from "../typography/heading";
 import Paragraph from "../typography/paragraph";
 import NoteSvg from "../svg/NoteSvg";
-import { useEffect, useState } from "react";
 
-const StoryCard = () => {
-  const [textData, setTextData] = useState(
-    "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi esse laboriosam officia quae. Architecto aut debitis distinctio dolorum error fuga id, illo laboriosam minus, necessitatibus quod repudiandae sequi veritatis vero?"
-  );
+const StoryCard = ({
+  title,
+  image,
+  text,
+  author,
+  songName,
+}: StoryCardProps) => {
   const [introText, setIntroText] = useState("");
   const [screenWidth, setScreenWidth] = useState(0);
   const [listenerSet, setListenerSet] = useState(false);
@@ -30,7 +38,7 @@ const StoryCard = () => {
   }, [screenWidth]);
 
   function shortText() {
-    let wordsArray = textData.match(/[\w\S]+/g);
+    let wordsArray = text.match(/[\w\S]+/g);
     let newIntroText: string;
     let stringIndex = 0;
     let amountOfWords;
@@ -53,11 +61,11 @@ const StoryCard = () => {
     wordsArray &&
       wordsArray.forEach((word, index) => {
         if (index === amountOfWords) {
-          stringIndex = textData.indexOf(word) + word.length;
+          stringIndex = text.indexOf(word) + word.length;
         }
       });
 
-    newIntroText = textData.slice(0, stringIndex);
+    newIntroText = text.slice(0, stringIndex);
 
     if (newIntroText.slice(-1) === "," || newIntroText.slice(-1) === ".") {
       newIntroText = newIntroText.slice(0, newIntroText.length - 1);
@@ -69,35 +77,39 @@ const StoryCard = () => {
   }
 
   return (
-    <div className="storycard">
-      <div className="storycard__imageWrapper">
-        <Image fill src={"https://picsum.photos/200"} alt={"Image"} />
-      </div>
-      <div className="storycard__content">
-        <div>
-          <div className="storycard__imageWrapperMobile">
-            <Image fill src={"https://picsum.photos/200"} alt={"Image"} />
+    <Link href={"/"}>
+      <article className="storycard">
+        {image && (
+          <div className="storycard__imageWrapper">
+            <Image fill src={image} alt={"Image"} />
           </div>
-          <div className="storycard__textWrapper">
-            <Heading>Peter en de PowerPoint</Heading>
-            <Paragraph>
-              {introText}
-              <a href="#" className="storycard__readmore">
-                {" "}
-                Lees verder
-              </a>
-            </Paragraph>
+        )}
+        <div className="storycard__content">
+          <div>
+            {image && (
+              <div className="storycard__imageWrapperMobile">
+                <Image fill src={image} alt={"Image"} />
+              </div>
+            )}
+            <div className="storycard__textWrapper">
+              <Heading>{title}</Heading>
+              <Paragraph>
+                {introText}
+                <a href="#" className="storycard__readmore">
+                  {" "}
+                  Lees verder
+                </a>
+              </Paragraph>
+            </div>
           </div>
+          <Paragraph>Geschreven door {author}</Paragraph>
+          <span className="storycard__song">
+            <Paragraph>{songName}</Paragraph>
+            <NoteSvg />
+          </span>
         </div>
-        <Paragraph>
-          <span>Geschreven door </span>Marjolein (gastschrijver)
-        </Paragraph>
-        <span className="storycard__song">
-          <Paragraph>The Doors - People Are Strange</Paragraph>
-          <NoteSvg />
-        </span>
-      </div>
-    </div>
+      </article>
+    </Link>
   );
 };
 
