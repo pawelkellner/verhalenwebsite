@@ -67,11 +67,11 @@ const Form = ({ formAction }: { formAction: (value) => void }) => {
           required
         />
 
-        <Editor
+        {/* <Editor
           placeholder="Zie Ginds Komt De Stoomboot..."
           label="Songtekst"
           required
-        />
+        /> */}
       </div>
     </form>
   );
