@@ -40,6 +40,3 @@ next-env.d.ts
 
 # editor
 .idea
-
-# hide firebase for staging purposes
-/src/components/firebase
