@@ -5,6 +5,7 @@
   display: flex;
   justify-content: space-between;
   gap: 4px;
+  width: 100%;
 
   &:not(:last-of-type) {
     margin-bottom: 10px;
