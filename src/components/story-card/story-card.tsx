@@ -47,7 +47,7 @@ const StoryCard = ({
 
     switch (true) {
       case screenWidth >= 768:
-        amountOfWords = 29;
+        amountOfWords = 180;
         break;
       case screenWidth >= 510:
         amountOfWords = 20;
@@ -60,17 +60,21 @@ const StoryCard = ({
         break;
     }
 
-    wordsArray &&
-      wordsArray.forEach((word, index) => {
-        if (index === amountOfWords) {
-          stringIndex = text.indexOf(word) + word.length;
-        }
-      });
+    // wordsArray &&
+    //   wordsArray.forEach((word, index) => {
+    //     if (index === amountOfWords) {
+    //       stringIndex = text.indexOf(word) + word.length;
+    //     }
+    //   });
 
-    newIntroText = text.slice(0, stringIndex);
+    newIntroText = text.slice(0, 180);
 
-    if (newIntroText.slice(-1) === "," || newIntroText.slice(-1) === ".") {
-      newIntroText = newIntroText.slice(0, newIntroText.length - 1);
+    switch (newIntroText.slice(-1)) {
+      case ",":
+      case ".":
+      case " ":
+        newIntroText = newIntroText.slice(0, newIntroText.length - 1);
+        break;
     }
 
     newIntroText += "...";
@@ -79,7 +83,7 @@ const StoryCard = ({
   }
 
   return (
-    <button className="unstyled" onClick={() => router.push("/story")}>
+    <button className="unstyled" onClick={() => router.push("/story")} >
       <article className="storycard">
         {image && (
           <div className="storycard__imageWrapper">

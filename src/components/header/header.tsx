@@ -1,10 +1,9 @@
 "use client";
-import { useState, useReducer, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 import styles from "./styles.module.scss";
-import { initialState, reducer, ActionTypes } from "../../store/header-reducer";
 
 import Heading from "../typography/heading";
 import Paragraph from "../typography/paragraph";
@@ -17,18 +16,18 @@ import LogoSvg from "../svg/LogoSvg";
 const Header = () => {
   const router = usePathname();
 
+  const [isWhite, setIsWhite] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [eventAdded, setEventAdded] = useState(false);
   const [scrollHeight, setScrollHeight] = useState(0);
-  const [classString, setClassString] = useState("");
 
   useEffect(() => {
     if (router !== "/") {
-      setClassString("nav -white");
+      setIsWhite(true)
     } else if (router === "/" && scrollHeight >= 50) {
-      setClassString("nav -white");
+      setIsWhite(true)
     } else {
-      setClassString("nav");
+      setIsWhite(false)
     }
   }, [scrollHeight, router]);
 
@@ -56,7 +55,7 @@ const Header = () => {
 
   return (
     <header>
-      <nav className={classString} data-open={isMenuOpen}>
+      <nav className={styles.nav} data-open={isMenuOpen} data-white={isWhite}>
         <Link href="/" className={styles.nav__logo}>
           <Button variant="unstyled">
             <LogoSvg />
