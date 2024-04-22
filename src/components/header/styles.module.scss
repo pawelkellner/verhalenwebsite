@@ -154,7 +154,7 @@
   }
 }
 
-#menu_checkbox {
+.menu_checkbox {
   display: none;
 
   &:checked + .hamburgercheck div:first-child {

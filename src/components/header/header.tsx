@@ -2,7 +2,7 @@
 import { useState, useReducer, useEffect } from "react";
 import Link from "next/link";
 
-import "./header.scss";
+import styles from "./styles.module.scss";
 import { initialState, reducer, ActionTypes } from "../../store/header-reducer";
 
 import Heading from "../typography/heading";
@@ -52,8 +52,8 @@ const Header = () => {
 
   return (
     <header>
-      <nav className={classString} data-open={isMenuOpen}>
-        <Link href="/" className="nav__logo">
+      <nav className={styles.nav} data-open={isMenuOpen}>
+        <Link href="/" className={styles.nav__logo}>
           <Button
             onClick={() =>
               dispatch({ type: ActionTypes.TOGGLE_SEARCH_BAR, value: true })
@@ -65,7 +65,7 @@ const Header = () => {
           </Button>
         </Link>
         {state.showSearchBar && (
-          <div className="nav__searchWrapper">
+          <div className={styles.nav__searchWrapper}>
             <input
               onInput={(e) => search(e)}
               type="text"
@@ -74,7 +74,7 @@ const Header = () => {
             <SearchSvg iconColor="#7D7D7B" />
           </div>
         )}
-        <div className="nav__buttons">
+        <div className={styles.nav__buttons}>
           <LinkButton
             href="/about"
             onClick={() =>
@@ -93,8 +93,8 @@ const Header = () => {
           >
             Schrijven
           </LinkButton>
-          <input onInput={toggleMenu} type="checkbox" id="menu_checkbox" />
-          <label className="hamburgercheck" htmlFor="menu_checkbox">
+          <input onInput={toggleMenu} type="checkbox" id="menu_checkbox" className={styles.menu_checkbox}/>
+          <label className={styles.hamburgercheck} htmlFor="menu_checkbox">
             <div />
             <div />
             <div />
@@ -102,7 +102,7 @@ const Header = () => {
         </div>
       </nav>
       {isMenuOpen && (
-        <div className="nav__hamburgerMenu">
+        <div className={styles.nav__hamburgerMenu}>
           <div className="container">
             <a href="/about">
               <Paragraph variant="sm">Over Muziek verhalen</Paragraph>
