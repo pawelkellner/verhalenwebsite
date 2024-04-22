@@ -1,5 +1,6 @@
 "use client";
 import { useState, useReducer, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 import "./header.scss";
@@ -14,19 +15,22 @@ import SearchSvg from "../svg/SearchSvg";
 import LogoSvg from "../svg/LogoSvg";
 
 const Header = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const router = usePathname();
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [eventAdded, setEventAdded] = useState(false);
   const [scrollHeight, setScrollHeight] = useState(0);
   const [classString, setClassString] = useState("");
 
   useEffect(() => {
-    if (scrollHeight >= 367) {
+    if (router !== "/") {
+      setClassString("nav -white");
+    } else if (router === "/" && scrollHeight >= 50) {
       setClassString("nav -white");
     } else {
       setClassString("nav");
     }
-  }, [scrollHeight]);
+  }, [scrollHeight, router]);
 
   function search(e) {}
 
@@ -54,17 +58,12 @@ const Header = () => {
     <header>
       <nav className={classString} data-open={isMenuOpen}>
         <Link href="/" className="nav__logo">
-          <Button
-            onClick={() =>
-              dispatch({ type: ActionTypes.TOGGLE_SEARCH_BAR, value: true })
-            }
-            variant="unstyled"
-          >
+          <Button variant="unstyled">
             <LogoSvg />
             <Heading variant="lg">Muziek verhalen</Heading>
           </Button>
         </Link>
-        {state.showSearchBar && (
+        {router === "/" && (
           <div className="nav__searchWrapper">
             <input
               onInput={(e) => search(e)}
@@ -75,22 +74,9 @@ const Header = () => {
           </div>
         )}
         <div className="nav__buttons">
-          <LinkButton
-            href="/about"
-            onClick={() =>
-              dispatch({ type: ActionTypes.TOGGLE_SEARCH_BAR, value: false })
-            }
-          >
-            Over Muziek verhalen
-          </LinkButton>
+          <LinkButton href="/about">Over Muziek verhalen</LinkButton>
 
-          <LinkButton
-            href="/write"
-            buttonVariant="primary"
-            onClick={() =>
-              dispatch({ type: ActionTypes.TOGGLE_SEARCH_BAR, value: false })
-            }
-          >
+          <LinkButton href="/write" buttonVariant="primary">
             Schrijven
           </LinkButton>
           <input onInput={toggleMenu} type="checkbox" id="menu_checkbox" />
