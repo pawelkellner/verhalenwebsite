@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
-import Link from "next/link";
 
 import "./story-card.scss";
 import { StoryCardProps } from "./story-card.types";
@@ -18,6 +18,8 @@ const StoryCard = ({
   author,
   songName,
 }: StoryCardProps) => {
+  const router = useRouter();
+
   const [introText, setIntroText] = useState("");
   const [screenWidth, setScreenWidth] = useState(0);
   const [listenerSet, setListenerSet] = useState(false);
@@ -77,7 +79,7 @@ const StoryCard = ({
   }
 
   return (
-    <Link href={"/"}>
+    <button className="unstyled" onClick={() => router.push("/story")}>
       <article className="storycard">
         {image && (
           <div className="storycard__imageWrapper">
@@ -109,7 +111,7 @@ const StoryCard = ({
           </span>
         </div>
       </article>
-    </Link>
+    </button>
   );
 };
 
