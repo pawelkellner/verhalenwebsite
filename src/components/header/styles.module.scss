@@ -178,7 +178,7 @@
 }
 
 .hamburgercheck {
-  transform: scale(0.6);
+  transform: scale(0.45);
   display: block;
   width: 60px;
   height: 60px;
@@ -202,7 +202,7 @@
     position: relative;
     top: 0;
     height: 12px;
-    background-color: var(--grey-400);
+    background-color: var(--black);
     margin-bottom: 12px;
     transition: 0.3s ease transform, 0.3s ease top, 0.3s ease width,
     0.3s ease right;
