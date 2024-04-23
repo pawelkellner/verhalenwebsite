@@ -3,6 +3,8 @@ type TextInputProps = {
     name: string
     label: string
     placeholder?: string
+    onChange: (e) => void
+    value?: string
     required?: boolean
     accept?: string
 }

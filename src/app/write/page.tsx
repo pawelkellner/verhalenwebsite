@@ -14,11 +14,6 @@ export const metadata = {
 };
 
 export default function Write() {
-  const formAction = async () => {
-    "use server";
-    console.log("a");
-  };
-
   return (
     <MainLayout className="write__container">
       <PageTitle title="Schrijf jouw verhaal" />
@@ -30,7 +25,7 @@ export default function Write() {
           aliquip ex ea commodo consequat.
         </Paragraph>
       </div>
-      <Form formAction={formAction} />
+      <Form />
     </MainLayout>
   );
 }

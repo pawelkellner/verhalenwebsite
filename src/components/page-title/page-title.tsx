@@ -1,5 +1,5 @@
 import React from "react";
-import "./page-title.scss";
+import style from "./page-title.module.scss";
 import Paragraph from "../typography/paragraph";
 
 const PageTitle = ({
@@ -10,9 +10,9 @@ const PageTitle = ({
   noTopPadding?: boolean;
 }) => {
   return (
-    <div className={`${!noTopPadding && "top__padding"}`}>
+    <div className={!noTopPadding ? style.top__padding : ""}>
       <Paragraph variant="md">{title}</Paragraph>
-      <div className="line" />
+      <div className={style.line} />
     </div>
   );
 };

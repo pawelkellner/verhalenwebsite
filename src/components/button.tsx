@@ -5,6 +5,7 @@ export interface ButtonProps {
   onClick?: () => void;
   variant?: "primary" | "secondary" | "neutral" | "disabled" | "unstyled";
   className?: string;
+  style?: CSSProperties;
   children: React.ReactNode;
 }
 
@@ -12,6 +13,7 @@ const Button: FC<ButtonProps> = ({
   onClick,
   variant = "default",
   className,
+  style: customStyle,
   children,
 }) => {
   const getStyle = (variant: string): CSSProperties => {
@@ -61,7 +63,11 @@ const Button: FC<ButtonProps> = ({
   };
 
   return (
-    <button onClick={onClick} style={getStyle(variant)} className={className}>
+    <button
+      onClick={onClick}
+      style={{ ...getStyle(variant), ...customStyle }}
+      className={className}
+    >
       {children}
     </button>
   );

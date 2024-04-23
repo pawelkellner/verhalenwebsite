@@ -1,4 +1,4 @@
-import "./text-input.scss";
+import styles from "./text-input.module.scss";
 import TextInputProps from "./text-input.type";
 
 const TextInput = ({
@@ -6,11 +6,13 @@ const TextInput = ({
   name,
   label,
   placeholder,
+  onChange,
+  value,
   required = false,
   accept,
 }: TextInputProps) => {
   return (
-    <div className="input__group">
+    <div className={styles.input__group}>
       <label htmlFor={name}>
         {label}
         {required && "*"}
@@ -20,6 +22,8 @@ const TextInput = ({
         type={type}
         name={name}
         placeholder={placeholder}
+        onChange={onChange}
+        value={value}
         required={required}
         accept={accept && accept}
       />
