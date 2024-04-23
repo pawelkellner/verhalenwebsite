@@ -40,34 +40,25 @@ const StoryCard = ({
   }, [screenWidth]);
 
   function shortText() {
-    let wordsArray = text.match(/[\w\S]+/g);
     let newIntroText: string;
-    let stringIndex = 0;
-    let amountOfWords;
+    let amountOfChars;
 
     switch (true) {
       case screenWidth >= 768:
-        amountOfWords = 180;
+        amountOfChars = 180;
         break;
       case screenWidth >= 510:
-        amountOfWords = 20;
+        amountOfChars = 152;
         break;
       case screenWidth >= 400:
-        amountOfWords = 15;
+        amountOfChars = 100;
         break;
       default:
-        amountOfWords = 10;
+        amountOfChars = 66;
         break;
     }
 
-    // wordsArray &&
-    //   wordsArray.forEach((word, index) => {
-    //     if (index === amountOfWords) {
-    //       stringIndex = text.indexOf(word) + word.length;
-    //     }
-    //   });
-
-    newIntroText = text.slice(0, 180);
+    newIntroText = text.slice(0, amountOfChars);
 
     switch (newIntroText.slice(-1)) {
       case ",":
@@ -82,8 +73,10 @@ const StoryCard = ({
     setIntroText(newIntroText);
   }
 
+
+
   return (
-    <button className="unstyled" onClick={() => router.push("/story")} >
+    <button className="unstyled" onClick={() => router.push("/story")}>
       <article className="storycard">
         {image && (
           <div className="storycard__imageWrapper">
@@ -97,18 +90,27 @@ const StoryCard = ({
                 <Image fill src={image} alt={"Image"} />
               </div>
             )}
-            <div className="storycard__textWrapper">
+            <div className={`storycard__textWrapper ${!introText && 'skeletonText'}`}>
               <Heading>{title}</Heading>
-              <Paragraph>
-                {introText}
-                <a href="#" className="storycard__readmore">
-                  {" "}
-                  Lees verder
-                </a>
-              </Paragraph>
+              { introText ? (
+                <Paragraph >
+                  {introText}
+                  <a href="#" className="storycard__readmore">
+                    {" "}
+                    Lees verder
+                  </a>
+                </Paragraph>
+              ) : (
+                  <>
+                    <Paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga, quod.</Paragraph>
+                    <Paragraph>Lorem ipsum dolor.</Paragraph>
+                  </>
+              ) }
             </div>
           </div>
-          <Paragraph>Geschreven door {author}</Paragraph>
+          <Paragraph>
+            <span>Geschreven door </span>{author}
+          </Paragraph>
           <span className="storycard__song">
             <Paragraph>{songName}</Paragraph>
             <NoteSvg />
