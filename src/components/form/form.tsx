@@ -134,14 +134,12 @@ const Form = () => {
           placeholder="Er was eens een.."
           label="Verhaal tekst"
           onChange={(value) => setStoryText(value)}
-          value={storyText}
           required
         />
         <Editor
           placeholder="Zie Ginds Komt De Stoomboot..."
           label="Songtekst"
           onChange={(value) => setSongText(value)}
-          value={songText}
           required
         />
         <div className={lineStyle.line} />
