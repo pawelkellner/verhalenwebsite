@@ -18,9 +18,29 @@ const Header = () => {
   const router = usePathname();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [eventAdded, setEventAdded] = useState(false);
   const [scrollHeight, setScrollHeight] = useState(0);
   const [classString, setClassString] = useState("");
+
+  useEffect(() => {
+    function changeScrollHeight() {
+      if (typeof window !== "undefined") {
+        setScrollHeight(window.scrollY);
+      }
+    }
+
+    function initScroll() {
+      if (typeof window !== "undefined") {
+        window.addEventListener("scroll", changeScrollHeight);
+        changeScrollHeight();
+      }
+    }
+
+    initScroll();
+
+    return () => {
+      window.removeEventListener("scroll", changeScrollHeight);
+    };
+  }, []);
 
   useEffect(() => {
     if (router !== "/") {
@@ -37,22 +57,6 @@ const Header = () => {
   function toggleMenu() {
     setIsMenuOpen(!isMenuOpen);
   }
-
-  function changeScrollHeight() {
-    if ( typeof window !== "undefined" ) {
-      setScrollHeight(window.scrollY);
-    }
-  }
-
-  function initScroll() {
-    if (!eventAdded && typeof window !== "undefined" ) {
-      window.addEventListener("scroll", changeScrollHeight);
-      changeScrollHeight();
-      setEventAdded(true);
-    }
-  }
-
-  initScroll();
 
   return (
     <header>

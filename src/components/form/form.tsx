@@ -24,7 +24,9 @@ const Form = () => {
   const [storyText, setStoryText] = useState<React.ReactNode | null>(null);
   const [songText, setSongText] = useState<React.ReactNode | null>(null);
 
-  const addItem = async () => {
+  const addItem = async (e: React.FormEvent) => {
+    console.log("a");
+    e.preventDefault();
     try {
       let imageUrl: string | null = null;
       if (songImage) {
@@ -46,6 +48,7 @@ const Form = () => {
         songText: songText,
         createdAt: serverTimestamp(),
       });
+
       console.log("Document written with ID: ", docRef.id);
       setAuthor("");
       setStoryTitle("");

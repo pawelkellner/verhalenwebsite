@@ -29,9 +29,6 @@ const TextEditor = ({
       <CKEditor
         editor={ClassicEditor}
         data={placeholder}
-        onReady={(editor) => {
-          console.log("CKEditor5 React Component is ready to use!", editor);
-        }}
         onChange={(event, editor) => {
           const data = editor.getData();
           onChange(data);

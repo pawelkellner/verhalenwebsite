@@ -2,7 +2,7 @@ import React, { FC, CSSProperties } from "react";
 import { theme } from "../theme";
 
 export interface ButtonProps {
-  onClick?: () => void;
+  onClick?: (value?) => void;
   variant?: "primary" | "secondary" | "neutral" | "disabled" | "unstyled";
   className?: string;
   style?: CSSProperties;

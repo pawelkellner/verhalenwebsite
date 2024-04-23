@@ -1,3 +1,5 @@
+@import "src/app/mixins";
+
 .inputs__group {
     max-width: 650px;
     display: flex;
@@ -6,8 +8,14 @@
 
     .row {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: space-between;
         align-items: flex-start;
+        gap: 35px;
+
+        @include mobile {
+            flex-direction: row;
+            gap: 0px;
+        }
     }
 }
