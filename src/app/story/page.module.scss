@@ -1,0 +1,127 @@
+@import "src/app/mixins";
+
+.story {
+
+  &__content{
+    display: flex;
+    flex-direction: column;
+
+    @include tablet {
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+  }
+
+  &__story {
+    max-width: 450px;
+    padding-bottom: 50px;
+    order: 2;
+
+    @include tablet {
+      order: 1;
+    }
+  }
+
+  &__information {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    background-color: rgba(72, 184, 208, 0.2);
+    transform: translateY(-20px);
+    padding-block: 20px;
+    padding-inline: 15px;
+    order: 1;
+
+    @include tablet{
+      max-width: 400px;
+      order: 2;
+    }
+  }
+
+  &__origin {
+    max-width: calc(100% - 220px);
+
+    @include tablet {
+      max-width: unset;
+    }
+
+    > p {
+      font-weight: 300!important;
+      padding-bottom: 15px;
+    }
+  }
+
+  &__author {
+
+  }
+
+  &__quote {
+    width: 250px;
+    h1 {
+      font-size: 20px;
+      font-family: "Serif pro";
+      font-style: italic;
+      font-weight: 400;
+      padding-bottom: 5px;
+    }
+  }
+
+  &__spotifyPlayer {
+    position: absolute;
+    right: 15px;
+    top: 20px;
+
+    @include tablet {
+      right: unset;
+      top: unset;
+      position: relative;
+    }
+
+    > span {
+      content: '';
+      background: var(--grey-100);
+      width: 180px;
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+
+      span {
+        content: '';
+        width: 15px;
+        height: 15px;
+        background: yellow;
+      }
+    }
+  }
+
+  &__lyrics{
+    max-width: 450px;
+
+    &Wrapper{
+      background: rgba(72, 184, 208, 0.2);
+
+      main > div {
+        padding-block: 50px;
+        max-width: 600px;
+        border-block: 1px solid var(--grey-300);
+      }
+    }
+  }
+
+  &__buttons {
+    padding-top: 30px;
+    max-width: 600px;
+
+    > p {
+      padding-block: 10px;
+      width: 100%;
+      text-align: center;
+      color: var(--grey-400);
+    }
+  }
+}
+

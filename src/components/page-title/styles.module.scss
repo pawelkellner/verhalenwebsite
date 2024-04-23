@@ -1,0 +1,25 @@
+.top__padding {
+    padding-top: 200px;
+
+    &[data-padding-bottom=true] {
+        padding-bottom: 15px;
+    }
+}
+
+.line {
+    margin-block: 5px;
+    height: 1px;
+    width: 100%;
+    background-color: var(--grey-300);
+}
+
+.title_wrapper {
+    display: flex;
+    justify-content: space-between;
+
+    > div{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+}

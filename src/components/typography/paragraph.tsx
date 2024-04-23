@@ -36,7 +36,7 @@ const Paragraph: FC<ParagraphProps> = ({
       default:
         return {
           fontSize: "14px",
-          lineHeight: "14px",
+          lineHeight: "18px",
           fontWeight: fontWeight ? fontWeight : 400,
           color: color && color,
         };
