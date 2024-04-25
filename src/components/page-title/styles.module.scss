@@ -1,8 +1,27 @@
+@import "./src/app/mixins";
+
 .top__padding {
     padding-top: 200px;
 
     &[data-padding-bottom=true] {
         padding-bottom: 15px;
+    }
+
+    > div[data-story-page=true] {
+        h2, p {
+            font-size: 16px!important;
+            line-height: 1.2!important;
+
+            @include mobile {
+                font-size: 20px!important;
+            }
+        }
+
+        h2 {
+            @include mobile {
+                font-size: 26px!important;
+            }
+        }
     }
 }
 
@@ -17,9 +36,65 @@
     display: flex;
     justify-content: space-between;
 
-    > div{
+    > div {
         display: flex;
         align-items: center;
         gap: 10px;
+    }
+}
+
+.scrollingText__container {
+    width: 100px;
+    overflow: hidden;
+
+    @include mobile {
+        width: 250px;
+    }
+
+    @include tablet {
+        width: unset;
+        overflow: unset;
+    }
+
+    > p {
+        width: fit-content;
+        text-wrap: nowrap;
+        -moz-transform: translateX(100%);
+        -webkit-transform: translateX(100%);
+        transform: translateX(100%);
+
+        -moz-animation: my-animation 8s linear infinite;
+        -webkit-animation: my-animation 8s linear infinite;
+        animation: my-animation 8s linear infinite;
+
+        @include tablet {
+            animation: unset;
+            transform: unset;
+        }
+    }
+}
+
+/* for Firefox */
+@-moz-keyframes my-animation {
+    from { -moz-transform: translateX(100%); }
+    to { -moz-transform: translateX(-100%); }
+}
+
+/* for Chrome */
+@-webkit-keyframes my-animation {
+    from { -webkit-transform: translateX(100%); }
+    to { -webkit-transform: translateX(-100%); }
+}
+
+@keyframes my-animation {
+    from {
+        -moz-transform: translateX(100%);
+        -webkit-transform: translateX(100%);
+        transform: translateX(100%);
+    }
+    to {
+        -moz-transform: translateX(-100%);
+        -webkit-transform: translateX(-100%);
+        transform: translateX(-100%);
     }
 }
