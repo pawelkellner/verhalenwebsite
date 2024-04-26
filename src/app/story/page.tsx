@@ -50,17 +50,17 @@ export default async function Story() {
             <div className={styles.story__lyricsWrapper}>
                 <MainLayout>
                     <div>
-                        <Paragraph variant="md">Songtekst van 'Blah Blah Blah'</Paragraph>
+                        <Paragraph variant="md">Songtekst van &apos;Blah Blah Blah&apos;</Paragraph>
                         <div className={styles.story__lyrics}>
-                            All we ever hear from you is blah, blah, blah<br/>So, all we ever do is go ya, ya, ya<br/>And we don't even care about what they say<br/>'Cause it's ya-ya, ya-ya<br/>Blah-blah, blah-blah<br/><br/>
-                            All we ever hear from you is blah, blah, blah <br/>So, all we ever do is go ya, ya, ya <br/>And we don't even care about what they say <br/>'Cause it's ya-ya, ya-ya <br/>Blah-blah, blah-blah<br/><br/>
+                            All we ever hear from you is blah, blah, blah<br/>So, all we ever do is go ya, ya, ya<br/>And we don&apos;t even care about what they say<br/>&apos;Cause it&apos;s ya-ya, ya-ya<br/>Blah-blah, blah-blah<br/><br/>
+                            All we ever hear from you is blah, blah, blah <br/>So, all we ever do is go ya, ya, ya <br/>And we don&apos;t even care about what they say <br/>&apos;Cause it&apos;s ya-ya, ya-ya <br/>Blah-blah, blah-blah<br/><br/>
                             All we ever hear from you is <br/>Blah, blah, blah, blah, blah, blah<br/>
                             Blah, blah, blah, blah, blah, blah <br/>Blah, blah, blah, blah, blah, blah...<br/><br/>
-                            All we ever hear from you is blah, blah, blah <br/>So, all we ever do is go ya, ya, ya <br/>And we don't even care about what they say <br/>'Cause it's ya-ya, ya-ya <br/>Blah-blah, blah-blah<br/><br/>
-                            All we ever hear from you is blah, blah, blah <br/>So, all we ever do is go ya, ya, ya <br/>And we don't even care about what they say <br/>'Cause it's ya-ya, ya-ya <br/>Blah-blah, blah-blah<br/><br/>
-                            All we ever hear from you is blah, blah, blah <br/>So, all we ever do is go ya, ya, ya <br/>And we don't even care about what they say <br/>'Cause it's ya-ya, ya-ya <br/>Blah-blah, blah-blah<br/><br/>
-                            All we ever hear from you is blah, blah, blah <br/>So, all we ever do is go ya, ya, ya <br/>And we don't even care about what they say <br/>'Cause it's ya-ya, ya-ya <br/>Blah-blah, blah-blah<br/><br/>
-                            All we ever hear from you is blah, blah, blah <br/>So, all we ever do is go ya, ya, ya <br/>And we don't even care about what they say <br/>'Cause it's ya-ya, ya-ya <br/>Blah-blah, blah-blah
+                            All we ever hear from you is blah, blah, blah <br/>So, all we ever do is go ya, ya, ya <br/>And we don&apos;t even care about what they say <br/>&apos;Cause it&apos;s ya-ya, ya-ya <br/>Blah-blah, blah-blah<br/><br/>
+                            All we ever hear from you is blah, blah, blah <br/>So, all we ever do is go ya, ya, ya <br/>And we don&apos;t even care about what they say <br/>&apos;Cause it&apos;s ya-ya, ya-ya <br/>Blah-blah, blah-blah<br/><br/>
+                            All we ever hear from you is blah, blah, blah <br/>So, all we ever do is go ya, ya, ya <br/>And we don&apos;t even care about what they say <br/>&apos;Cause it&apos;s ya-ya, ya-ya <br/>Blah-blah, blah-blah<br/><br/>
+                            All we ever hear from you is blah, blah, blah <br/>So, all we ever do is go ya, ya, ya <br/>And we don&apos;t even care about what they say <br/>&apos;Cause it&apos;s ya-ya, ya-ya <br/>Blah-blah, blah-blah<br/><br/>
+                            All we ever hear from you is blah, blah, blah <br/>So, all we ever do is go ya, ya, ya <br/>And we don&apos;t even care about what they say <br/>&apos;Cause it&apos;s ya-ya, ya-ya <br/>Blah-blah, blah-blah
                         </div>
                     </div>
                 </MainLayout>
