@@ -7,7 +7,7 @@ const MainLayout = ({
   children: React.ReactNode;
   className?: string;
 }) => {
-  return <main className={`container ${className}`}>{children}</main>;
+  return <main className={`container ${className || ''}`}>{children}</main>;
 };
 
 export default MainLayout;
