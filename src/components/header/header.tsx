@@ -62,17 +62,16 @@ const Header = () => {
             <Heading variant="lg">Muziek verhalen</Heading>
           </Button>
         </Link>
-        {router === "/" ||
-          ("/stories" && (
-            <div className={styles.nav__searchWrapper}>
-              <input
-                onInput={(e) => search(e)}
-                type="text"
-                placeholder="Zoek verhalen"
-              />
-              <SearchSvg iconColor="#7D7D7B" />
-            </div>
-          ))}
+        {(router === "/" || router.includes("stories")) && (
+          <div className={styles.nav__searchWrapper}>
+            <input
+              onInput={(e) => search(e)}
+              type="text"
+              placeholder="Zoek verhalen"
+            />
+            <SearchSvg iconColor="#7D7D7B" />
+          </div>
+        )}
         <div className={styles.nav__buttons}>
           <LinkButton href="/about">Over Muziek verhalen</LinkButton>
 

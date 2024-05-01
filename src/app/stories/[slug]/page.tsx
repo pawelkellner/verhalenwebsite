@@ -1,5 +1,6 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
+import { useRouter } from "next/navigation";
 
 import styles from "../page.module.scss";
 
@@ -10,7 +11,9 @@ import Pagination from "../../../components/pagination/pagination";
 import PageTitle from "../../../components/page-title/page-title";
 import StoryCard from "../../../components/story-card/story-card";
 
-export default function Page({ params }: { params: { slug: number } }) {
+export default function Page({ params }: { params: { slug: string } }) {
+  const router = useRouter();
+
   return (
     <MainLayout>
       <PageTitle title="Verhalen" />
@@ -28,8 +31,8 @@ export default function Page({ params }: { params: { slug: number } }) {
         ))}
       </div>
       <Pagination
-        initialIndex={2}
-        onIndexChange={(index) => console.log(index)}
+        initialIndex={parseInt(params.slug)}
+        onIndexChange={(index) => router.push(`/stories/${index}`)}
       />
     </MainLayout>
   );
