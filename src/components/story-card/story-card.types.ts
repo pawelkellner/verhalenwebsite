@@ -1,4 +1,5 @@
 export type StoryCardProps = {
+    id: number
     title: string
     image?: string
     text: string

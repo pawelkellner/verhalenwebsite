@@ -12,6 +12,7 @@ import Paragraph from "../typography/paragraph";
 import NoteSvg from "../svg/NoteSvg";
 
 const StoryCard = ({
+  id,
   title,
   image,
   text,
@@ -73,10 +74,8 @@ const StoryCard = ({
     setIntroText(newIntroText);
   }
 
-
-
   return (
-    <button className="unstyled" onClick={() => router.push("/story")}>
+    <button className="unstyled" onClick={() => router.push(`story/${id}`)}>
       <article className="storycard">
         {image && (
           <div className="storycard__imageWrapper">
@@ -90,10 +89,14 @@ const StoryCard = ({
                 <Image fill src={image} alt={"Image"} />
               </div>
             )}
-            <div className={`storycard__textWrapper ${!introText && 'skeletonText'}`}>
+            <div
+              className={`storycard__textWrapper ${
+                !introText && "skeletonText"
+              }`}
+            >
               <Heading>{title}</Heading>
-              { introText ? (
-                <Paragraph >
+              {introText ? (
+                <Paragraph>
                   {introText}
                   <a href="#" className="storycard__readmore">
                     {" "}
@@ -101,15 +104,19 @@ const StoryCard = ({
                   </a>
                 </Paragraph>
               ) : (
-                  <>
-                    <Paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga, quod.</Paragraph>
-                    <Paragraph>Lorem ipsum dolor.</Paragraph>
-                  </>
-              ) }
+                <>
+                  <Paragraph>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Fuga, quod.
+                  </Paragraph>
+                  <Paragraph>Lorem ipsum dolor.</Paragraph>
+                </>
+              )}
             </div>
           </div>
           <Paragraph>
-            <span>Geschreven door </span>{author}
+            <span>Geschreven door </span>
+            {author}
           </Paragraph>
           <span className="storycard__song">
             <Paragraph>{songName}</Paragraph>
