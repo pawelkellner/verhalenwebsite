@@ -23,11 +23,11 @@ const Header = () => {
 
   useEffect(() => {
     if (router !== "/") {
-      setIsWhite(true)
+      setIsWhite(true);
     } else if (router === "/" && scrollHeight >= 50) {
-      setIsWhite(true)
+      setIsWhite(true);
     } else {
-      setIsWhite(false)
+      setIsWhite(false);
     }
   }, [scrollHeight, router]);
 
@@ -38,13 +38,13 @@ const Header = () => {
   }
 
   function changeScrollHeight() {
-    if ( typeof window !== "undefined" ) {
+    if (typeof window !== "undefined") {
       setScrollHeight(window.scrollY);
     }
   }
 
   function initScroll() {
-    if (!eventAdded && typeof window !== "undefined" ) {
+    if (!eventAdded && typeof window !== "undefined") {
       window.addEventListener("scroll", changeScrollHeight);
       changeScrollHeight();
       setEventAdded(true);
@@ -62,23 +62,29 @@ const Header = () => {
             <Heading variant="lg">Muziek verhalen</Heading>
           </Button>
         </Link>
-        {router === "/" && (
-          <div className={styles.nav__searchWrapper}>
-            <input
-              onInput={(e) => search(e)}
-              type="text"
-              placeholder="Zoek verhalen"
-            />
-            <SearchSvg iconColor="#7D7D7B" />
-          </div>
-        )}
+        {router === "/" ||
+          ("/stories" && (
+            <div className={styles.nav__searchWrapper}>
+              <input
+                onInput={(e) => search(e)}
+                type="text"
+                placeholder="Zoek verhalen"
+              />
+              <SearchSvg iconColor="#7D7D7B" />
+            </div>
+          ))}
         <div className={styles.nav__buttons}>
           <LinkButton href="/about">Over Muziek verhalen</LinkButton>
 
           <LinkButton href="/write" buttonVariant="primary">
             Schrijven
           </LinkButton>
-          <input onInput={toggleMenu} type="checkbox" id="menu_checkbox" className={styles.menu_checkbox}/>
+          <input
+            onInput={toggleMenu}
+            type="checkbox"
+            id="menu_checkbox"
+            className={styles.menu_checkbox}
+          />
           <label className={styles.hamburgercheck} htmlFor="menu_checkbox">
             <div />
             <div />
