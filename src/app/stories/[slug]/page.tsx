@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import styles from "../page.module.scss";
@@ -12,11 +12,17 @@ import PageTitle from "../../../components/page-title/page-title";
 import StoryCard from "../../../components/story-card/story-card";
 
 export default function Page({ params }: { params: { slug: string } }) {
+  const activeIndex = parseInt(params.slug);
+
+  const [index, setIndex] = useState(activeIndex);
+
   const router = useRouter();
+
+  const maxIndex = 11;
 
   return (
     <MainLayout>
-      <PageTitle title="Verhalen" />
+      <PageTitle title={`Pagina ${activeIndex} van ${maxIndex}`} />
 
       <div className={styles.cards__container}>
         {stories.map((story, index) => (
@@ -31,8 +37,11 @@ export default function Page({ params }: { params: { slug: string } }) {
         ))}
       </div>
       <Pagination
-        initialIndex={parseInt(params.slug)}
-        onIndexChange={(index) => router.push(`/stories/${index}`)}
+        maxIndex={maxIndex}
+        initialIndex={activeIndex}
+        onIndexChange={(newIndex) => {
+          router.push(`/stories/${newIndex}`), setIndex(newIndex);
+        }}
       />
     </MainLayout>
   );

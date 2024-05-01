@@ -8,17 +8,15 @@ import { DoubleArrow } from "../svg/double-arrow";
 import { theme } from "../../theme";
 
 const Pagination = ({
+  maxIndex = 10,
   initialIndex,
   onIndexChange,
 }: {
+  maxIndex?: number;
   initialIndex?: number;
   onIndexChange?: (value: number) => void;
 }) => {
-  console.log(initialIndex);
-
   const [index, setIndex] = useState(initialIndex ? initialIndex : 1);
-
-  const maxIndex = 11;
 
   useEffect(() => {
     onIndexChange && onIndexChange(index);
@@ -47,7 +45,10 @@ const Pagination = ({
         Volgende
       </Button>
       <Button onClick={() => setIndex(maxIndex)}>
-        <DoubleArrow color={theme.grey[400]} direction="right" />
+        <DoubleArrow
+          color={index === 11 ? theme.grey[300] : theme.grey[400]}
+          direction="right"
+        />
       </Button>
     </div>
   );
