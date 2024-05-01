@@ -162,6 +162,11 @@
     padding-top: 30px;
     max-width: 600px;
 
+    button { 
+      width: 100%;
+      justify-content: center;
+    }
+
     @include mobile {
       margin-inline: unset;
     }

@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 import styles from "../page.module.scss";
@@ -13,12 +12,12 @@ import PlayButtonSvg from "../../../components/svg/PlayButtonSvg";
 import PageTitle from "../../../components/page-title/page-title";
 import Paragraph from "../../../components/typography/paragraph";
 import Heading from "../../../components/typography/heading";
-import Button from "../../../components/button";
+import LinkButton from "../../../components/link-button/link-button";
 
 export default function Story({ params }: { params: { slug: string } }) {
-  const router = useRouter();
+  const slug = parseInt(params.slug);
 
-  const story = stories.find((story) => story.id === parseInt(params.slug));
+  const story = stories.find((story) => story.id === slug);
 
   return (
     <>
@@ -107,14 +106,10 @@ export default function Story({ params }: { params: { slug: string } }) {
             </div>
             <div className={styles.story__spotifyPlayer}>
               <span>
-                <Image
-                  src={
-                    story?.image ? story.image : '"https://picsum.photos/220"'
-                  }
-                  alt={"album cover"}
-                  fill
-                ></Image>
-                <span></span>
+                {story?.image && (
+                  <Image src={story?.image} alt={"album cover"} fill />
+                )}
+                <span />
                 <PlayButtonSvg />
               </span>
             </div>
@@ -192,19 +187,13 @@ export default function Story({ params }: { params: { slug: string } }) {
       </div>
       <MainLayout>
         <div className={styles.story__buttons}>
-          <Button
-            variant="secondary"
-            style={{ width: "100%", justifyContent: "center" }}
-          >
+          <LinkButton href={`/story/${slug + 1}`} buttonVariant="secondary">
             Lees nog een verhaal
-          </Button>
+          </LinkButton>
           <Paragraph>Of</Paragraph>
-          <Button
-            variant="secondary"
-            style={{ width: "100%", justifyContent: "center" }}
-          >
+          <LinkButton href="/write" buttonVariant="secondary">
             Schrijf er zelf een
-          </Button>
+          </LinkButton>
         </div>
       </MainLayout>
     </>
