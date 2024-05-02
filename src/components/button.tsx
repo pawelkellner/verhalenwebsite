@@ -8,12 +8,12 @@ export interface ButtonProps {
   children: React.ReactNode;
 }
 const Button: FC<ButtonProps> = ({
-     onClick,
-     variant = "default",
-     className,
-     style: customStyle,
-     children,
-   }) => {
+  onClick,
+  variant = "default",
+  className,
+  style: customStyle,
+  children,
+}) => {
   const getStyle = (variant: string): CSSProperties => {
     switch (variant) {
       case "primary":
@@ -59,13 +59,13 @@ const Button: FC<ButtonProps> = ({
     }
   };
   return (
-      <button
-          onClick={onClick}
-          style={{ ...getStyle(variant), ...customStyle }}
-          className={className}
-      >
-        {children}
-      </button>
+    <button
+      onClick={onClick}
+      style={{ ...getStyle(variant), ...customStyle }}
+      className={className}
+    >
+      {children}
+    </button>
   );
 };
 export default Button;
