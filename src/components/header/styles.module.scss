@@ -43,51 +43,6 @@
     }
   }
 
-  &__searchWrapper {
-    position: relative;
-    width: fit-content;
-    display: flex;
-    justify-content: center;
-
-    @media screen and (max-width: 440px) {
-      width: 100%;
-      margin-inline: 10px;
-    }
-
-    & input {
-      all: unset;
-      box-sizing: border-box;
-      background: var(--grey-100);
-      border: 1px solid var(--primary);
-      border-radius: 12.5px;
-      height: 45px;
-      padding-block: 10px;
-      padding-inline: 15px;
-      padding-right: 50px;
-      width: 300px;
-
-      @media screen and (max-width: 440px) {
-        width: 100%;
-      }
-
-      &::placeholder {
-        color: var(--grey-400);
-      }
-    }
-
-    & svg {
-      cursor: pointer;
-      position: absolute;
-      right: 15px;
-      top: 10px;
-      color: #48B8D0;
-
-      path {
-        fill: var(--grey-400);
-      }
-    }
-  }
-
   &__buttons {
     width: calc(100% / 3);
     height: 100%;

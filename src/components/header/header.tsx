@@ -9,8 +9,8 @@ import Heading from "../typography/heading";
 import Paragraph from "../typography/paragraph";
 import Button from "../button";
 import LinkButton from "../link-button/link-button";
+import Search from "../search/search";
 
-import SearchSvg from "../svg/SearchSvg";
 import LogoSvg from "../svg/LogoSvg";
 
 const Header = () => {
@@ -30,8 +30,6 @@ const Header = () => {
       setIsWhite(false);
     }
   }, [scrollHeight, router]);
-
-  function search(e) {}
 
   function toggleMenu() {
     setIsMenuOpen(!isMenuOpen);
@@ -62,16 +60,7 @@ const Header = () => {
             <Heading variant="lg">Muziek verhalen</Heading>
           </Button>
         </Link>
-        {(router === "/" || router.includes("stories")) && (
-          <div className={styles.nav__searchWrapper}>
-            <input
-              onInput={(e) => search(e)}
-              type="text"
-              placeholder="Zoek verhalen"
-            />
-            <SearchSvg iconColor="#7D7D7B" />
-          </div>
-        )}
+        {(router === "/" || router.includes("stories")) && <Search />}
         <div className={styles.nav__buttons}>
           <LinkButton href="/about">Over Muziek verhalen</LinkButton>
 
