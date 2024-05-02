@@ -1,6 +1,5 @@
 import React, { FC, CSSProperties } from "react";
 import { theme } from "../theme";
-
 export interface ButtonProps {
   onClick?: (value?) => void;
   variant?: "primary" | "secondary" | "neutral" | "disabled" | "unstyled";
@@ -8,7 +7,6 @@ export interface ButtonProps {
   style?: CSSProperties;
   children: React.ReactNode;
 }
-
 const Button: FC<ButtonProps> = ({
   onClick,
   variant = "default",
@@ -52,7 +50,6 @@ const Button: FC<ButtonProps> = ({
           cursor: "pointer",
           outline: "inherit",
         };
-
       default:
         return {
           background: theme.grey[100],
@@ -61,7 +58,6 @@ const Button: FC<ButtonProps> = ({
         };
     }
   };
-
   return (
     <button
       onClick={onClick}
@@ -72,5 +68,4 @@ const Button: FC<ButtonProps> = ({
     </button>
   );
 };
-
 export default Button;

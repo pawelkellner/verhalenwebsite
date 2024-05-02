@@ -15,6 +15,14 @@
     }
   }
 
+  &__textWrapper {
+    width: 100%;
+    overflow: hidden;
+
+    @include mobile {
+      width: unset;
+    }
+  }
 
   &__imageWrapper {
     position: relative;
@@ -91,7 +99,7 @@
     }
 
     > div {
-      max-width: 500px;
+      max-width: 400px;
       display: flex;
       gap: 15px;
 
@@ -99,13 +107,21 @@
         display: block;
       }
 
+      @include tablet {
+        max-width: 500px;
+      }
+
       h2 {
         padding-bottom: 15px;
         font-size: 20px!important;
 
         @include mobile {
-          font-size: 28px!important;
+          font-size: 24px!important;
           padding-bottom: 10px;
+        }
+
+        @include tablet {
+          font-size: 28px!important;
         }
       }
       p {
@@ -135,5 +151,18 @@
       bottom: unset;
       top: 15px;
     }
+  }
+}
+
+.skeletonText{
+  > p {
+    background: var(--grey-200)!important;
+    color: transparent!important;
+    white-space: nowrap;
+  }
+
+  > p:not(:first-of-type) {
+    margin-top: 10px;
+    width: 30%;
   }
 }
