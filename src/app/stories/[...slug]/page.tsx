@@ -11,19 +11,27 @@ import Pagination from "../../../components/pagination/pagination";
 import PageTitle from "../../../components/page-title/page-title";
 import StoryCard from "../../../components/story-card/story-card";
 
-export default function Page({ params }: { params: { slug: string } }) {
-  const activeIndex = parseInt(params.slug);
-
-  const [index, setIndex] = useState(activeIndex);
-
+export default function Page({
+  params,
+}: {
+  params: { slug: { index: string; searchTerm?: string } };
+}) {
   const router = useRouter();
+
+  const activeIndex = parseInt(params.slug[0]);
+  const searchTerm = params.slug[1];
 
   const maxIndex = 11;
 
   return (
     <MainLayout>
-      <PageTitle title={`Pagina ${activeIndex} van ${maxIndex}`} />
-
+      <PageTitle
+        title={
+          searchTerm
+            ? `Zoekresultaten voor '${searchTerm}'`
+            : `Pagina ${activeIndex} van ${maxIndex}`
+        }
+      />
       <div className={styles.cards__container}>
         {stories.map((story, index) => (
           <StoryCard
@@ -41,7 +49,7 @@ export default function Page({ params }: { params: { slug: string } }) {
         maxIndex={maxIndex}
         initialIndex={activeIndex}
         onIndexChange={(newIndex) => {
-          router.push(`/stories/${newIndex}`), setIndex(newIndex);
+          router.push(`/stories/${newIndex}/${searchTerm ? searchTerm : ""}`);
         }}
       />
     </MainLayout>

@@ -16,9 +16,9 @@ export const DoubleArrow = ({
       <path
         d="M14.8 1L24 10L14.8 19M1 1L10.2 10L1 19"
         stroke={color}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   ) : (
@@ -32,9 +32,9 @@ export const DoubleArrow = ({
       <path
         d="M10.2 1L1 10L10.2 19M24 1L14.8 10L24 19"
         stroke={color}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

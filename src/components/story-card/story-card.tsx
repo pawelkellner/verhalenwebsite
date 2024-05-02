@@ -75,7 +75,7 @@ const StoryCard = ({
   }
 
   return (
-    <button className="unstyled" onClick={() => router.push(`story/${id}`)}>
+    <button className="unstyled" onClick={() => router.push(`/story/${id}`)}>
       <article className="storycard">
         {image && (
           <div className="storycard__imageWrapper">
