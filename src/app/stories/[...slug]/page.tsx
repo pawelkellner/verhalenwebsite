@@ -18,10 +18,27 @@ export default function Page({
 }) {
   const router = useRouter();
 
+  const maxIndex = 11;
+
   const activeIndex = parseInt(params.slug[0]);
   const searchTerm = params.slug[1];
 
-  const maxIndex = 11;
+  const filterStories = (story) => {
+    if (!searchTerm) {
+      return true;
+    }
+
+    const titleMatch = story.title
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    const textMatch = story.text
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    const songNameMatch = story.songName
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    return titleMatch || textMatch || songNameMatch;
+  };
 
   return (
     <MainLayout>
@@ -33,7 +50,7 @@ export default function Page({
         }
       />
       <div className={styles.cards__container}>
-        {stories.map((story, index) => (
+        {stories.filter(filterStories).map((story, index) => (
           <StoryCard
             key={index}
             id={story.id}

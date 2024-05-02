@@ -16,9 +16,8 @@ const Search = () => {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    if (searchTerm.trim() !== "") {
-      router.push(`/stories/${1}/${encodeURIComponent(searchTerm)}`);
-    }
+
+    router.push(`/stories/${1}/${encodeURIComponent(searchTerm)}`);
   };
 
   return (
