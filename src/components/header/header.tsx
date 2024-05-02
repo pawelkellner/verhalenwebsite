@@ -55,7 +55,10 @@ const Header = () => {
     <header>
       <nav className={styles.nav} data-open={isMenuOpen} data-white={isWhite}>
         <Link href="/" className={styles.nav__logo}>
-          <Button variant="unstyled">
+          <Button
+            variant="unstyled"
+            style={{ display: "flex", alignItems: "center" }}
+          >
             <LogoSvg />
             <Heading variant="lg">Muziek verhalen</Heading>
           </Button>
