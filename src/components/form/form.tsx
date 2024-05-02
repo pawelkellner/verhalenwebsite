@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 
 import "./form.scss";
-import lineStyle from "../page-title/page-title.module.scss";
+import lineStyle from "../page-title/styles.module.scss";
 
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../../firebase";
@@ -36,20 +36,20 @@ const Form = () => {
         imageUrl = await getDownloadURL(storageRef);
       }
 
-      const docRef = await addDoc(collection(db, "verhalen"), {
-        author: author,
-        storyTitle: storyTitle,
-        songTitle: songTitle,
-        linkToSong: linkToSong,
-        songImage: songImage,
-        quoteText: quoteText,
-        quoteAuthor: quoteAuthor,
-        storyText: storyText,
-        songText: songText,
-        createdAt: serverTimestamp(),
-      });
+      // const docRef = await addDoc(collection(db, "verhalen"), {
+      //   author: author,
+      //   storyTitle: storyTitle,
+      //   songTitle: songTitle,
+      //   linkToSong: linkToSong,
+      //   songImage: songImage,
+      //   quoteText: quoteText,
+      //   quoteAuthor: quoteAuthor,
+      //   storyText: storyText,
+      //   songText: songText,
+      //   createdAt: serverTimestamp(),
+      // });
 
-      console.log("Document written with ID: ", docRef.id);
+      // console.log("Document written with ID: ", docRef.id);
       setAuthor("");
       setStoryTitle("");
       setSongTitle("");
