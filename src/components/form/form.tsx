@@ -29,12 +29,12 @@ const Form = () => {
     e.preventDefault();
     try {
       let imageUrl: string | null = null;
-      if (songImage) {
-        const storage = getStorage();
-        const storageRef = ref(storage, songImage.name);
-        await uploadBytes(storageRef, songImage);
-        imageUrl = await getDownloadURL(storageRef);
-      }
+      // if (songImage) {
+      //   const storage = getStorage();
+      //   const storageRef = ref(storage, songImage.name);
+      //   await uploadBytes(storageRef, songImage);
+      //   imageUrl = await getDownloadURL(storageRef);
+      // }
 
       // const docRef = await addDoc(collection(db, "verhalen"), {
       //   author: author,
@@ -130,7 +130,7 @@ const Form = () => {
             value={quoteAuthor}
           />
         </div>
-        <Editor
+        {/* <Editor
           placeholder="Er was eens een.."
           label="Verhaal tekst"
           onChange={(value) => setStoryText(value)}
@@ -141,7 +141,7 @@ const Form = () => {
           label="Songtekst"
           onChange={(value) => setSongText(value)}
           required
-        />
+        /> */}
         <div className={lineStyle.line} />
         <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
           <input type="checkbox" id="confirm" />
