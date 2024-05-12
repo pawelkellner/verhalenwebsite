@@ -1,17 +1,14 @@
-"use client";
+"use client"
 import React, { useState } from "react";
 
 import "./form.scss";
 import lineStyle from "../page-title/styles.module.scss";
 
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { db } from "../../firebase";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-
 import Editor from "../editor/editor";
 import TextInput from "../text-input/text-input";
 import TextArea from "../text-area/text-area";
 import Button from "../button";
+import { submitStory } from "../../app/actions";
 
 const Form = () => {
   const [author, setAuthor] = useState("");
@@ -24,32 +21,22 @@ const Form = () => {
   const [storyText, setStoryText] = useState<React.ReactNode | null>(null);
   const [songText, setSongText] = useState<React.ReactNode | null>(null);
 
-  const addItem = async (e: React.FormEvent) => {
-    console.log("a");
+  const addItem = async (e) => {
     e.preventDefault();
+
     try {
-      let imageUrl: string | null = null;
-      // if (songImage) {
-      //   const storage = getStorage();
-      //   const storageRef = ref(storage, songImage.name);
-      //   await uploadBytes(storageRef, songImage);
-      //   imageUrl = await getDownloadURL(storageRef);
-      // }
+      const storyData = {
+        author: author,
+        storyTitle: storyTitle,
+        songTitle: songTitle,
+        quoteText: quoteText,
+        quoteAuthor: quoteAuthor,
+        storyText: storyText,
+        songText: songText,
+      }
 
-      // const docRef = await addDoc(collection(db, "verhalen"), {
-      //   author: author,
-      //   storyTitle: storyTitle,
-      //   songTitle: songTitle,
-      //   linkToSong: linkToSong,
-      //   songImage: songImage,
-      //   quoteText: quoteText,
-      //   quoteAuthor: quoteAuthor,
-      //   storyText: storyText,
-      //   songText: songText,
-      //   createdAt: serverTimestamp(),
-      // });
+      const response = await submitStory(storyData, songImage);
 
-      // console.log("Document written with ID: ", docRef.id);
       setAuthor("");
       setStoryTitle("");
       setSongTitle("");
@@ -59,13 +46,13 @@ const Form = () => {
       setQuoteAuthor("");
       setStoryText(null);
       setSongText(null);
-    } catch (error) {
-      console.error("Error adding document: ", error);
+    } catch (e) {
+      console.error('error: ', e)
     }
   };
 
   return (
-    <form>
+    <form onSubmit={addItem}>
       <div className="inputs__group">
         <TextInput
           type="text"
@@ -151,7 +138,7 @@ const Form = () => {
             ad minim veniam.
           </label>
         </div>
-        <Button onClick={addItem} variant="secondary" style={{ width: "100%" }}>
+        <Button variant="secondary" style={{ width: "100%" }}>
           Verstuur verhaal
         </Button>
       </div>

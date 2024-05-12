@@ -5,15 +5,24 @@ import { db } from "../firebase";
 interface Verhaal {
     id: string;
     name: string;
+    storyTitle: string;
+    storyText: string;
+    author: string;
+    songTitle: string;
+    songText: string;
+    songImage?: string;
+    songOrigin: string;
+    linkToSong: string;
+    quoteAuthor: string;
+    quoteText: string;
     number: number;
-    imageUrl?: string;
+    createdAt: object;
 }
 
 export const fetchVerhalen = cache(async () => {
     try {
         const querySnapshot = await getDocs(query(collection(db, 'verhalen'), orderBy('createdAt', 'asc')));
         const verhalenData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Verhaal));
-        console.log(verhalenData)
         return verhalenData;
     } catch (error) {
         console.error("Error fetching documents: ", error);

@@ -59,6 +59,10 @@ const StoryCard = ({
         break;
     }
 
+    if ( !text ) {
+      text = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad consequatur dicta dolor earum eveniet excepturi ipsum necessitatibus porro, praesentium quos ratione reprehenderit soluta sunt vero voluptas. Autem dolores et exercitationem, illo ipsa laudantium magni possimus recusandae rerum sit vero voluptas.';
+    }
+
     newIntroText = text.slice(0, amountOfChars);
 
     switch (newIntroText.slice(-1)) {
