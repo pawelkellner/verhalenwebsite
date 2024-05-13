@@ -8,11 +8,11 @@ import { DoubleArrow } from "../svg/double-arrow";
 import { theme } from "../../theme";
 
 const Pagination = ({
-  maxIndex = 10,
+  maxIndex,
   initialIndex,
   onIndexChange,
 }: {
-  maxIndex?: number;
+  maxIndex: number;
   initialIndex?: number;
   onIndexChange?: (value: number) => void;
 }) => {
@@ -41,12 +41,15 @@ const Pagination = ({
         <span>{index}</span>
         <span>{index < maxIndex ? index + 1 : " "} </span>
       </div>
-      <Button variant="secondary" onClick={() => setIndex(index + 1)}>
+      <Button
+        variant={index < maxIndex ? "secondary" : "disabled"}
+        onClick={() => index < maxIndex && setIndex(index + 1)}
+      >
         Volgende
       </Button>
       <Button onClick={() => setIndex(maxIndex)}>
         <DoubleArrow
-          color={index === 11 ? theme.grey[300] : theme.grey[400]}
+          color={index === maxIndex ? theme.grey[300] : theme.grey[400]}
           direction="right"
         />
       </Button>

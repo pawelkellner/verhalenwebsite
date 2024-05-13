@@ -22,7 +22,7 @@ export default async function Home() {
       <MainLayout>
         <PageTitle noTopPadding title="Recente verhalen" />
         <div className={styles.cards__container}>
-          {verhalen?.map((story, index) => (
+          {/* {verhalen?.map((story, index) => (
             <StoryCard
               key={index}
               id={story.id}
@@ -32,8 +32,8 @@ export default async function Home() {
               author={story.author}
               songName={story.songTitle}
             />
-          ))}
-          {stories.map((story, index) => (
+          ))} */}
+          {stories.slice(0, 8).map((story, index) => (
             <StoryCard
               key={index}
               id={story.id}
@@ -52,9 +52,17 @@ export default async function Home() {
             justifyContent: "center",
           }}
         >
-          <Link href={`/stories/${2}`}>
-            <Pagination />
-          </Link>
+          {stories?.length && stories?.length > 8 ? (
+            <Link href={`/stories/${2}`}>
+              <Pagination maxIndex={3} />
+            </Link>
+          ) : (
+            <>
+              <div style={{ pointerEvents: "none" }}>
+                <Pagination maxIndex={1} />
+              </div>
+            </>
+          )}
         </div>
       </MainLayout>
     </>

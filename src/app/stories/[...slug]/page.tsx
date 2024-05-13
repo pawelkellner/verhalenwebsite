@@ -18,9 +18,11 @@ export default function Page({
 }) {
   const router = useRouter();
 
-  const maxIndex = 11;
-
+  const storiesPerPage = 8;
+  const maxIndex = Math.ceil(stories.length / storiesPerPage);
   const activeIndex = parseInt(params.slug[0]);
+  const startIndex = (activeIndex - 1) * storiesPerPage;
+
   const searchTerm = params.slug[1];
 
   const filterStories = (story) => {
@@ -50,17 +52,20 @@ export default function Page({
         }
       />
       <div className={styles.cards__container}>
-        {stories.filter(filterStories).map((story, index) => (
-          <StoryCard
-            key={index}
-            id={story.id}
-            title={story.title}
-            image={story.image}
-            text={story.text}
-            author={story.author}
-            songName={story.songName}
-          />
-        ))}
+        {stories
+          .slice(startIndex, startIndex + storiesPerPage)
+          .filter(filterStories)
+          .map((story, index) => (
+            <StoryCard
+              key={index}
+              id={story.id}
+              title={story.title}
+              image={story.image}
+              text={story.text}
+              author={story.author}
+              songName={story.songName}
+            />
+          ))}
       </div>
       <Pagination
         maxIndex={maxIndex}
