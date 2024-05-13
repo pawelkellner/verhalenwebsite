@@ -15,6 +15,7 @@ interface Verhaal {
     linkToSong: string;
     quoteAuthor: string;
     quoteText: string;
+    originText: string;
     number: number;
     createdAt: object;
 }
