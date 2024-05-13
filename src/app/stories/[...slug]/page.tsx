@@ -2,8 +2,6 @@ import React from "react";
 
 import { fetchVerhalen } from "../../utils";
 
-import { Verhaal } from "../../utils";
-
 import styles from "../page.module.scss";
 
 import MainLayout from "../../../components/main-layout/main-layout";
@@ -11,12 +9,14 @@ import Pagination from "../../../components/pagination/pagination";
 import PageTitle from "../../../components/page-title/page-title";
 import StoryCard from "../../../components/story-card/story-card";
 
+import { stories } from "../../../example-stories";
+
 export default async function Page({
   params,
 }: {
   params: { slug: { index: string; searchTerm?: string } };
 }) {
-  const verhalen = await fetchVerhalen();
+  const verhalen = stories;
 
   const storiesPerPage = 8;
   const maxIndex = Math.ceil(
@@ -27,28 +27,20 @@ export default async function Page({
 
   const searchTerm = params.slug[1];
 
-  const filterStories = (story: Verhaal) => {
-    console.log("Story:", story);
-    console.log("Search Term:", searchTerm);
-
+  const filterStories = (story) => {
     if (!searchTerm) {
       return true;
     }
 
-    const titleMatch =
-      story.storyTitle &&
-      JSON.stringify(story.storyTitle)
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase());
-    const textMatch =
-      story.storyText &&
-      JSON.stringify(story.storyText)
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase());
-    const songNameMatch =
-      story.songTitle &&
-      story.songTitle.toLowerCase().includes(searchTerm.toLowerCase());
-
+    const titleMatch = story.storyTitle
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    const textMatch = story.storyText
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    const songNameMatch = story.songTitle
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
     return titleMatch || textMatch || songNameMatch;
   };
 
@@ -70,11 +62,11 @@ export default async function Page({
               <StoryCard
                 key={index}
                 id={story.id}
-                title={story.storyTitle}
-                image={story.songImage}
-                text={story.storyText}
+                title={story.title}
+                image={story.image}
+                text={story.text}
                 author={story.author}
-                songName={story.songTitle}
+                songName={story.songName}
               />
             ))}
       </div>
