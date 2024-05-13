@@ -33,17 +33,6 @@ export default async function Home() {
               songName={story.songTitle}
             />
           ))}
-          {stories.slice(0, 8).map((story, index) => (
-            <StoryCard
-              key={index}
-              id={story.id}
-              title={story.title}
-              image={story.image}
-              text={story.text}
-              author={story.author}
-              songName={story.songName}
-            />
-          ))}
         </div>
         <div
           style={{
@@ -52,14 +41,14 @@ export default async function Home() {
             justifyContent: "center",
           }}
         >
-          {stories?.length && stories?.length > 8 ? (
+          {verhalen?.length && verhalen?.length > 8 ? (
             <Link href={`/stories/${2}`}>
-              <Pagination maxIndex={3} />
+              <Pagination disabled={true} maxIndex={3} />
             </Link>
           ) : (
             <>
               <div style={{ pointerEvents: "none" }}>
-                <Pagination maxIndex={1} />
+                <Pagination disabled={true} maxIndex={1} />
               </div>
             </>
           )}

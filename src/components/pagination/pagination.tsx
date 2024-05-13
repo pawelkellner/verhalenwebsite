@@ -1,6 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 
+import { useRouter } from "next/navigation";
+
 import styles from "./pagination.module.scss";
 
 import Button from "../button";
@@ -10,16 +12,21 @@ import { theme } from "../../theme";
 const Pagination = ({
   maxIndex,
   initialIndex,
-  onIndexChange,
+  searchTerm,
+  disabled = false,
 }: {
   maxIndex: number;
   initialIndex?: number;
-  onIndexChange?: (value: number) => void;
+  searchTerm?: number;
+  disabled?: boolean;
 }) => {
+  const router = useRouter();
+
   const [index, setIndex] = useState(initialIndex ? initialIndex : 1);
 
   useEffect(() => {
-    onIndexChange && onIndexChange(index);
+    disabled === false &&
+      router.push(`/stories/${index}/${searchTerm ? searchTerm : ""}`);
   }, [index]);
 
   return (
