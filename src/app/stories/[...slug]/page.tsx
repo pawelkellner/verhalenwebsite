@@ -30,13 +30,13 @@ export default async function Page({
       return true;
     }
 
-    const titleMatch = story.title
+    const titleMatch = story.storyTitle
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
-    const textMatch = story.text
+    const textMatch = story.storyText
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
-    const songNameMatch = story.songName
+    const songNameMatch = story.songTitle
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
     return titleMatch || textMatch || songNameMatch;
