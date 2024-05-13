@@ -10,6 +10,8 @@ import Button from "../button";
 import { submitStory } from "../../app/actions";
 import dynamic from "next/dynamic";
 
+import SpotifySearch from "../spotify-search/spotify-search.js";
+
 const Editor = dynamic(
   () => {
     return import("../editor/editor");
@@ -79,7 +81,7 @@ const Form = () => {
           required
         />
         <div className="row">
-          <TextInput
+          {/* <TextInput
             type="text"
             name="song_title"
             label="Titel van het liedje"
@@ -87,7 +89,8 @@ const Form = () => {
             onChange={(e) => setSongTitle(e.target.value)}
             value={songTitle}
             required
-          />
+          /> */}
+          <SpotifySearch></SpotifySearch>
           <TextInput
             type="text"
             name="link_to_song"
