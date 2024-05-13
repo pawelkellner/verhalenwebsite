@@ -52,9 +52,17 @@ export default async function Home() {
             justifyContent: "center",
           }}
         >
-          <Link href={`/stories/${2}`}>
-            <Pagination disabled={true} maxIndex={3} />
-          </Link>
+          {verhalen?.length && verhalen?.length > 8 ? (
+            <Link href={`/stories/${2}`}>
+              <Pagination disabled={true} maxIndex={3} />
+            </Link>
+          ) : (
+            <>
+              <div style={{ pointerEvents: "none" }}>
+                <Pagination disabled={true} maxIndex={1} />
+              </div>
+            </>
+          )}
         </div>
       </MainLayout>
     </>
