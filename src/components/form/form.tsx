@@ -26,6 +26,7 @@ const Form = () => {
   const [songTitle, setSongTitle] = useState("");
   const [linkToSong, setLinkToSong] = useState("");
   const [songImage, setSongImage] = useState<File | null>(null);
+  const [originText, setOriginText] = useState("");
   const [quoteText, setQuoteText] = useState("");
   const [quoteAuthor, setQuoteAuthor] = useState("");
   const [storyText, setStoryText] = useState<React.ReactNode | null>(null);
@@ -45,6 +46,7 @@ const Form = () => {
         songTitle: songTitle,
         quoteText: quoteText,
         quoteAuthor: quoteAuthor,
+        originText: originText,
         storyText: storyText,
         songText: songText,
       };
@@ -58,6 +60,7 @@ const Form = () => {
       setSongImage(null);
       setQuoteText("");
       setQuoteAuthor("");
+      setOriginText("");
       setStoryText(null);
       setSongText(null);
     } catch (e) {
@@ -114,6 +117,15 @@ const Form = () => {
           label="Afbeelding"
           onChange={(e) => setSongImage(e.target.files[0])}
           accept="image/png, image/jpeg"
+        />
+        <TextArea
+            name="origin_text"
+            label="Totstandkomming"
+            placeholder="Totstandkommming"
+            onChange={(e) => setOriginText(e.target.value)}
+            value={originText}
+            cols={30}
+            rows={5}
         />
         <div className="row">
           <TextArea
