@@ -104,7 +104,7 @@ const StoryCard = ({
               }`}
             >
               <Heading>
-                {title} {id}
+                {title}
               </Heading>
               {introText ? (
                 <Paragraph>
