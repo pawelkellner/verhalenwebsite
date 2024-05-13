@@ -20,7 +20,7 @@ export interface Verhaal {
     createdAt: object;
 }
 
-export const fetchVerhalen = cache(async () => {
+export const fetchVerhalen = (async () => {
     try {
         const querySnapshot = await getDocs(query(collection(db, 'verhalen'), orderBy('createdAt', 'asc')));
         const verhalenData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Verhaal));
