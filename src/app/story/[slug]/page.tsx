@@ -41,23 +41,18 @@ export default async function Story({ params }: { params: { slug: string } }) {
               <Heading>Peter en de Powerpoint</Heading>
             </div>
             <div
-              dangerouslySetInnerHTML={{
-                __html: story?.storyText
+            dangerouslySetInnerHTML={{
+              __html: story?.storyText
                   ? story?.storyText
                   : "Tekst niet beschikbaar",
-              }}
-            ></div>
+            }}
+            />
           </div>
           <div className={styles.story__information}>
             <div className={styles.story__origin}>
-              {story?.songOrigin && (
+              {story?.originText && (
                 <Paragraph>
-                  Dit verhaal is geïnspireerd op was Peters eerste werkdag. bij
-                  zijn nieuwe bedrijf. Hij was aangenomen als marketingmanager,
-                  ondanks dat hij tot nu toe alleen op communicatie-afdelingen
-                  had gewerkt. Op zijn CV had hij één en ander wat aangedikt en
-                  tijdens het gesprek misschien ook niet alles helemaal
-                  waarheidsgetrouw weergegeven.
+                  {story?.originText}
                 </Paragraph>
               )}
               <div className={styles.story__author}>
@@ -95,13 +90,13 @@ export default async function Story({ params }: { params: { slug: string } }) {
               Songtekst van &apos;{story?.songTitle}&apos;
             </Paragraph>
             <div
-              dangerouslySetInnerHTML={{
-                __html: story?.songText
+            dangerouslySetInnerHTML={{
+              __html: story?.songText
                   ? story?.songText
                   : "Songtekst niet beschikbaar",
-              }}
-              className={styles.story__lyrics}
-            ></div>
+            }}
+            className={styles.story__lyrics}
+            />
           </div>
         </MainLayout>
       </div>
