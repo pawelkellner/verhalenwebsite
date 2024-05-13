@@ -32,7 +32,7 @@ const Button: FC<ButtonProps> = ({
         return {
           background: theme.grey[100],
           borderColor: theme.grey[100],
-          color: theme.grey[400],
+          color: theme.grey[500],
         };
       case "disabled":
         return {

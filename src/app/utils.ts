@@ -2,7 +2,7 @@ import { cache } from 'react';
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "../firebase";
 
-interface Verhaal {
+export interface Verhaal {
     id: string;
     name: string;
     storyTitle: string;

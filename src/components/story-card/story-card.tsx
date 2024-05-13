@@ -103,7 +103,9 @@ const StoryCard = ({
                 !introText && "skeletonText"
               }`}
             >
-              <Heading>{title}</Heading>
+              <Heading>
+                {title} {id}
+              </Heading>
               {introText ? (
                 <Paragraph>
                   {introText}
