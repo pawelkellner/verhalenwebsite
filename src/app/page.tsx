@@ -22,7 +22,7 @@ export default async function Home() {
       <MainLayout>
         <PageTitle noTopPadding title="Recente verhalen" />
         <div className={styles.cards__container}>
-          {/* {verhalen?.map((story, index) => (
+          {verhalen?.map((story, index) => (
             <StoryCard
               key={index}
               id={story.id}
@@ -32,7 +32,7 @@ export default async function Home() {
               author={story.author}
               songName={story.songTitle}
             />
-          ))} */}
+          ))}
           {stories.slice(0, 8).map((story, index) => (
             <StoryCard
               key={index}
