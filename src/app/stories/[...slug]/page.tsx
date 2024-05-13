@@ -2,6 +2,8 @@ import React from "react";
 
 import { fetchVerhalen } from "../../utils";
 
+import { Verhaal } from "../../utils";
+
 import styles from "../page.module.scss";
 
 import MainLayout from "../../../components/main-layout/main-layout";
@@ -25,20 +27,28 @@ export default async function Page({
 
   const searchTerm = params.slug[1];
 
-  const filterStories = (story) => {
+  const filterStories = (story: Verhaal) => {
+    console.log("Story:", story);
+    console.log("Search Term:", searchTerm);
+
     if (!searchTerm) {
       return true;
     }
 
-    const titleMatch = story.storyTitle
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-    const textMatch = story.storyText
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-    const songNameMatch = story.songTitle
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
+    const titleMatch =
+      story.storyTitle &&
+      JSON.stringify(story.storyTitle)
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+    const textMatch =
+      story.storyText &&
+      JSON.stringify(story.storyText)
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+    const songNameMatch =
+      story.songTitle &&
+      story.songTitle.toLowerCase().includes(searchTerm.toLowerCase());
+
     return titleMatch || textMatch || songNameMatch;
   };
 
