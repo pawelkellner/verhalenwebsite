@@ -59,19 +59,28 @@ const StoryCard = ({
         break;
     }
 
-    newIntroText = text.slice(0, amountOfChars);
-
-    switch (newIntroText.slice(-1)) {
-      case ",":
-      case ".":
-      case " ":
-        newIntroText = newIntroText.slice(0, newIntroText.length - 1);
-        break;
+    if (!text) {
+      text =
+        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad consequatur dicta dolor earum eveniet excepturi ipsum necessitatibus porro, praesentium quos ratione reprehenderit soluta sunt vero voluptas. Autem dolores et exercitationem, illo ipsa laudantium magni possimus recusandae rerum sit vero voluptas.";
     }
 
-    newIntroText += "...";
+    if (typeof text === "string") {
+      text = text.replace(/<[^>]*>/g, "");
 
-    setIntroText(newIntroText);
+      if (typeof text === "string") {
+        newIntroText = text.slice(0, amountOfChars);
+        switch (newIntroText.slice(-1)) {
+          case ",":
+          case ".":
+          case " ":
+            newIntroText = newIntroText.slice(0, newIntroText.length - 1);
+            break;
+        }
+
+        newIntroText += "...";
+        setIntroText(newIntroText);
+      }
+    }
   }
 
   return (
