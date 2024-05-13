@@ -6,10 +6,10 @@ interface Verhaal {
     id: string;
     name: string;
     storyTitle: string;
-    storyText: string;
+    storyText: string | TrustedHTML;
     author: string;
     songTitle: string;
-    songText: string;
+    songText: string | TrustedHTML;
     songImage?: string;
     songOrigin: string;
     linkToSong: string;
