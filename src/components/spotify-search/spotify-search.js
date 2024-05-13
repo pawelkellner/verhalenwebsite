@@ -4,7 +4,7 @@ import styles from "./spotify-search-module.scss";
 
 
 
-function SpotifyApp() {
+function SpotifyApp({getSong}) {
     // Variables that do not need state (always the same)
     const clientId = '7dc0428f34154a42a4e4a26571e8b410';
     const clientSecret = '5b33db7a5ee84ca5893cac234137cda9';
@@ -124,6 +124,7 @@ function SpotifyApp() {
             }
         } else {
             setSelectedResult([result]);
+            getSong(result)
         }
     }
 

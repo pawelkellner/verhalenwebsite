@@ -11,6 +11,7 @@ import { submitStory } from "../../app/actions";
 import dynamic from "next/dynamic";
 
 import SpotifySearch from "../spotify-search/spotify-search.js";
+import { log } from "console";
 
 const Editor = dynamic(
   () => {
@@ -29,6 +30,10 @@ const Form = () => {
   const [quoteAuthor, setQuoteAuthor] = useState("");
   const [storyText, setStoryText] = useState<React.ReactNode | null>(null);
   const [songText, setSongText] = useState<React.ReactNode | null>(null);
+
+  function getSong(res){
+    setSongTitle(res.name);
+  }
 
   const addItem = async (e) => {
     e.preventDefault();
@@ -90,7 +95,9 @@ const Form = () => {
             value={songTitle}
             required
           /> */}
-          <SpotifySearch></SpotifySearch>
+          <SpotifySearch
+            getSong={getSong}
+          />
           <TextInput
             type="text"
             name="link_to_song"
@@ -153,6 +160,7 @@ const Form = () => {
         </Button>
       </div>
     </form>
+    
   );
 };
 
