@@ -39,5 +39,183 @@ export const stories: StoryCardProps[] = [
         text: "Een groep astronauten vertrekt op een spannende missie naar de verre uithoeken van het heelal. Tijdens hun reis worden ze geconfronteerd met buitenaardse wezens, ruimtepiraten en de mysteries van het universum.",
         author: "Lisa van der Meer",
         songName: "David Bowie - Space Oddity"
-    }
+    },
+    {
+        id: '106',
+        title: "Het Betoverde Bos",
+        text: "Een jong meisje genaamd Anna ontdekt een betoverd bos achter haar huis. Ze ontmoet magische wezens en leert over vriendschap en moed terwijl ze probeert de vloek die op het bos rust te verbreken.",
+        author: "Thomas Jansen",
+        songName: "The Beatles - Hey Jude"
+    },
+    {
+        id: '107',
+        title: "Het Betoverde Bos",
+        text: "Een jong meisje genaamd Anna ontdekt een betoverd bos achter haar huis. Ze ontmoet magische wezens en leert over vriendschap en moed terwijl ze probeert de vloek die op het bos rust te verbreken.",
+        author: "Thomas Jansen",
+        songName: "The Beatles - Hey Jude"
+    },
+    {
+        id: '108',
+        title: "Het Betoverde Bos",
+        text: "Een jong meisje genaamd Anna ontdekt een betoverd bos achter haar huis. Ze ontmoet magische wezens en leert over vriendschap en moed terwijl ze probeert de vloek die op het bos rust te verbreken.",
+        author: "Thomas Jansen",
+        songName: "The Beatles - Hey Jude"
+    },
+    {
+        id: '109',
+        title: "Het Betoverde Bos",
+        text: "Een jong meisje genaamd Anna ontdekt een betoverd bos achter haar huis. Ze ontmoet magische wezens en leert over vriendschap en moed terwijl ze probeert de vloek die op het bos rust te verbreken.",
+        author: "Thomas Jansen",
+        songName: "The Beatles - Hey Jude"
+    },
+    {
+        id: '110',
+        title: "Het Betoverde Bos",
+        text: "Een jong meisje genaamd Anna ontdekt een betoverd bos achter haar huis. Ze ontmoet magische wezens en leert over vriendschap en moed terwijl ze probeert de vloek die op het bos rust te verbreken.",
+        author: "Thomas Jansen",
+        songName: "The Beatles - Hey Jude"
+    },
+    {
+        id: '111',
+        title: "Het Betoverde Bos",
+        text: "Een jong meisje genaamd Anna ontdekt een betoverd bos achter haar huis. Ze ontmoet magische wezens en leert over vriendschap en moed terwijl ze probeert de vloek die op het bos rust te verbreken.",
+        author: "Thomas Jansen",
+        songName: "The Beatles - Hey Jude"
+    },
+    {
+        id: '112',
+        title: "Ruimte Odyssee",
+        image: "https://picsum.photos/230",
+        text: "Een groep astronauten vertrekt op een spannende missie naar de verre uithoeken van het heelal. Tijdens hun reis worden ze geconfronteerd met buitenaardse wezens, ruimtepiraten en de mysteries van het universum.",
+        author: "Lisa van der Meer",
+        songName: "David Bowie - Space Oddity"
+    },
+    {
+        id: '113',
+        title: "Ruimte Odyssee",
+        image: "https://picsum.photos/230",
+        text: "Een groep astronauten vertrekt op een spannende missie naar de verre uithoeken van het heelal. Tijdens hun reis worden ze geconfronteerd met buitenaardse wezens, ruimtepiraten en de mysteries van het universum.",
+        author: "Lisa van der Meer",
+        songName: "David Bowie - Space Oddity"
+    },
+    {
+        id: '114',
+        title: "Ruimte Odyssee",
+        image: "https://picsum.photos/230",
+        text: "Een groep astronauten vertrekt op een spannende missie naar de verre uithoeken van het heelal. Tijdens hun reis worden ze geconfronteerd met buitenaardse wezens, ruimtepiraten en de mysteries van het universum.",
+        author: "Lisa van der Meer",
+        songName: "David Bowie - Space Oddity"
+    },
+    {
+        id: '115',
+        title: "Ruimte Odyssee",
+        image: "https://picsum.photos/230",
+        text: "Een groep astronauten vertrekt op een spannende missie naar de verre uithoeken van het heelal. Tijdens hun reis worden ze geconfronteerd met buitenaardse wezens, ruimtepiraten en de mysteries van het universum.",
+        author: "Lisa van der Meer",
+        songName: "David Bowie - Space Oddity"
+    },
+    {
+        id: '116',
+        title: "Ruimte Odyssee",
+        image: "https://picsum.photos/230",
+        text: "Een groep astronauten vertrekt op een spannende missie naar de verre uithoeken van het heelal. Tijdens hun reis worden ze geconfronteerd met buitenaardse wezens, ruimtepiraten en de mysteries van het universum.",
+        author: "Lisa van der Meer",
+        songName: "David Bowie - Space Oddity"
+    },
+    {
+        id: '117',
+        title: "Ruimte Odyssee",
+        image: "https://picsum.photos/230",
+        text: "Een groep astronauten vertrekt op een spannende missie naar de verre uithoeken van het heelal. Tijdens hun reis worden ze geconfronteerd met buitenaardse wezens, ruimtepiraten en de mysteries van het universum.",
+        author: "Lisa van der Meer",
+        songName: "David Bowie - Space Oddity"
+    },
+    {
+        id: '118',
+        title: "Ruimte Odyssee",
+        image: "https://picsum.photos/230",
+        text: "Een groep astronauten vertrekt op een spannende missie naar de verre uithoeken van het heelal. Tijdens hun reis worden ze geconfronteerd met buitenaardse wezens, ruimtepiraten en de mysteries van het universum.",
+        author: "Lisa van der Meer",
+        songName: "David Bowie - Space Oddity"
+    },
+    {
+        id: '119',
+        title: "Ruimte Odyssee",
+        image: "https://picsum.photos/230",
+        text: "Een groep astronauten vertrekt op een spannende missie naar de verre uithoeken van het heelal. Tijdens hun reis worden ze geconfronteerd met buitenaardse wezens, ruimtepiraten en de mysteries van het universum.",
+        author: "Lisa van der Meer",
+        songName: "David Bowie - Space Oddity"
+    },
+    {
+        id: '120',
+        title: "Ruimte Odyssee",
+        image: "https://picsum.photos/230",
+        text: "Een groep astronauten vertrekt op een spannende missie naar de verre uithoeken van het heelal. Tijdens hun reis worden ze geconfronteerd met buitenaardse wezens, ruimtepiraten en de mysteries van het universum.",
+        author: "Lisa van der Meer",
+        songName: "David Bowie - Space Oddity"
+    },
+    {
+        id: '121',
+        title: "Ruimte Odyssee",
+        image: "https://picsum.photos/230",
+        text: "Een groep astronauten vertrekt op een spannende missie naar de verre uithoeken van het heelal. Tijdens hun reis worden ze geconfronteerd met buitenaardse wezens, ruimtepiraten en de mysteries van het universum.",
+        author: "Lisa van der Meer",
+        songName: "David Bowie - Space Oddity"
+    },
+    {
+        id: '122',
+        title: "Ruimte Odyssee",
+        image: "https://picsum.photos/230",
+        text: "Een groep astronauten vertrekt op een spannende missie naar de verre uithoeken van het heelal. Tijdens hun reis worden ze geconfronteerd met buitenaardse wezens, ruimtepiraten en de mysteries van het universum.",
+        author: "Lisa van der Meer",
+        songName: "David Bowie - Space Oddity"
+    },
+    {
+        id: '123',
+        title: "Ruimte Odyssee",
+        image: "https://picsum.photos/230",
+        text: "Een groep astronauten vertrekt op een spannende missie naar de verre uithoeken van het heelal. Tijdens hun reis worden ze geconfronteerd met buitenaardse wezens, ruimtepiraten en de mysteries van het universum.",
+        author: "Lisa van der Meer",
+        songName: "David Bowie - Space Oddity"
+    },
+    {
+        id: '124',
+        title: "Ruimte Odyssee",
+        image: "https://picsum.photos/230",
+        text: "Een groep astronauten vertrekt op een spannende missie naar de verre uithoeken van het heelal. Tijdens hun reis worden ze geconfronteerd met buitenaardse wezens, ruimtepiraten en de mysteries van het universum.",
+        author: "Lisa van der Meer",
+        songName: "David Bowie - Space Oddity"
+    },
+    {
+        id: '125',
+        title: "Ruimte Odyssee",
+        image: "https://picsum.photos/230",
+        text: "Een groep astronauten vertrekt op een spannende missie naar de verre uithoeken van het heelal. Tijdens hun reis worden ze geconfronteerd met buitenaardse wezens, ruimtepiraten en de mysteries van het universum.",
+        author: "Lisa van der Meer",
+        songName: "David Bowie - Space Oddity"
+    },
+    {
+        id: '126',
+        title: "Ruimte Odyssee",
+        image: "https://picsum.photos/230",
+        text: "Een groep astronauten vertrekt op een spannende missie naar de verre uithoeken van het heelal. Tijdens hun reis worden ze geconfronteerd met buitenaardse wezens, ruimtepiraten en de mysteries van het universum.",
+        author: "Lisa van der Meer",
+        songName: "David Bowie - Space Oddity"
+    },
+    {
+        id: '127',
+        title: "Ruimte Odyssee",
+        image: "https://picsum.photos/230",
+        text: "Een groep astronauten vertrekt op een spannende missie naar de verre uithoeken van het heelal. Tijdens hun reis worden ze geconfronteerd met buitenaardse wezens, ruimtepiraten en de mysteries van het universum.",
+        author: "Lisa van der Meer",
+        songName: "David Bowie - Space Oddity"
+    },
+    {
+        id: '128',
+        title: "Ruimte Odyssee",
+        image: "https://picsum.photos/230",
+        text: "Een groep astronauten vertrekt op een spannende missie naar de verre uithoeken van het heelal. Tijdens hun reis worden ze geconfronteerd met buitenaardse wezens, ruimtepiraten en de mysteries van het universum.",
+        author: "Lisa van der Meer",
+        songName: "David Bowie - Space Oddity"
+    },
 ];

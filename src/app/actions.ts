@@ -1,14 +1,14 @@
 "use server"
 
-import {getDownloadURL, getStorage, ref, uploadBytes} from "firebase/storage";
-import {addDoc, collection, serverTimestamp} from "firebase/firestore";
-import {db} from "../firebase";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { db } from "../firebase";
 
-export async function submitStory(storyData, songImage){
+export async function submitStory(storyData, songImage) {
     try {
         let imageUrl: string | null = null;
 
-        if ( songImage ) {
+        if (songImage) {
             const storage = getStorage();
             const storageRef = ref(storage, songImage.name);
             await uploadBytes(storageRef, songImage);
