@@ -63,6 +63,8 @@ const StoryCard = ({
       text = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad consequatur dicta dolor earum eveniet excepturi ipsum necessitatibus porro, praesentium quos ratione reprehenderit soluta sunt vero voluptas. Autem dolores et exercitationem, illo ipsa laudantium magni possimus recusandae rerum sit vero voluptas.';
     }
 
+    text = text.replace(/<[^>]*>/g, "")
+
     newIntroText = text.slice(0, amountOfChars);
 
     switch (newIntroText.slice(-1)) {
@@ -74,7 +76,6 @@ const StoryCard = ({
     }
 
     newIntroText += "...";
-
     setIntroText(newIntroText);
   }
 
