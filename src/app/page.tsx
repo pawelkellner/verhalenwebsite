@@ -33,17 +33,17 @@ export default async function Home() {
               songName={story.songTitle}
             />
           ))}
-          {stories.map((story, index) => (
-            <StoryCard
-              key={index}
-              id={story.id}
-              title={story.title}
-              image={story.image}
-              text={story.text}
-              author={story.author}
-              songName={story.songName}
-            />
-          ))}
+          {/*{stories.map((story, index) => (*/}
+          {/*  <StoryCard*/}
+          {/*    key={index}*/}
+          {/*    id={story.id}*/}
+          {/*    title={story.title}*/}
+          {/*    image={story.image}*/}
+          {/*    text={story.text}*/}
+          {/*    author={story.author}*/}
+          {/*    songName={story.songName}*/}
+          {/*  />*/}
+          {/*))}*/}
         </div>
         <div
           style={{
