@@ -165,23 +165,24 @@ function SpotifyApp() {
 
     return (
         <div className=''>
-            {/* Search bar */}
-            <div className="">
-                <input
-                    className="search-input"
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    onKeyPress={(e) => {
-                        if (e.key === 'Enter') {
-                            searchArtist();
-                        }
-                    }}
-                    placeholder="Search for an artist or song"
-                />
-                {/* <button className="search-button" onClick={searchArtist}>Search</button> */}
-            </div>
-
+            {/* Conditional rendering of the search bar */}
+            {!(selectedResult && selectedResult.length > 0 && selectedResult[0].type === 'Track') && (
+                <div className="">
+                    <input
+                        className="search-input"
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        onKeyPress={(e) => {
+                            if (e.key === 'Enter') {
+                                searchArtist();
+                            }
+                        }}
+                        placeholder="Search for an artist or song"
+                    />
+                </div>
+            )}
+    
             {/* Search results */}
             <div className="search_results-container">
                 {selectedResult && selectedResult.length > 0 ? (
@@ -197,10 +198,10 @@ function SpotifyApp() {
                         <>
                             <p>{selectedResult[0].type}</p>
                             <p>{selectedResult[0].name}</p>
-
-
+    
+    
                             {/* Display artist albums */}
-
+    
                             <div className='albums-container'>
                                 {artistAlbums.map(album => (
                                     <div key={album.id} className='album-item' onClick={() => getAlbumSongs(album)}>
@@ -209,7 +210,7 @@ function SpotifyApp() {
                                     </div>
                                 ))}
                             </div>
-
+    
                             {artistSongs.length > 0 ? (
                                 <div className='songs-container'>
                                     {artistSongs.map(song => (
@@ -219,7 +220,7 @@ function SpotifyApp() {
                                     ))}
                                 </div>
                             ) : null}
-
+    
                         </>
                     )
                 ) : searchResults.length > 0 ? (
@@ -239,9 +240,10 @@ function SpotifyApp() {
                     <></>
                 )}
             </div>
-
+    
         </div>
     );
+    
 }
 
 export default SpotifyApp;

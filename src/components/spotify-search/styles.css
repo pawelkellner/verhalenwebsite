@@ -4,7 +4,15 @@
 }
 
 .search-input{
-    background:red;
+    margin-top:25px;
+    border:none;
+    background:#f4f3f0;
+    height:31px;
+    min-width:295px;
+    /* padding: 12px 6px 12px 6px; */
+    padding:12px;
+    border:1px solid #ededea;
+    border-radius: 10px;
 }
 
 ul {
