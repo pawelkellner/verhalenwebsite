@@ -1,14 +1,21 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 
 import "./form.scss";
 import lineStyle from "../page-title/styles.module.scss";
 
-import Editor from "../editor/editor";
 import TextInput from "../text-input/text-input";
 import TextArea from "../text-area/text-area";
 import Button from "../button";
 import { submitStory } from "../../app/actions";
+import dynamic from "next/dynamic";
+
+const Editor = dynamic(
+  () => {
+    return import("../editor/editor");
+  },
+  { ssr: false }
+);
 
 const Form = () => {
   const [author, setAuthor] = useState("");
@@ -33,7 +40,7 @@ const Form = () => {
         quoteAuthor: quoteAuthor,
         storyText: storyText,
         songText: songText,
-      }
+      };
 
       const response = await submitStory(storyData, songImage);
 
@@ -47,7 +54,7 @@ const Form = () => {
       setStoryText(null);
       setSongText(null);
     } catch (e) {
-      console.error('error: ', e)
+      console.error("error: ", e);
     }
   };
 
@@ -117,7 +124,7 @@ const Form = () => {
             value={quoteAuthor}
           />
         </div>
-        {/* <Editor
+        <Editor
           placeholder="Er was eens een.."
           label="Verhaal tekst"
           onChange={(value) => setStoryText(value)}
@@ -128,7 +135,7 @@ const Form = () => {
           label="Songtekst"
           onChange={(value) => setSongText(value)}
           required
-        /> */}
+        />
         <div className={lineStyle.line} />
         <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
           <input type="checkbox" id="confirm" />
