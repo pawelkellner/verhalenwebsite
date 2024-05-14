@@ -49,11 +49,6 @@ const Form = () => {
 
   const router = useRouter();
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-
-  const router = useRouter();
-
   async function getSong(res) {
     setSongTitle(res.name);
     const lyricResult = await getLyrics(res.artist, res.name);
