@@ -38,23 +38,19 @@ export default async function Story({ params }: { params: { slug: string } }) {
         <div className={styles.story__content}>
           <div className={styles.story__story}>
             <div className={styles.story__titleMobile}>
-              <Heading>Peter en de Powerpoint</Heading>
+              <Heading>{story?.storyTitle}</Heading>
             </div>
             <div
-            dangerouslySetInnerHTML={{
-              __html: story?.storyText
+              dangerouslySetInnerHTML={{
+                __html: story?.storyText
                   ? story?.storyText
                   : "Tekst niet beschikbaar",
-            }}
+              }}
             />
           </div>
           <div className={styles.story__information}>
             <div className={styles.story__origin}>
-              {story?.originText && (
-                <Paragraph>
-                  {story?.originText}
-                </Paragraph>
-              )}
+              {story?.originText && <Paragraph>{story?.originText}</Paragraph>}
               <div className={styles.story__author}>
                 <Paragraph>Verhaal geschreven door {story?.author}</Paragraph>
 
@@ -90,12 +86,12 @@ export default async function Story({ params }: { params: { slug: string } }) {
               Songtekst van &apos;{story?.songTitle}&apos;
             </Paragraph>
             <div
-            dangerouslySetInnerHTML={{
-              __html: story?.songText
+              dangerouslySetInnerHTML={{
+                __html: story?.songText
                   ? story?.songText
                   : "Songtekst niet beschikbaar",
-            }}
-            className={styles.story__lyrics}
+              }}
+              className={styles.story__lyrics}
             />
           </div>
         </MainLayout>
