@@ -12,6 +12,9 @@ import dynamic from "next/dynamic";
 
 import SpotifySearch from "../spotify-search/spotify-search.js";
 
+import { storage as firebaseStorage } from "../../firebase";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+
 const Editor = dynamic(
   () => {
     return import("../editor/editor");
@@ -50,7 +53,19 @@ const Form = () => {
         songText: songText,
       };
 
-      const response = await submitStory(storyData, songImage);
+      let imageUrl: string | null = null;
+
+      console.log("songImage:", songImage);
+
+      if (songImage) {
+        const storageRef = ref(firebaseStorage, songImage.name);
+        await uploadBytes(storageRef, songImage);
+        imageUrl = await getDownloadURL(storageRef);
+      }
+
+      console.log("imageUrl:", imageUrl);
+
+      const response = await submitStory(storyData, imageUrl);
 
       setAuthor("");
       setStoryTitle("");
