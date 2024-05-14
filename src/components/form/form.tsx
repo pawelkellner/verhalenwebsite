@@ -208,6 +208,7 @@ const Form = () => {
         placeholder="Zie Ginds Komt De Stoomboot..."
         label="Songtekst"
         onChange={(value) => setSongText(value)}
+        songText={songText}
         required
       />
       <div className={lineStyle.line} />

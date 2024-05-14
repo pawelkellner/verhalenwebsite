@@ -9,11 +9,13 @@ const TextEditor = ({
   placeholder,
   label,
   onChange,
+  songText,
   required,
 }: {
   placeholder: string;
   label: string;
   onChange: (value: string) => void;
+  songText?: string;
   required: boolean;
 }) => {
   const [editorData, setEditorData] = useState(placeholder);
@@ -21,6 +23,12 @@ const TextEditor = ({
   useEffect(() => {
     setEditorData(placeholder);
   }, [placeholder]);
+
+  useEffect(() => {
+    if (songText !== undefined) {
+      setEditorData(songText);
+    }
+  }, [songText]);
 
   return (
     <div className={styles.input__group}>
