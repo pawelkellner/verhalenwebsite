@@ -1,8 +1,23 @@
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import {collection, addDoc, serverTimestamp, getDocs, query, orderBy} from "firebase/firestore";
 import { db } from "../../firebase";
 import {getDownloadURL, getStorage, ref, uploadBytes} from "firebase/storage";
+import {Verhaal} from "../utils";
 
 export async function GET(){
+    try {
+        const querySnapshot = await getDocs(query(collection(db, 'verhalen'), orderBy('createdAt', 'asc')));
+        const verhalenData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Verhaal));
+        return new Response(JSON.stringify({
+            body: verhalenData,
+        }), {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            status: 201,
+        })
+    } catch (error) {
+        console.error("Error fetching documents: ", error);
+    }
     return new Response('Get route');
 }
 
