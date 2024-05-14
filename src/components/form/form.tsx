@@ -9,6 +9,7 @@ import TextInput from "../text-input/text-input";
 import TextArea from "../text-area/text-area";
 import Button from "../button";
 import { submitStory } from "../../app/actions";
+import { getLyrics } from "../../app/actions";
 import dynamic from "next/dynamic";
 import Paragraph from "../typography/paragraph";
 
@@ -48,8 +49,16 @@ const Form = () => {
 
   const router = useRouter();
 
-  function getSong(res) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  const router = useRouter();
+
+  async function getSong(res) {
     setSongTitle(res.name);
+    const lyricResult = await getLyrics(res.artist, res.name);
+    console.log(lyricResult);
+    setSongText(lyricResult);
   }
 
   const addItem = async (e) => {
