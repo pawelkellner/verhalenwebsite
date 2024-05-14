@@ -1,5 +1,6 @@
 import React, { FC, CSSProperties } from "react";
 import { theme } from "../theme";
+
 export interface ButtonProps {
   onClick?: (value?) => void;
   variant?: "primary" | "secondary" | "neutral" | "disabled" | "unstyled";

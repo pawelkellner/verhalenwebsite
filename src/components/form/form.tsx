@@ -59,7 +59,7 @@ const Form = () => {
 
       let imageUrl: string | null = null;
 
-      console.log("songImage:", songImage)
+      console.log("songImage:", songImage);
 
       if (songImage) {
         const storageRef = ref(firebaseStorage, songImage.name);
@@ -67,7 +67,7 @@ const Form = () => {
         imageUrl = await getDownloadURL(storageRef);
       }
 
-      console.log("imageUrl:", imageUrl)
+      console.log("imageUrl:", imageUrl);
 
       const response = await submitStory(storyData, imageUrl);
 
@@ -116,9 +116,7 @@ const Form = () => {
             value={songTitle}
             required
           /> */}
-          <SpotifySearch
-            getSong={getSong}
-          />
+          <SpotifySearch getSong={getSong} />
           <TextInput
             type="text"
             name="link_to_song"
@@ -139,7 +137,7 @@ const Form = () => {
         <TextArea
           name="origin_text"
           label="Totstandkomming"
-          placeholder="Totstandkommming"
+          placeholder="Totstandkomming"
           onChange={(e) => setOriginText(e.target.value)}
           value={originText}
           cols={30}
@@ -190,7 +188,6 @@ const Form = () => {
         </Button>
       </div>
     </form>
-
   );
 };
 
