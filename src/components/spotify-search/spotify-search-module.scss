@@ -5,7 +5,7 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 6px;
-    width: 100%;
+    width: 400px;
 
     
     @include mobile {
@@ -19,5 +19,11 @@
         border-radius: 10px;
         padding: 6px 12px;
         width: 100%;
+        background-color: red;
     }
 }
+
+.hover_effect:hover {
+        background-color: var(--grey-200);
+    }
+
