@@ -33,17 +33,17 @@ export default async function Home() {
               songName={story.songTitle}
             />
           ))}
-          {stories.map((story, index) => (
-            <StoryCard
-              key={index}
-              id={story.id}
-              title={story.title}
-              image={story.image}
-              text={story.text}
-              author={story.author}
-              songName={story.songName}
-            />
-          ))}
+          {/*{stories.map((story, index) => (*/}
+          {/*  <StoryCard*/}
+          {/*    key={index}*/}
+          {/*    id={story.id}*/}
+          {/*    title={story.title}*/}
+          {/*    image={story.image}*/}
+          {/*    text={story.text}*/}
+          {/*    author={story.author}*/}
+          {/*    songName={story.songName}*/}
+          {/*  />*/}
+          {/*))}*/}
         </div>
         <div
           style={{
@@ -52,9 +52,17 @@ export default async function Home() {
             justifyContent: "center",
           }}
         >
-          <Link href={`/stories/${2}`}>
-            <Pagination />
-          </Link>
+          {verhalen?.length && verhalen?.length > 8 ? (
+            <Link href={`/stories/${2}`}>
+              <Pagination disabled={true} maxIndex={3} />
+            </Link>
+          ) : (
+            <>
+              <div style={{ pointerEvents: "none" }}>
+                <Pagination disabled={true} maxIndex={1} />
+              </div>
+            </>
+          )}
         </div>
       </MainLayout>
     </>

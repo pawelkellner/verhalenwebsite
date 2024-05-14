@@ -1,6 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 
+import { useRouter } from "next/navigation";
+
 import styles from "./pagination.module.scss";
 
 import Button from "../button";
@@ -8,18 +10,23 @@ import { DoubleArrow } from "../svg/double-arrow";
 import { theme } from "../../theme";
 
 const Pagination = ({
-  maxIndex = 10,
+  maxIndex,
   initialIndex,
-  onIndexChange,
+  searchTerm,
+  disabled = false,
 }: {
-  maxIndex?: number;
+  maxIndex: number;
   initialIndex?: number;
-  onIndexChange?: (value: number) => void;
+  searchTerm?: number;
+  disabled?: boolean;
 }) => {
+  const router = useRouter();
+
   const [index, setIndex] = useState(initialIndex ? initialIndex : 1);
 
   useEffect(() => {
-    onIndexChange && onIndexChange(index);
+    disabled === false &&
+      router.push(`/stories/${index}/${searchTerm ? searchTerm : ""}`);
   }, [index]);
 
   return (
@@ -41,12 +48,15 @@ const Pagination = ({
         <span>{index}</span>
         <span>{index < maxIndex ? index + 1 : " "} </span>
       </div>
-      <Button variant="secondary" onClick={() => setIndex(index + 1)}>
+      <Button
+        variant={index < maxIndex ? "secondary" : "disabled"}
+        onClick={() => index < maxIndex && setIndex(index + 1)}
+      >
         Volgende
       </Button>
       <Button onClick={() => setIndex(maxIndex)}>
         <DoubleArrow
-          color={index === 11 ? theme.grey[300] : theme.grey[400]}
+          color={index === maxIndex ? theme.grey[300] : theme.grey[400]}
           direction="right"
         />
       </Button>
