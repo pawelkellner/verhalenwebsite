@@ -53,7 +53,7 @@ const Form = () => {
     setSongTitle(res.name);
     const lyricResult = await getLyrics(res.artist, res.name);
     console.log(lyricResult);
-    setSongText(lyricResult);
+    setSongText(lyricResult && lyricResult);
   }
 
   const addItem = async (e) => {

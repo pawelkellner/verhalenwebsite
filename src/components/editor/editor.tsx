@@ -25,7 +25,7 @@ const TextEditor = ({
   }, [placeholder]);
 
   useEffect(() => {
-    if (songText !== undefined) {
+    if (songText) {
       setEditorData(songText);
     }
   }, [songText]);
