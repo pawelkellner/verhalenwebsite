@@ -9,7 +9,7 @@ const Hero = () => {
       <span className="hero__backgroundblur"></span>
       <div className="container">
         <div className="hero__contentWrapper">
-          <Heading variant="xl" fontWeight={500}>
+          <Heading variant="xl" fontWeight={400}>
             Verhalen geinspireerd door een liedje
           </Heading>
           <Paragraph variant="md">

@@ -11,7 +11,6 @@ import { submitStory } from "../../app/actions";
 import dynamic from "next/dynamic";
 
 import SpotifySearch from "../spotify-search/spotify-search.js";
-import { log } from "console";
 
 const Editor = dynamic(
   () => {
@@ -32,7 +31,7 @@ const Form = () => {
   const [storyText, setStoryText] = useState<React.ReactNode | null>(null);
   const [songText, setSongText] = useState<React.ReactNode | null>(null);
 
-  function getSong(res){
+  function getSong(res) {
     setSongTitle(res.name);
   }
 
@@ -98,9 +97,7 @@ const Form = () => {
             value={songTitle}
             required
           /> */}
-          <SpotifySearch
-            getSong={getSong}
-          />
+          <SpotifySearch getSong={getSong} />
           <TextInput
             type="text"
             name="link_to_song"
@@ -119,13 +116,13 @@ const Form = () => {
           accept="image/png, image/jpeg"
         />
         <TextArea
-            name="origin_text"
-            label="Totstandkomming"
-            placeholder="Totstandkommming"
-            onChange={(e) => setOriginText(e.target.value)}
-            value={originText}
-            cols={30}
-            rows={5}
+          name="origin_text"
+          label="Totstandkomming"
+          placeholder="Totstandkomming"
+          onChange={(e) => setOriginText(e.target.value)}
+          value={originText}
+          cols={30}
+          rows={5}
         />
         <div className="row">
           <TextArea
@@ -172,7 +169,6 @@ const Form = () => {
         </Button>
       </div>
     </form>
-    
   );
 };
 

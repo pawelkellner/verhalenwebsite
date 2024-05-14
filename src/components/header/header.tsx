@@ -60,7 +60,9 @@ const Header = () => {
             style={{ display: "flex", alignItems: "center" }}
           >
             <LogoSvg />
-            <Heading variant="lg">Muziek verhalen</Heading>
+            <Heading variant="lg" fontWeight={300}>
+              Muziek verhalen
+            </Heading>
           </Button>
         </Link>
         {(router === "/" || router.includes("stories")) && <Search />}

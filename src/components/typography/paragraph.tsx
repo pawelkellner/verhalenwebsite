@@ -10,7 +10,7 @@ interface ParagraphProps {
 const Paragraph: FC<ParagraphProps> = ({
   variant = "default",
   color = "",
-  fontWeight = 400,
+  fontWeight = 300,
   children,
 }) => {
   const getStyle = (
@@ -23,21 +23,21 @@ const Paragraph: FC<ParagraphProps> = ({
         return {
           fontSize: "20px",
           lineHeight: "24px",
-          fontWeight: fontWeight ? fontWeight : 400,
+          fontWeight: fontWeight,
           color: color && color,
         };
       case "sm":
         return {
           fontSize: "18px",
           lineHeight: "22px",
-          fontWeight: fontWeight ? fontWeight : 400,
+          fontWeight: fontWeight,
           color: color && color,
         };
       default:
         return {
           fontSize: "14px",
           lineHeight: "18px",
-          fontWeight: fontWeight ? fontWeight : 400,
+          fontWeight: fontWeight,
           color: color && color,
         };
     }

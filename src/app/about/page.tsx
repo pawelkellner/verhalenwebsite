@@ -17,10 +17,10 @@ export default function About() {
     <MainLayout>
       <PageTitle title="Over Muziek Verhalen" />
       <div className={style.about__container}>
-        <Heading variant="lg" fontWeight={500}>
+        <Heading variant="lg" fontWeight={300}>
           Lorem ipsum
         </Heading>
-        <Paragraph>
+        <Paragraph variant="sm">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
           minim veniam, quis nostrud exercitation ullamco laboris nisi ut
@@ -29,7 +29,7 @@ export default function About() {
           pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
           culpa qui officia deserunt mollit anim id est laborum.
         </Paragraph>
-        <Paragraph>
+        <Paragraph variant="sm">
           Sed ut perspiciatis unde omnis iste natus error sit voluptatem
           accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae
           ab illo inventore veritatis et quasi architecto beatae vitae dicta
