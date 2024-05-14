@@ -8,6 +8,7 @@ import TextInput from "../text-input/text-input";
 import TextArea from "../text-area/text-area";
 import Button from "../button";
 import { submitStory } from "../../app/actions";
+import { getLyrics } from "../../app/actions";
 import dynamic from "next/dynamic";
 
 import SpotifySearch from "../spotify-search/spotify-search.js";
@@ -34,8 +35,11 @@ const Form = () => {
   const [storyText, setStoryText] = useState<React.ReactNode | null>(null);
   const [songText, setSongText] = useState<React.ReactNode | null>(null);
 
-  function getSong(res) {
+  async function getSong(res) {
     setSongTitle(res.name);
+    const lyricResult = await getLyrics(res.artist, res.name);
+    console.log(lyricResult);
+    setSongText(lyricResult);
   }
 
   const addItem = async (e) => {
@@ -133,13 +137,13 @@ const Form = () => {
           accept="image/png, image/jpeg"
         />
         <TextArea
-            name="origin_text"
-            label="Totstandkomming"
-            placeholder="Totstandkommming"
-            onChange={(e) => setOriginText(e.target.value)}
-            value={originText}
-            cols={30}
-            rows={5}
+          name="origin_text"
+          label="Totstandkomming"
+          placeholder="Totstandkommming"
+          onChange={(e) => setOriginText(e.target.value)}
+          value={originText}
+          cols={30}
+          rows={5}
         />
         <div className="row">
           <TextArea
@@ -161,7 +165,7 @@ const Form = () => {
           />
         </div>
         <Editor
-          placeholder="Er was eens een.."
+          placeholder={"Er was eens een.."}
           label="Verhaal tekst"
           onChange={(value) => setStoryText(value)}
           required
