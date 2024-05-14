@@ -16,9 +16,13 @@ export async function GET(){
             status: 201,
         })
     } catch (error) {
-        console.error("Error fetching documents: ", error);
+        return new Response(JSON.stringify(error), {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            status: 400,
+        })
     }
-    return new Response('Get route');
 }
 
 export async function POST(request: Request) {
