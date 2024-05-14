@@ -1,11 +1,13 @@
-
-import React from "react";
+"use client"
+import React, {useEffect} from "react";
 
 import Link from "next/link";
 
 import styles from "./page.module.scss";
 
+import {useState} from "react";
 import { stories } from "../example-stories";
+import {Verhaal} from "./utils";
 
 import MainLayout from "../components/main-layout/main-layout";
 import Pagination from "../components/pagination/pagination";
@@ -13,12 +15,15 @@ import PageTitle from "../components/page-title/page-title";
 import StoryCard from "../components/story-card/story-card";
 import Hero from "../components/hero/hero";
 
-export default async function Home() {
+export default function Home() {
+    const [stories, setStories] = useState<Verhaal[]>([]);
 
-    const data = await fetch("https://verhalenwebsite.vercel.app/api", {
-        method: "GET",
-    })
-    const stories = await data.json();
+    useEffect(() => {
+        fetch("https://verhalenwebsite.vercel.app/api", {
+            method: "GET",
+        }).then(res => res.json())
+            .then(data => setStories(data.body))
+    }, [])
 
   return (
     <>
@@ -26,7 +31,7 @@ export default async function Home() {
       <MainLayout>
         <PageTitle noTopPadding title="Recente verhalen" />
         <div className={styles.cards__container}>
-          {stories?.body.map((story, index) => (
+          {stories?.map((story, index) => (
             <StoryCard
               key={index}
               id={story.id}
