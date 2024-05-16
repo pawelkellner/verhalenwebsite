@@ -17,7 +17,10 @@ export interface Verhaal {
     quoteText: string;
     originText: string;
     number: number;
-    createdAt: object;
+    createdAt: {
+        seconds: number,
+        nanoseconds: number
+    };
 }
 
 export const fetchVerhalen = cache(async () => {

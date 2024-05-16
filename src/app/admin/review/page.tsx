@@ -1,0 +1,45 @@
+import React from "react";
+
+import styles from "./page.module.scss";
+
+import { fetchVerhalen } from "../../utils";
+
+import MainLayout from "../../../components/main-layout/main-layout";
+import PageTitle from "../../../components/page-title/page-title";
+import StoryCard from "../../../components/story-card/story-card";
+
+export default async function Home() {
+  const verhalen = await fetchVerhalen();
+
+  const sortedVerhalen = verhalen?.sort((a, b) => {
+    const dateA = new Date(
+      a.createdAt.seconds * 1000 + a.createdAt.nanoseconds / 1000000
+    ).getTime();
+    const dateB = new Date(
+      b.createdAt.seconds * 1000 + b.createdAt.nanoseconds / 1000000
+    ).getTime();
+    return dateB - dateA;
+  });
+
+  return (
+    <>
+      <MainLayout>
+        <PageTitle title="Ingezonden verhalen" />
+        <div className={styles.cards__container}>
+          {sortedVerhalen?.map((story, index) => (
+            <StoryCard
+              key={index}
+              id={story.id}
+              title={story.storyTitle}
+              image={story.songImage}
+              text={story.storyText}
+              author={story.author}
+              songName={story.songTitle}
+              customUrl={`/admin/review/story/${story.id}`}
+            />
+          ))}
+        </div>
+      </MainLayout>
+    </>
+  );
+}

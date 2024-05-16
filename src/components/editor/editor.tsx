@@ -9,26 +9,22 @@ const TextEditor = ({
   placeholder,
   label,
   onChange,
-  songText,
+  value,
   required,
 }: {
-  placeholder: string;
+  placeholder?: string;
   label: string;
   onChange: (value: string) => void;
-  songText?: string;
+  value?: string;
   required: boolean;
 }) => {
   const [editorData, setEditorData] = useState(placeholder);
 
   useEffect(() => {
-    setEditorData(placeholder);
-  }, [placeholder]);
-
-  useEffect(() => {
-    if (songText) {
-      setEditorData(songText);
+    if (value) {
+      setEditorData(value);
     }
-  }, [songText]);
+  }, [value]);
 
   return (
     <div className={styles.input__group}>
@@ -40,9 +36,6 @@ const TextEditor = ({
       <CKEditor
         editor={ClassicEditor}
         data={editorData}
-        onReady={(editor) => {
-          editor.setData(placeholder);
-        }}
         onChange={(event, editor) => {
           const data = editor.getData();
           onChange(data);

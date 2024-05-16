@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import "./form.scss";
+import "../form/form.scss";
 import lineStyle from "../page-title/styles.module.scss";
 
 import TextInput from "../text-input/text-input";
@@ -25,29 +25,44 @@ const Editor = dynamic(
   { ssr: false }
 );
 
-const Form = () => {
-  const [author, setAuthor] = useState("");
-  const [storyTitle, setStoryTitle] = useState("");
+const FormAdmin = ({
+  authorData,
+  storyTitleData,
+  songTitleData,
+  linkToSongData,
+  songImageData,
+  originTextData,
+  quoteTextData,
+  quoteAuthorData,
+  storyTextData,
+  songTextData,
+}) => {
+  const [author, setAuthor] = useState(authorData);
+  const [storyTitle, setStoryTitle] = useState(storyTitleData);
 
-  const [songTitle, setSongTitle] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [songTitle, setSongTitle] = useState(songTitleData);
+  const [searchQuery, setSearchQuery] = useState(songTitleData);
   const [searchResults, setSearchResults] = useState([]);
   const [selectedResult, setSelectedResult] = useState([]);
   const [artistAlbums, setArtistAlbums] = useState([]);
   const [artistSongs, setArtistSongs] = useState([]);
-  const [linkToSong, setLinkToSong] = useState("");
+  const [linkToSong, setLinkToSong] = useState(linkToSongData);
 
-  const [songImage, setSongImage] = useState<File | null>(null);
-  const [originText, setOriginText] = useState("");
-  const [quoteText, setQuoteText] = useState("");
-  const [quoteAuthor, setQuoteAuthor] = useState("");
-  const [storyText, setStoryText] = useState<string | undefined>(undefined);
-  const [songText, setSongText] = useState<string | undefined>(undefined);
+  const [songImage, setSongImage] = useState<File | null>(songImageData);
+  const [originText, setOriginText] = useState(originTextData);
+  const [quoteText, setQuoteText] = useState(quoteTextData);
+  const [quoteAuthor, setQuoteAuthor] = useState(quoteAuthorData);
+  const [storyText, setStoryText] = useState<string | undefined>(storyTextData);
+  const [songText, setSongText] = useState<string | undefined>(songTextData);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
   const router = useRouter();
+
+  useEffect(() => {
+    setSongText(songTextData);
+  }, []);
 
   async function getSong(res) {
     setSongTitle(`${res.artist} - ${res.name}`);
@@ -211,14 +226,7 @@ const Form = () => {
         required
       />
       <div className={lineStyle.line} />
-      <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
-        <input type="checkbox" id="confirm" />
-        <label htmlFor="confirm" style={{ marginTop: -3 }}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam.
-        </label>
-      </div>
+
       <Button
         variant={
           storyTitle === "" ||
@@ -230,9 +238,9 @@ const Form = () => {
             : "secondary"
         }
         style={{ width: "100%" }}
-        onClick={addItem}
+        // onClick={addItem}
       >
-        Verstuur verhaal
+        Aanpassingen opslaan
       </Button>
 
       <div
@@ -251,19 +259,15 @@ const Form = () => {
         )}
         {isSuccess && (
           <>
-            <Paragraph variant="sm">
-              Je verhaal is verstuurd en zal zo snel mogelijk goed- of afgekeurd
-              worden. Intussentijd, kan je nog een verhaal schrijven of verhalen
-              van andere gebruikers lezen
-            </Paragraph>
+            <Paragraph variant="sm">Verhaal bewerken is gelukt</Paragraph>
             <Button
               onClick={(e) => {
-                e.preventDefault(), router.push("/");
+                e.preventDefault(), router.push("/admin/review");
               }}
               style={{ width: "100%" }}
               variant="secondary"
             >
-              Lees verhalen
+              Terug naar ingezonden verhalen
             </Button>
           </>
         )}
@@ -272,4 +276,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default FormAdmin;

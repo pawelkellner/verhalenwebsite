@@ -20,9 +20,19 @@ export default async function Page({
 }) {
   const verhalen = await fetchVerhalen();
 
+  const sortedVerhalen = verhalen?.sort((a, b) => {
+    const dateA = new Date(
+      a.createdAt.seconds * 1000 + a.createdAt.nanoseconds / 1000000
+    ).getTime();
+    const dateB = new Date(
+      b.createdAt.seconds * 1000 + b.createdAt.nanoseconds / 1000000
+    ).getTime();
+    return dateB - dateA;
+  });
+
   const storiesPerPage = 8;
   const maxIndex = Math.ceil(
-    (verhalen ? verhalen?.length : storiesPerPage) / storiesPerPage
+    (sortedVerhalen ? sortedVerhalen?.length : storiesPerPage) / storiesPerPage
   );
   const activeIndex = parseInt(params.slug[0]);
   const startIndex = (activeIndex - 1) * storiesPerPage;
@@ -64,8 +74,8 @@ export default async function Page({
         }
       />
       <div className={styles.cards__container}>
-        {verhalen &&
-          verhalen
+        {sortedVerhalen &&
+          sortedVerhalen
             .slice(startIndex, startIndex + storiesPerPage)
             .filter(filterStories)
             .map((story, index) => (

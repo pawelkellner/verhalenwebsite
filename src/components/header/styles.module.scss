@@ -49,18 +49,19 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    gap: 30px;
 
     @media screen and (max-width: 440px) {
       width: 55px!important;
     }
 
-    & a:first-of-type {
+    & a:last-of-type {
       height: 100%;
       display: none;
       align-items: center;
-      padding-right: 30px;
-      border-right: 1px solid var(--grey-300);
-      margin-right: 30px;
+      padding-left: 30px;
+      border-left: 1px solid var(--grey-300);
+
 
       @include tablet {
         display: flex;

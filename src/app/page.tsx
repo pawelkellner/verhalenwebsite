@@ -16,13 +16,25 @@ import Hero from "../components/hero/hero";
 export default async function Home() {
   const verhalen = await fetchVerhalen();
 
+  const sortedVerhalen = verhalen?.sort((a, b) => {
+    const dateA = new Date(
+      a.createdAt.seconds * 1000 + a.createdAt.nanoseconds / 1000000
+    ).getTime();
+    const dateB = new Date(
+      b.createdAt.seconds * 1000 + b.createdAt.nanoseconds / 1000000
+    ).getTime();
+    return dateB - dateA;
+  });
+
+  console.log(sortedVerhalen);
+
   return (
     <>
       <Hero />
       <MainLayout>
         <PageTitle noTopPadding title="Recente verhalen" />
         <div className={styles.cards__container}>
-          {verhalen?.map((story, index) => (
+          {sortedVerhalen?.map((story, index) => (
             <StoryCard
               key={index}
               id={story.id}

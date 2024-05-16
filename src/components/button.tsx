@@ -3,7 +3,13 @@ import { theme } from "../theme";
 
 export interface ButtonProps {
   onClick?: (value?) => void;
-  variant?: "primary" | "secondary" | "neutral" | "disabled" | "unstyled";
+  variant?:
+    | "primary"
+    | "secondary"
+    | "neutral"
+    | "warning"
+    | "disabled"
+    | "unstyled";
   className?: string;
   style?: CSSProperties;
   children: React.ReactNode;
@@ -34,6 +40,12 @@ const Button: FC<ButtonProps> = ({
           background: theme.grey[100],
           borderColor: theme.grey[100],
           color: theme.grey[500],
+        };
+      case "warning":
+        return {
+          background: "none",
+          borderColor: "#ef4444",
+          color: "#ef4444",
         };
       case "disabled":
         return {
