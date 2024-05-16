@@ -1,7 +1,7 @@
 "use server"
 
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { app } from '../firebase'; // Assuming the Firebase initialization file is named firebaseConfig.js and it exports the initialized app as 'app'
 import { db } from "../firebase";
 
@@ -44,8 +44,22 @@ export async function authLogin(email, password) {
     try {
        const getUser = await signInWithEmailAndPassword(auth, email, password);
        const userEmail = getUser.user.email
-       return [userEmail, "test"]
+       return userEmail
     } catch (error) {
         console.log(error.message);
     }
 }
+
+export async function isUserLoggedIn() {
+    try {
+        const auth = getAuth(app);
+        if (auth.currentUser !== null) {
+            return auth.currentUser.email
+        } else {
+            return false
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+

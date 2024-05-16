@@ -2,7 +2,7 @@
 
 import style from "./page.module.scss";
 import React, { useState } from 'react';
-import { authLogin } from "../../app/actions";
+import { authLogin, isUserLoggedIn } from "../../app/actions";
 
 export default function AuthLogin() {
 
@@ -11,11 +11,15 @@ export default function AuthLogin() {
       console.log("user email:", response)
     }
 
-    
+    async function checkAuth() {
+      const response = await isUserLoggedIn();
+      console.log(response)
+    }
 
     return (
         <div className={style.about__container}>
           <button onClick={() => loginWithCredentials()}>Log in</button>
+          <button onClick={() => checkAuth()}>check auth</button>
         </div>
     );
 }
