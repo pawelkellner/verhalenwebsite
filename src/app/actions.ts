@@ -63,3 +63,11 @@ export async function isUserLoggedIn() {
     }
 }
 
+export async function authLogout() {
+    try {
+        const auth = getAuth(app);
+        await signOut(auth);
+    } catch (error) {
+        console.log(error.message);
+    }
+}

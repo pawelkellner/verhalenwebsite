@@ -2,7 +2,7 @@
 
 import style from "./page.module.scss";
 import React, { useState } from 'react';
-import { authLogin, isUserLoggedIn } from "../../app/actions";
+import { authLogin, isUserLoggedIn, authLogout } from "../../app/actions";
 
 export default function AuthLogin() {
 
@@ -13,13 +13,27 @@ export default function AuthLogin() {
 
     async function checkAuth() {
       const response = await isUserLoggedIn();
-      console.log(response)
+      if (response !== false) {
+        console.log("user email:", response)
+      } else {
+        console.log("user is not logged in")
+      }
+    }
+
+    async function logoutUser() {
+      try {
+        await authLogout();
+      } catch(e) {
+        console.log(e)
+      }
+      checkAuth();
     }
 
     return (
         <div className={style.about__container}>
           <button onClick={() => loginWithCredentials()}>Log in</button>
-          <button onClick={() => checkAuth()}>check auth</button>
+          <button onClick={() => checkAuth()}>Check auth</button>
+          <button onClick={() => logoutUser()}>Log outh</button>
         </div>
     );
 }
