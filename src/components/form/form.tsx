@@ -42,7 +42,7 @@ const Form = () => {
   const [quoteText, setQuoteText] = useState("");
   const [quoteAuthor, setQuoteAuthor] = useState("");
   const [storyText, setStoryText] = useState<React.ReactNode | null>(null);
-  const [songText, setSongText] = useState<React.ReactNode | null>(null);
+  const [songText, setSongText] = useState<string | undefined>(undefined);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -53,7 +53,7 @@ const Form = () => {
     setSongTitle(res.name);
     const lyricResult = await getLyrics(res.artist, res.name);
     console.log(lyricResult);
-    setSongText(lyricResult && lyricResult);
+    setSongText(lyricResult || undefined);
   }
 
   const addItem = async (e) => {
@@ -63,7 +63,7 @@ const Form = () => {
       storyTitle === "" ||
       songTitle === "" ||
       storyText === "" ||
-      songText === "" ||
+      songText === null ||
       isLoading
     )
       return;
@@ -110,7 +110,7 @@ const Form = () => {
         setQuoteAuthor("");
         setOriginText("");
         setStoryText(null);
-        setSongText(null);
+        setSongText(undefined);
       } catch (e) {
         console.error("error: ", e);
       }
