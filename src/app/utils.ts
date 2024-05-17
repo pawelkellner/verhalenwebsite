@@ -1,6 +1,8 @@
 import { cache } from 'react';
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "../firebase";
+import * as url from "url";
+import {StaticImport} from "next/dist/shared/lib/get-img-props";
 
 export interface Verhaal {
     id: string;
@@ -8,11 +10,19 @@ export interface Verhaal {
     storyTitle: string;
     storyText: string | TrustedHTML;
     author: string;
+    song: {
+        album: string;
+        albumImage: string | StaticImport;
+        artist: string;
+        id: string;
+        name: string;
+        type: string;
+    };
     songTitle: string;
     songText: string | TrustedHTML;
     songImage?: string;
     songOrigin: string;
-    linkToSong: string;
+    linkToSong: string | StaticImport;
     quoteAuthor: string;
     quoteText: string;
     originText: string;

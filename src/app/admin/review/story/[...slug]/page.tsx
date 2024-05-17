@@ -28,7 +28,7 @@ export default async function Story({ params }: { params: { slug: string } }) {
           title={
             story?.storyTitle ? story.storyTitle : "Titel niet beschikbaar"
           }
-          songTitle={story?.songTitle}
+          songTitle={story?.song ? `${story?.song.name} - ${story?.song.artist}` : story?.songTitle}
           paddingBottom={true}
           storyPage={true}
         />
@@ -80,7 +80,7 @@ export default async function Story({ params }: { params: { slug: string } }) {
         <MainLayout>
           <div>
             <Paragraph variant="md">
-              Songtekst van &apos;{story?.songTitle}&apos;
+              Songtekst van &apos;{ story?.song ? story?.song.name : story?.songTitle}&apos;
             </Paragraph>
             <div
               dangerouslySetInnerHTML={{

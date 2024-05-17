@@ -65,7 +65,7 @@ const FormAdmin = ({
   }, []);
 
   async function getSong(res) {
-    setSongTitle(`${res.artist} - ${res.name}`);
+    // setSongTitle(`${res.artist} - ${res.name}`);
 
     const lyricResult = await getLyrics(res.artist, res.name);
     setSongText(lyricResult || undefined);
@@ -156,7 +156,7 @@ const FormAdmin = ({
       <div className="row">
         <SpotifySearch
           getSong={getSong}
-          setSongTitle={setSongTitle}
+          setSong={setSongTitle}
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           searchResults={searchResults}

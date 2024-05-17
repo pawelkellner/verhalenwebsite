@@ -24,6 +24,8 @@ export default async function Story({ params }: { params: { slug: string } }) {
   const date = new Date(Number(story?.createdAt)).toLocaleString("en-US");
   console.log(date);
 
+  console.log(story)
+
   return (
     <>
       <MainLayout>
@@ -31,7 +33,7 @@ export default async function Story({ params }: { params: { slug: string } }) {
           title={
             story?.storyTitle ? story.storyTitle : "Titel niet beschikbaar"
           }
-          songTitle={story?.songTitle}
+          songTitle={story?.song ? `${story?.song.name} - ${story?.song.artist}` : story?.songTitle}
           paddingBottom={true}
           storyPage={true}
         />
@@ -57,17 +59,11 @@ export default async function Story({ params }: { params: { slug: string } }) {
                 <Paragraph>Gepubliceerd op 25 maart, 2024</Paragraph>
               </div>
             </div>
-            {story?.quoteAuthor && (
-              <div className={styles.story__quote}>
-                <h1>“{story?.quoteText}”</h1>
-                <Paragraph>- {story?.quoteAuthor}</Paragraph>
-              </div>
-            )}
-            {story?.songImage && (
+            {story?.linkToSong || story?.song ? (
               <div className={styles.story__spotifyPlayer}>
                 <span>
                   <Image
-                    src={story?.songImage ? story?.songImage : ""}
+                    src={story?.linkToSong ? story?.linkToSong : story?.song.albumImage}
                     alt={"album cover"}
                     fill
                   />
@@ -75,7 +71,7 @@ export default async function Story({ params }: { params: { slug: string } }) {
                   <PlayButtonSvg />
                 </span>
               </div>
-            )}
+            ) : ''}
           </div>
         </div>
       </MainLayout>
@@ -83,7 +79,7 @@ export default async function Story({ params }: { params: { slug: string } }) {
         <MainLayout>
           <div>
             <Paragraph variant="md">
-              Songtekst van &apos;{story?.songTitle}&apos;
+              Songtekst van &apos;{story?.song ? story?.song.name : story?.songTitle }&apos;
             </Paragraph>
             <div
               dangerouslySetInnerHTML={{

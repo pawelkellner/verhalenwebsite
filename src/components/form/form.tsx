@@ -30,6 +30,7 @@ const Form = () => {
   const [storyTitle, setStoryTitle] = useState("");
 
   const [songTitle, setSongTitle] = useState("");
+  const [song, setSong] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [selectedResult, setSelectedResult] = useState([]);
@@ -39,8 +40,6 @@ const Form = () => {
 
   const [songImage, setSongImage] = useState<File | null>(null);
   const [originText, setOriginText] = useState("");
-  const [quoteText, setQuoteText] = useState("");
-  const [quoteAuthor, setQuoteAuthor] = useState("");
   const [storyText, setStoryText] = useState<string | undefined>(undefined);
   const [songText, setSongText] = useState<string | undefined>(undefined);
 
@@ -50,7 +49,8 @@ const Form = () => {
   const router = useRouter();
 
   async function getSong(res) {
-    setSongTitle(`${res.artist} - ${res.name}`);
+      setSong(res)
+    // setSongTitle(`${res.artist} - ${res.name}`);
 
     const lyricResult = await getLyrics(res.artist, res.name);
     setSongText(lyricResult || undefined);
@@ -61,7 +61,6 @@ const Form = () => {
 
     if (
       storyTitle === "" ||
-      songTitle === "" ||
       storyText === "" ||
       songText === null ||
       isLoading
@@ -74,9 +73,8 @@ const Form = () => {
         const storyData = {
           author: author,
           storyTitle: storyTitle,
+          song: song,
           songTitle: songTitle,
-          quoteText: quoteText,
-          quoteAuthor: quoteAuthor,
           originText: originText,
           storyText: storyText,
           songText: songText,
@@ -106,8 +104,6 @@ const Form = () => {
         setArtistSongs([]);
         setLinkToSong("");
         setSongImage(null);
-        setQuoteText("");
-        setQuoteAuthor("");
         setOriginText("");
         setStoryText(undefined);
         setSongText(undefined);
@@ -124,10 +120,11 @@ const Form = () => {
       <TextInput
         type="text"
         name="story_author"
-        label="Vul hier je naam in als de auteur van dit verhaal"
+        label="Auteur verhaal"
         placeholder="Auteur"
         onChange={(e) => setAuthor(e.target.value)}
         value={author}
+        required
       />
       <TextInput
         type="text"
@@ -139,65 +136,59 @@ const Form = () => {
         required
       />
       <div className="row">
-        <SpotifySearch
-          getSong={getSong}
-          setSongTitle={setSongTitle}
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          searchResults={searchResults}
-          setSearchResults={setSearchResults}
-          selectedResult={selectedResult}
-          setSelectedResult={setSelectedResult}
-          artistAlbums={artistAlbums}
-          setArtistAlbums={setArtistAlbums}
-          artistSongs={artistSongs}
-          setArtistSongs={setArtistSongs}
-        />
-        <TextInput
+          { songTitle === '' && (
+              <SpotifySearch
+                  getSong={getSong}
+                  setSong={setSong}
+                  searchQuery={searchQuery}
+                  setSearchQuery={setSearchQuery}
+                  searchResults={searchResults}
+                  setSearchResults={setSearchResults}
+                  selectedResult={selectedResult}
+                  setSelectedResult={setSelectedResult}
+                  artistAlbums={artistAlbums}
+                  setArtistAlbums={setArtistAlbums}
+                  artistSongs={artistSongs}
+                  setArtistSongs={setArtistSongs}
+              />
+          )}
+          <TextInput
           type="text"
           name="link_to_song"
           label="Link naar het liedje (Spotify, Youtube oid)"
           placeholder="Link"
           onChange={(e) => setLinkToSong(e.target.value)}
           value={linkToSong}
-          required
         />
       </div>
-      <TextInput
-        type="file"
-        name="song_image"
-        label="Afbeelding"
-        onChange={(e) => setSongImage(e.target.files[0])}
-        accept="image/png, image/jpeg"
-      />
+        { song === '' && (
+            <div className="row">
+              <TextInput
+                type="file"
+                name="song_image"
+                label="Album cover (Zonder Spotify)"
+                onChange={(e) => setSongImage(e.target.files[0])}
+                accept="image/png, image/jpeg"
+              />
+            <TextInput
+                type="text"
+                name="song_info"
+                label="Arties en titel van het liedje (Zonder Spotify)"
+                placeholder={"Arties en titel van het liedje"}
+                onChange={(e) => setSongTitle(e.target.value)}
+                value={songTitle}
+            />
+            </div>
+        )}
       <TextArea
         name="origin_text"
-        label="Totstandkomming"
-        placeholder="Totstandkomming"
+        label="Extra informatie (zichtbaar bij verhaaltje)"
+        placeholder="Extra informatie"
         onChange={(e) => setOriginText(e.target.value)}
         value={originText}
         cols={30}
         rows={5}
       />
-      <div className="row">
-        <TextArea
-          name="quote_text"
-          label="Quote"
-          placeholder="Verhaal"
-          onChange={(e) => setQuoteText(e.target.value)}
-          value={quoteText}
-          cols={30}
-          rows={5}
-        />
-        <TextInput
-          type="text"
-          name="quote_author"
-          label="Quote auteur"
-          placeholder="Auteur"
-          onChange={(e) => setQuoteAuthor(e.target.value)}
-          value={quoteAuthor}
-        />
-      </div>
       <Editor
         label="Verhaal tekst"
         onChange={(value) => setStoryText(value)}
@@ -212,7 +203,7 @@ const Form = () => {
       />
       <div className={lineStyle.line} />
       <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
-        <input type="checkbox" id="confirm" />
+        <input type="checkbox" id="confirm" required/>
         <label htmlFor="confirm" style={{ marginTop: -3 }}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
@@ -222,7 +213,6 @@ const Form = () => {
       <Button
         variant={
           storyTitle === "" ||
-          songTitle === "" ||
           storyText === "" ||
           songText === "" ||
           isLoading

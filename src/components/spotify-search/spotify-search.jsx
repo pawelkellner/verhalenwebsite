@@ -9,7 +9,7 @@ import Cross from "../svg/cross";
 
 function SpotifyApp({
   getSong,
-  setSongTitle,
+  setSong,
   searchQuery,
   setSearchQuery,
   searchResults,
@@ -140,12 +140,15 @@ function SpotifyApp({
           image: item.images[0]?.url,
         }));
 
+        console.log(albums)
+
         setArtistAlbums(albums);
         setSelectedResult([{ type: result.type, name: result.name }]);
       } catch (error) {
         console.error("Error:", error.message);
       }
     } else {
+      setSong(result)
       setSelectedResult([result]);
       getSong(result);
     }
@@ -203,7 +206,7 @@ function SpotifyApp({
             width: "100%",
           }}
         >
-          <label htmlFor={"spotify"}>Titel van het liedje*</label>
+          <label htmlFor={"spotify"}>Het liedje (Via Spotify)*</label>
           <input
             id="spotify"
             className="search-input"
@@ -212,7 +215,7 @@ function SpotifyApp({
             onChange={(e) => {
               setSearchQuery(e.target.value);
             }}
-            placeholder="Zoek een artiest op"
+            placeholder="Zoek een artiest of het titel van het liedje"
             style={
               searchResults.length > 0
                 ? {
@@ -270,6 +273,7 @@ function SpotifyApp({
                 variant="unstyled"
                 style={{ position: "absolute", right: 0, top: 0 }}
                 onClick={() => {
+                  setSong('');
                   setSearchResults([]);
                   setSearchQuery("");
                   setSelectedResult([]);
@@ -326,7 +330,7 @@ function SpotifyApp({
                     className="album-item hover_effect"
                     style={{ cursor: "pointer" }}
                     onClick={() => {
-                      getAlbumSongs(album), setSongTitle(album);
+                      getAlbumSongs(album), setSong(album);
                     }}
                   >
                     <img
@@ -390,7 +394,7 @@ function SpotifyApp({
                 key={result.id}
                 className="result-list hover_effect"
                 onClick={() => {
-                  resultSelected(result), setSongTitle(result);
+                  resultSelected(result), setSong(result);
                 }}
                 style={{ cursor: "pointer" }}
               >

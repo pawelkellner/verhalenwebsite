@@ -17,6 +17,7 @@ import Hero from "../components/hero/hero";
 
 export default function Home() {
     const [stories, setStories] = useState<Verhaal[]>([]);
+    const [limitedStories, setLimitedStories] = useState<Verhaal[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -34,6 +35,7 @@ export default function Home() {
                     return dateB - dateA;
                 });
                 setStories(sortedVerhalen);
+                setLimitedStories(sortedVerhalen.slice(0,7))
                 setLoading(false);
             })
     }, [])
@@ -75,7 +77,7 @@ export default function Home() {
                     />
                 </>
             )}
-          {stories?.map((story, index) => (
+          {limitedStories?.map((story, index) => (
                 <StoryCard
                   key={index}
                   id={story.id}
@@ -83,7 +85,7 @@ export default function Home() {
                   image={story.songImage}
                   text={story.storyText}
                   author={story.author}
-                  songName={story.songTitle}
+                  songName={ story.song ? `${story.song.name} - ${story.song.artist}` : story.songTitle}
                 />
           ))}
         </div>
