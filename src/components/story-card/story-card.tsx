@@ -10,6 +10,7 @@ import { StoryCardProps } from "./story-card.types";
 import Heading from "../typography/heading";
 import Paragraph from "../typography/paragraph";
 import NoteSvg from "../svg/NoteSvg";
+import { ImageError } from "next/dist/server/image-optimizer";
 
 const StoryCard = ({
      id,
@@ -18,7 +19,8 @@ const StoryCard = ({
      text,
      author,
      songName,
-     skeleton
+     skeleton,
+    customUrl,
    }: StoryCardProps) => {
   const router = useRouter();
 
@@ -87,7 +89,7 @@ const StoryCard = ({
   return (
       <>
       { !skeleton ? (
-        <button className="unstyled" onClick={() => router.push(`/story/${id}`)}>
+        <button className="unstyled" onClick={() => router.push(customUrl ? customUrl : `/story/${id}`)}>
           <article className="storycard">
             {image && (
                 <div className="storycard__imageWrapper">
@@ -106,7 +108,7 @@ const StoryCard = ({
                         !introText && "skeletonText"
                     }`}
                 >
-                  <Heading>
+                  <Heading fontWeight={300}>
                     {title}
                   </Heading>
                   {introText ? (

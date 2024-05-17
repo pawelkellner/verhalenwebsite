@@ -1,5 +1,6 @@
 @import 'src/app/mixins';
 
+
 :root {
   --primary: #48B8D0;
   --black: #2D2D34;
@@ -14,7 +15,7 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  font-family: FUTURA PT;
+
   color: var(--black);
 }
 
@@ -31,7 +32,7 @@ body {
     border: medium none;
     border-spacing: 0;
     font-size: 16px;
-    font-weight: normal;
+    font-weight: 400;
     line-height: 1.42rem;
     list-style: none outside none;
     margin: 0;
@@ -42,6 +43,7 @@ body {
   }
 
 button {
+  font-family: inherit;
   outline: none;
   cursor: pointer;
   border: solid;
@@ -54,6 +56,11 @@ button {
   &:hover {
     opacity: .9 !important;
   }
+}
+
+input, textarea {
+  font-family: inherit;
+  font-weight: 300;
 }
 
 

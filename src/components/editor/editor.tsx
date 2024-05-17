@@ -9,18 +9,22 @@ const TextEditor = ({
   placeholder,
   label,
   onChange,
+  value,
   required,
 }: {
-  placeholder: string;
+  placeholder?: string;
   label: string;
   onChange: (value: string) => void;
+  value?: string;
   required: boolean;
 }) => {
   const [editorData, setEditorData] = useState(placeholder);
 
   useEffect(() => {
-    setEditorData(placeholder);
-  }, [placeholder]);
+    if (value) {
+      setEditorData(value);
+    }
+  }, [value]);
 
   return (
     <div className={styles.input__group}>
@@ -32,9 +36,6 @@ const TextEditor = ({
       <CKEditor
         editor={ClassicEditor}
         data={editorData}
-        onReady={(editor) => {
-          editor.setData(placeholder);
-        }}
         onChange={(event, editor) => {
           const data = editor.getData();
           onChange(data);

@@ -29,6 +29,18 @@ export default function Home() {
             })
     }, [])
 
+  const sortedVerhalen = verhalen?.sort((a, b) => {
+    const dateA = new Date(
+      a.createdAt.seconds * 1000 + a.createdAt.nanoseconds / 1000000
+    ).getTime();
+    const dateB = new Date(
+      b.createdAt.seconds * 1000 + b.createdAt.nanoseconds / 1000000
+    ).getTime();
+    return dateB - dateA;
+  });
+
+  console.log(sortedVerhalen);
+
   return (
     <>
       <Hero />
@@ -47,22 +59,22 @@ export default function Home() {
                         skeleton={true}
                     />
                     <StoryCard
-                    key={2}
-                    id={'idoski'}
-                    title={'Lorem ipsum dolor sit amet'}
-                    text={'Lorem ipsum dolor sit amet'}
-                    author={'Lorem ipsum'}
-                    songName={'Lorem ipsum dolor'}
-                    skeleton={true}
+                        key={2}
+                        id={'idoski'}
+                        title={'Lorem ipsum dolor sit amet'}
+                        text={'Lorem ipsum dolor sit amet'}
+                        author={'Lorem ipsum'}
+                        songName={'Lorem ipsum dolor'}
+                        skeleton={true}
                     />
                     <StoryCard
-                    key={3}
-                    id={'idoski'}
-                    title={'Lorem ipsum dolor sit amet'}
-                    text={'Lorem ipsum dolor sit amet'}
-                    author={'Lorem ipsum'}
-                    songName={'Lorem ipsum dolor'}
-                    skeleton={true}
+                        key={3}
+                        id={'idoski'}
+                        title={'Lorem ipsum dolor sit amet'}
+                        text={'Lorem ipsum dolor sit amet'}
+                        author={'Lorem ipsum'}
+                        songName={'Lorem ipsum dolor'}
+                        skeleton={true}
                     />
                 </>
             )}
@@ -96,9 +108,17 @@ export default function Home() {
             justifyContent: "center",
           }}
         >
-          <Link href={`/stories/${2}`}>
-            <Pagination disabled={true} maxIndex={3} />
-          </Link>
+          {stories?.length && stories?.length > 8 ? (
+            <Link href={`/stories/${2}`}>
+              <Pagination disabled={true} maxIndex={3} />
+            </Link>
+          ) : (
+            <>
+              <div style={{ pointerEvents: "none" }}>
+                <Pagination disabled={true} maxIndex={1} />
+              </div>
+            </>
+          )}
         </div>
       </MainLayout>
     </>

@@ -16,10 +16,16 @@ import LogoSvg from "../svg/LogoSvg";
 const Header = () => {
   const router = usePathname();
 
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
   const [isWhite, setIsWhite] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [eventAdded, setEventAdded] = useState(false);
   const [scrollHeight, setScrollHeight] = useState(0);
+
+  useEffect(() => {
+    setIsAuthenticated(true);
+  }, []);
 
   useEffect(() => {
     if (router !== "/") {
@@ -60,11 +66,15 @@ const Header = () => {
             style={{ display: "flex", alignItems: "center" }}
           >
             <LogoSvg />
-            <Heading variant="lg">Muziek verhalen</Heading>
+            <Heading variant="lg" fontWeight={300}>
+              Muziek verhalen
+            </Heading>
           </Button>
         </Link>
         {(router === "/" || router.includes("stories")) && <Search />}
         <div className={styles.nav__buttons}>
+          <LinkButton href="/admin/review">Beheerder paneel</LinkButton>
+
           <LinkButton href="/about">Over Muziek verhalen</LinkButton>
 
           <LinkButton href="/write" buttonVariant="primary">

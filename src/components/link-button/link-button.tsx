@@ -19,6 +19,7 @@ const LinkButton = ({
   return (
     <Link className={className} href={href}>
       <Button
+        style={{ fontWeight: 300 }}
         variant={buttonVariant ? buttonVariant : "unstyled"}
         onClick={onClick}
       >

@@ -3,26 +3,23 @@ import React from "react";
 
 import Image from "next/image";
 
-import styles from "../page.module.scss";
+import { fetchVerhalen } from "../../../../utils";
 
-import { stories } from "../../../example-stories";
+import styles from "../../../../story/page.module.scss";
 
-import MainLayout from "../../../components/main-layout/main-layout";
-import PlayButtonSvg from "../../../components/svg/PlayButtonSvg";
-import PageTitle from "../../../components/page-title/page-title";
-import Paragraph from "../../../components/typography/paragraph";
-import Heading from "../../../components/typography/heading";
-import LinkButton from "../../../components/link-button/link-button";
-import { fetchVerhalen } from "../../utils";
+import MainLayout from "../../../../../components/main-layout/main-layout";
+import PlayButtonSvg from "../../../../../components/svg/PlayButtonSvg";
+import PageTitle from "../../../../../components/page-title/page-title";
+import Paragraph from "../../../../../components/typography/paragraph";
+import Heading from "../../../../../components/typography/heading";
+import AdminButtons from "../../../../../components/admin-buttons/admin-buttons";
 
 export default async function Story({ params }: { params: { slug: string } }) {
-  // const slug = parseInt(params.slug);
-  const slug = params.slug;
+  const slug = params.slug.toString();
   const verhalen = await fetchVerhalen();
-  // const story = stories.find((story) => story.id === slug);
+
   const story = verhalen?.find((story) => story.id === slug);
   const date = new Date(Number(story?.createdAt)).toLocaleString("en-US");
-  console.log(date);
 
   return (
     <>
@@ -97,15 +94,7 @@ export default async function Story({ params }: { params: { slug: string } }) {
         </MainLayout>
       </div>
       <MainLayout>
-        <div className={styles.story__buttons}>
-          <LinkButton href={`/story/${slug + 1}`} buttonVariant="secondary">
-            Lees nog een verhaal
-          </LinkButton>
-          <Paragraph>Of</Paragraph>
-          <LinkButton href="/write" buttonVariant="secondary">
-            Schrijf er zelf een
-          </LinkButton>
-        </div>
+        <AdminButtons slug={slug} />
       </MainLayout>
     </>
   );

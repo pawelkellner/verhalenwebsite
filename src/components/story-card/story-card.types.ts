@@ -6,5 +6,6 @@ export type StoryCardProps = {
     author: string
     songName: string
     skeleton?: boolean
+    customUrl?: string
 }
 
