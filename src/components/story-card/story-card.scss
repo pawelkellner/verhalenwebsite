@@ -25,6 +25,8 @@
   }
 
   &__imageWrapper {
+    background-color: var(--grey-100);
+    border-radius: 10px;
     position: relative;
     height: 160px;
     width: 160px;
@@ -39,6 +41,8 @@
     }
 
     &Mobile {
+      background-color: var(--grey-200);
+      border-radius: 10px;
       position: relative;
       width: 96px;
       height: 96px;
@@ -162,7 +166,7 @@
   }
 
   > p:not(:first-of-type) {
-    margin-top: 10px;
     width: 30%;
+    margin-top: 10px;
   }
 }

@@ -17,12 +17,16 @@ import Hero from "../components/hero/hero";
 
 export default function Home() {
     const [stories, setStories] = useState<Verhaal[]>([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch("https://verhalenwebsite.vercel.app/api", {
+        fetch(`${process.env.NEXT_PUBLIC_FETCH_API_LINK}/api`, {
             method: "GET",
         }).then(res => res.json())
-            .then(data => setStories(data.body))
+            .then(data => {
+                setStories(data.body);
+                setLoading(false);
+            })
     }, [])
 
   return (
@@ -31,6 +35,37 @@ export default function Home() {
       <MainLayout>
         <PageTitle noTopPadding title="Recente verhalen" />
         <div className={styles.cards__container}>
+            {loading && (
+                <>
+                    <StoryCard
+                        key={1}
+                        id={'idoski'}
+                        title={'Lorem ipsum dolor sit amet'}
+                        text={'Lorem ipsum dolor sit amet'}
+                        author={'Lorem ipsum'}
+                        songName={'Lorem ipsum dolor'}
+                        skeleton={true}
+                    />
+                    <StoryCard
+                    key={2}
+                    id={'idoski'}
+                    title={'Lorem ipsum dolor sit amet'}
+                    text={'Lorem ipsum dolor sit amet'}
+                    author={'Lorem ipsum'}
+                    songName={'Lorem ipsum dolor'}
+                    skeleton={true}
+                    />
+                    <StoryCard
+                    key={3}
+                    id={'idoski'}
+                    title={'Lorem ipsum dolor sit amet'}
+                    text={'Lorem ipsum dolor sit amet'}
+                    author={'Lorem ipsum'}
+                    songName={'Lorem ipsum dolor'}
+                    skeleton={true}
+                    />
+                </>
+            )}
           {stories?.map((story, index) => (
             <StoryCard
               key={index}

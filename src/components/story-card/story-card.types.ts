@@ -5,5 +5,6 @@ export type StoryCardProps = {
     text: string | TrustedHTML
     author: string
     songName: string
+    skeleton?: boolean
 }
 
