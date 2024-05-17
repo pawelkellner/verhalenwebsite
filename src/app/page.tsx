@@ -24,22 +24,19 @@ export default function Home() {
             method: "GET",
         }).then(res => res.json())
             .then(data => {
-                setStories(data.body);
+                const sortedVerhalen = data.body?.sort((a, b) => {
+                    const dateA = new Date(
+                        a.createdAt.seconds * 1000 + a.createdAt.nanoseconds / 1000000
+                    ).getTime();
+                    const dateB = new Date(
+                        b.createdAt.seconds * 1000 + b.createdAt.nanoseconds / 1000000
+                    ).getTime();
+                    return dateB - dateA;
+                });
+                setStories(sortedVerhalen);
                 setLoading(false);
             })
     }, [])
-
-  const sortedVerhalen = verhalen?.sort((a, b) => {
-    const dateA = new Date(
-      a.createdAt.seconds * 1000 + a.createdAt.nanoseconds / 1000000
-    ).getTime();
-    const dateB = new Date(
-      b.createdAt.seconds * 1000 + b.createdAt.nanoseconds / 1000000
-    ).getTime();
-    return dateB - dateA;
-  });
-
-  console.log(sortedVerhalen);
 
   return (
     <>
@@ -79,27 +76,16 @@ export default function Home() {
                 </>
             )}
           {stories?.map((story, index) => (
-            <StoryCard
-              key={index}
-              id={story.id}
-              title={story.storyTitle}
-              image={story.songImage}
-              text={story.storyText}
-              author={story.author}
-              songName={story.songTitle}
-            />
+                <StoryCard
+                  key={index}
+                  id={story.id}
+                  title={story.storyTitle}
+                  image={story.songImage}
+                  text={story.storyText}
+                  author={story.author}
+                  songName={story.songTitle}
+                />
           ))}
-          {/*{stories.map((story, index) => (*/}
-          {/*  <StoryCard*/}
-          {/*    key={index}*/}
-          {/*    id={story.id}*/}
-          {/*    title={story.title}*/}
-          {/*    image={story.image}*/}
-          {/*    text={story.text}*/}
-          {/*    author={story.author}*/}
-          {/*    songName={story.songName}*/}
-          {/*  />*/}
-          {/*))}*/}
         </div>
         <div
           style={{
