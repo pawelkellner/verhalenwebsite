@@ -4,7 +4,7 @@ interface ParagraphProps {
   variant?: "sm" | "md";
   color?: string;
   fontWeight?: 200 | 300 | 400 | 500 | 600;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 const Paragraph: FC<ParagraphProps> = ({
@@ -43,7 +43,7 @@ const Paragraph: FC<ParagraphProps> = ({
     }
   };
 
-  return <p style={getStyle(variant, color, fontWeight)}>{children}</p>;
+  return <p style={getStyle(variant, color, fontWeight)}>{children || ''}</p>;
 };
 
 export default Paragraph;
