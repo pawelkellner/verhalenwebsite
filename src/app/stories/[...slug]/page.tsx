@@ -18,7 +18,7 @@ export default async function Page({
 }: {
   params: { slug: { index: string; searchTerm?: string } };
 }) {
-  const verhalen = await filteredVerhalen(true);
+  const verhalen = await filteredVerhalen(false);
 
   const sortedVerhalen = verhalen?.sort((a, b) => {
     const dateA = new Date(
