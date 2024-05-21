@@ -27,6 +27,7 @@ export interface Verhaal {
     quoteText: string;
     originText: string;
     number: number;
+    underReview: boolean;
     createdAt: {
         seconds: number,
         nanoseconds: number
