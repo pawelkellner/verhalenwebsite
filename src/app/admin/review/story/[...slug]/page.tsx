@@ -94,7 +94,7 @@ export default async function Story({ params }: { params: { slug: string } }) {
         </MainLayout>
       </div>
       <MainLayout>
-        <AdminButtons slug={slug} />
+        <AdminButtons slug={slug} story={story} />
       </MainLayout>
     </>
   );
