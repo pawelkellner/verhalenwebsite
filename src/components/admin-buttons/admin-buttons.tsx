@@ -7,14 +7,19 @@ import Button from "../button";
 import Paragraph from "../typography/paragraph";
 import LinkButton from "../link-button/link-button";
 
-const AdminButtons = ({ slug }) => {
+import { approveStory } from "../../app/actions";
+import { deleteStory } from "../../app/actions";
+
+const AdminButtons = ({ slug, story }) => {
   const router = useRouter();
 
-  const approved = () => {
+  const approved = async () => {
+    await approveStory(story)
     router.push("/admin/review");
   };
 
-  const disapproved = () => {
+  const disapproved = async () => {
+    await deleteStory(story)
     router.push("/admin/review");
   };
 

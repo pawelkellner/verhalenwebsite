@@ -1,6 +1,6 @@
 import React from "react";
 
-import { fetchVerhalen } from "../../utils";
+import filteredVerhalen from "../../../components/firebase/filteredVerhalen";
 
 import { Verhaal } from "../../utils";
 
@@ -18,7 +18,7 @@ export default async function Page({
 }: {
   params: { slug: { index: string; searchTerm?: string } };
 }) {
-  const verhalen = await fetchVerhalen();
+  const verhalen = await filteredVerhalen(false);
 
   const sortedVerhalen = verhalen?.sort((a, b) => {
     const dateA = new Date(
@@ -40,8 +40,6 @@ export default async function Page({
   const searchTerm = params.slug[1];
 
   const filterStories = (story: Verhaal) => {
-    console.log("Story:", story);
-    console.log("Search Term:", searchTerm);
 
     if (!searchTerm) {
       return true;

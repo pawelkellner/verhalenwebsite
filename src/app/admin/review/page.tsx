@@ -2,14 +2,14 @@ import React from "react";
 
 import styles from "./page.module.scss";
 
-import { fetchVerhalen } from "../../utils";
+import filteredVerhalen from "../../../components/firebase/filteredVerhalen";
 
 import MainLayout from "../../../components/main-layout/main-layout";
 import PageTitle from "../../../components/page-title/page-title";
 import StoryCard from "../../../components/story-card/story-card";
 
 export default async function Home() {
-  const verhalen = await fetchVerhalen();
+  const verhalen = await filteredVerhalen(true);
 
   const sortedVerhalen = verhalen?.sort((a, b) => {
     const dateA = new Date(
