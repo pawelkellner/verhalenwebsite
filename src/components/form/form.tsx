@@ -49,12 +49,14 @@ const Form = () => {
   3;
 
   const [manualSongInput, setManualSongInput] = useState(false);
-  const [inputUpload, setInputUoload] = useState(false);
+  const [manualStoryTextInput, setManualStoryTextInput] = useState(true);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
   const router = useRouter();
+
+  const isStoryText = storyText === "" || storyTextFile !== undefined;
 
   async function getSong(res) {
     setSong(res);
@@ -67,8 +69,7 @@ const Form = () => {
   const addItem = async (e) => {
     e.preventDefault();
 
-    if (storyTitle === "" || storyText === "" || songText === null || isLoading)
-      return;
+    if (storyTitle === "" || isStoryText || isLoading) return;
     else {
       setIsSuccess(false);
       setIsLoading(true);
@@ -81,7 +82,7 @@ const Form = () => {
           originText: originText,
           storyText: storyText,
           songText: songText,
-          underReview: true
+          underReview: true,
         };
 
         let imageUrl: string | null = null;
@@ -168,7 +169,9 @@ const Form = () => {
         </div>
         {song !== "" && !manualSongInput && (
           <Button
-            onClick={() => setManualSongInput(true)}
+            onClick={() => {
+              setManualSongInput(true), setSong("");
+            }}
             variant="underlined"
             style={{ paddingTop: 10 }}
           >
@@ -198,7 +201,9 @@ const Form = () => {
         )}
         {manualSongInput && (
           <Button
-            onClick={() => setManualSongInput(false)}
+            onClick={() => {
+              setManualSongInput(false), setSongTitle(""), setSongImage(null);
+            }}
             variant="underlined"
             style={{ paddingTop: 10 }}
           >
@@ -216,28 +221,46 @@ const Form = () => {
         rows={5}
       />
       <div>
-        <Editor
-          label="Verhaal tekst"
-          onChange={(value) => setStoryText(value)}
-          value={storyText}
-          required
-        />
-        <Button variant="underlined" style={{ paddingTop: 10 }}>
-          Of upload een document
-        </Button>
-        <TextInput
-          type="file"
-          name="story_text"
-          label="Verhaal tekst*"
-          onChange={(e) => setStoryTextFile(e.target.files[0])}
-          accept=".doc, .docx, .rtf, .txt, .pdf"
-        />
+        {manualStoryTextInput && (
+          <>
+            <Editor
+              label="Verhaal tekst"
+              onChange={(value) => setStoryText(value)}
+              value={storyText}
+              required
+            />
+            <Button
+              onClick={() => setManualStoryTextInput(false)}
+              variant="underlined"
+              style={{ paddingTop: 10 }}
+            >
+              Terug naar document uploaden
+            </Button>
+          </>
+        )}
+        {!manualStoryTextInput && (
+          <>
+            <TextInput
+              type="file"
+              name="story_text"
+              label="Verhaal tekst*"
+              onChange={(e) => setStoryTextFile(e.target.files[0])}
+              accept=".doc, .docx, .rtf, .txt, .pdf"
+            />
+            <Button
+              onClick={() => setManualStoryTextInput(true)}
+              variant="underlined"
+              style={{ paddingTop: 10 }}
+            >
+              Of schrijf het handmatig
+            </Button>
+          </>
+        )}
       </div>
       <Editor
         label="Songtekst"
         onChange={(value) => setSongText(value)}
         value={songText}
-        required
       />
       <div className={lineStyle.line} />
       <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
@@ -250,7 +273,7 @@ const Form = () => {
       </div>
       <Button
         variant={
-          storyTitle === "" || storyText === "" || songText === "" || isLoading
+          storyTitle === "" || isStoryText || isLoading
             ? "disabled"
             : "secondary"
         }

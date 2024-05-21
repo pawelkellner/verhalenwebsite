@@ -16,7 +16,7 @@ const TextEditor = ({
   label: string;
   onChange: (value: string) => void;
   value?: string;
-  required: boolean;
+  required?: boolean;
 }) => {
   const [editorData, setEditorData] = useState(placeholder);
 

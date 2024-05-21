@@ -12,9 +12,11 @@ const TextArea = ({
 }: TextAreaProps) => {
   return (
     <div className={styles.input__group}>
-      <label htmlFor={name}>{label}</label>
+      <label style={{ fontSize: 18 }} htmlFor={name}>
+        {label}
+      </label>
       <textarea
-        style={{ resize: "none", fontSize: 18 }}
+        style={{ resize: "none" }}
         id={name}
         name={name}
         placeholder={placeholder}
