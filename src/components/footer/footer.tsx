@@ -14,6 +14,9 @@ const Footer = () => {
           <Link href="/write">
             <Paragraph variant="md">Schrijf jouw verhaal</Paragraph>
           </Link>
+          <Link href="/admin">
+            <Paragraph variant="md">Inloggen voor beheerders</Paragraph>
+          </Link>
         </div>
         <div className="footer__copyright">
           <Paragraph variant="md">©2024 Muziek Verhalen</Paragraph>

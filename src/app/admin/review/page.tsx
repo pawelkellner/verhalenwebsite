@@ -8,7 +8,7 @@ import MainLayout from "../../../components/main-layout/main-layout";
 import PageTitle from "../../../components/page-title/page-title";
 import StoryCard from "../../../components/story-card/story-card";
 
-export default async function Home() {
+export default async function Page() {
   const verhalen = await filteredVerhalen(true);
 
   const sortedVerhalen = verhalen?.sort((a, b) => {
@@ -34,7 +34,11 @@ export default async function Home() {
               image={story.song ? story.song.albumImage : story.songImage}
               text={story.storyText}
               author={story.author}
-              songName={story?.song ? `${story?.song.name} - ${story?.song.artist}` : story?.songTitle}
+              songName={
+                story?.song
+                  ? `${story?.song.name} - ${story?.song.artist}`
+                  : story?.songTitle
+              }
               customUrl={`/admin/review/story/${story.id}`}
             />
           ))}

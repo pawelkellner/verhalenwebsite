@@ -1,48 +1,85 @@
-"use client"
+"use client";
 
 import style from "./page.module.scss";
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { authLogin, isUserLoggedIn, authLogout } from "../../app/actions";
+import Button from "../../components/button";
+import LinkButton from "../../components/link-button/link-button";
+import { useRouter } from "next/navigation";
 
 export default function AuthLogin() {
+  const router = useRouter();
 
-    async function loginWithCredentials() {
-      const response = await authLogin("testemail@m.com", "testpassword");
-      console.log("user email:", response)
+  async function loginWithCredentials() {
+    const response = await authLogin("testemail@m.com", "testpassword");
+    console.log("user email:", response);
+    // router.replace("/");
+  }
+
+  async function checkAuth() {
+    const response = await isUserLoggedIn();
+    if (response !== false) {
+      console.log("user email:", response);
+      // router.replace("/");
+    } else {
+      console.log("user is not logged in");
     }
+  }
 
-    async function checkAuth() {
-      const response = await isUserLoggedIn();
-      if (response !== false) {
-        console.log("user email:", response)
-      } else {
-        console.log("user is not logged in")
-      }
+  async function logoutUser() {
+    try {
+      await authLogout();
+    } catch (e) {
+      console.log(e);
     }
+    checkAuth();
+  }
 
-    async function logoutUser() {
-      try {
-        await authLogout();
-      } catch(e) {
-        console.log(e)
-      }
-      checkAuth();
-    }
-
-    return (
-        <div className={style.about__container}>
-          <button onClick={() => loginWithCredentials()}>Log in</button>
-          <button onClick={() => checkAuth()}>Check auth</button>
-          <button onClick={() => logoutUser()}>Log outh</button>
-        </div>
-    );
+  return (
+    <div className={style.about__container}>
+      <Button
+        variant="primary"
+        style={{
+          width: "100%",
+          minWidth: 200,
+          maxWidth: 500,
+        }}
+        onClick={() => loginWithCredentials()}
+      >
+        Log in
+      </Button>
+      <Button
+        variant="secondary"
+        style={{
+          width: "100%",
+          minWidth: 200,
+          maxWidth: 500,
+        }}
+        onClick={() => checkAuth()}
+      >
+        Check auth
+      </Button>
+      <Button
+        variant="secondary"
+        style={{
+          width: "100%",
+          minWidth: 200,
+          maxWidth: 500,
+        }}
+        onClick={() => logoutUser()}
+      >
+        Log out
+      </Button>
+    </div>
+  );
 }
 
-    // const [email, setEmail] = useState('');
-    // const [password, setPassword] = useState('');
-    // const [error, setError] = useState(null);
+// const [email, setEmail] = useState('');
+// const [password, setPassword] = useState('');
+// const [error, setError] = useState(null);
 
-{/* <h2>Login</h2>
+{
+  /* <h2>Login</h2>
             <p>Email</p>
             <input
                 type="text"
@@ -57,4 +94,5 @@ export default function AuthLogin() {
             />
           
             <button>Login</button>
-            {error && <p style={{ color: 'red' }}>{error}</p>} */}
+            {error && <p style={{ color: 'red' }}>{error}</p>} */
+}

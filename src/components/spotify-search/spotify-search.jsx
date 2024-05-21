@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./styles.css";
-import styles from "./spotify-search-module.scss";
 import Paragraph from "../typography/paragraph";
 import { theme } from "../../theme";
 import inputStyle from "../text-input/text-input.module.scss";
 import Button from "../button";
-import Cross from "../svg/cross";
 
 function SpotifyApp({
   getSong,
@@ -192,6 +190,9 @@ function SpotifyApp({
 
   return (
     <div className={inputStyle.input__group} style={{ gap: 0 }}>
+      <label htmlFor={"spotify"} style={{ fontSize: 18, paddingBottom: 6 }}>
+        Het liedje*
+      </label>
       {/* Conditional rendering of the search bar */}
       {!(
         selectedResult &&
@@ -200,15 +201,9 @@ function SpotifyApp({
       ) && (
         <div
           style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "6px",
             width: "100%",
           }}
         >
-          <label htmlFor={"spotify"} style={{ fontSize: 18 }}>
-            Het liedje (Via Spotify)*
-          </label>
           <input
             id="spotify"
             className="search-input"
@@ -217,7 +212,7 @@ function SpotifyApp({
             onChange={(e) => {
               setSearchQuery(e.target.value);
             }}
-            placeholder="Zoek de artiest van het liedje"
+            placeholder="Zoek de artiest van het lied"
             style={
               searchResults.length > 0
                 ? {

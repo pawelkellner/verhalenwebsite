@@ -18,12 +18,10 @@ const TextEditor = ({
   value?: string;
   required?: boolean;
 }) => {
-  const [editorData, setEditorData] = useState(placeholder);
+  const [editorData, setEditorData] = useState(placeholder || "");
 
   useEffect(() => {
-    if (value) {
-      setEditorData(value);
-    }
+    setEditorData(value || "");
   }, [value]);
 
   return (

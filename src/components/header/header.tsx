@@ -5,6 +5,7 @@ import Link from "next/link";
 
 import styles from "./styles.module.scss";
 
+import { isUserLoggedIn } from "../../app/actions";
 import Heading from "../typography/heading";
 import Paragraph from "../typography/paragraph";
 import Button from "../button";
@@ -24,7 +25,7 @@ const Header = () => {
   const [scrollHeight, setScrollHeight] = useState(0);
 
   useEffect(() => {
-    setIsAuthenticated(true);
+    checkAuth();
   }, []);
 
   useEffect(() => {
@@ -36,6 +37,17 @@ const Header = () => {
       setIsWhite(false);
     }
   }, [scrollHeight, router]);
+
+  async function checkAuth() {
+    const response = await isUserLoggedIn();
+    if (response !== false) {
+      console.log("user email:", response);
+      setIsAuthenticated(true);
+    } else {
+      console.log("user is not logged in");
+      setIsAuthenticated(false);
+    }
+  }
 
   function toggleMenu() {
     setIsMenuOpen(!isMenuOpen);
@@ -73,7 +85,9 @@ const Header = () => {
         </Link>
         {(router === "/" || router.includes("stories")) && <Search />}
         <div className={styles.nav__buttons}>
-          <LinkButton href="/admin/review">Beheerder paneel</LinkButton>
+          {isAuthenticated && (
+            <LinkButton href="/admin/review">Beheerder paneel</LinkButton>
+          )}
 
           <LinkButton href="/about">Over Muziek verhalen</LinkButton>
 

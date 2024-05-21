@@ -42,21 +42,20 @@ const Form = () => {
   const [songImage, setSongImage] = useState<File | null>(null);
   const [originText, setOriginText] = useState("");
   const [storyText, setStoryText] = useState<string | undefined>(undefined);
-  const [storyTextFile, setStoryTextFile] = useState<File | undefined>(
-    undefined
-  );
+  const [storyTextFile, setStoryTextFile] = useState<File | null>(null);
   const [songText, setSongText] = useState<string | undefined>(undefined);
   3;
 
   const [manualSongInput, setManualSongInput] = useState(false);
-  const [manualStoryTextInput, setManualStoryTextInput] = useState(true);
+  const [manualStoryTextInput, setManualStoryTextInput] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
   const router = useRouter();
 
-  const isStoryText = storyText === "" || storyTextFile !== undefined;
+  const isStoryText =
+    (storyText && storyText?.length > 1) || storyTextFile !== undefined;
 
   async function getSong(res) {
     setSong(res);
@@ -68,7 +67,7 @@ const Form = () => {
   const addItem = async (e) => {
     e.preventDefault();
 
-    if (storyTitle === "" || isStoryText || isLoading) return;
+    if (storyTitle === "" || !isStoryText || isLoading) return;
     else {
       setIsSuccess(false);
       setIsLoading(true);
@@ -79,6 +78,7 @@ const Form = () => {
           song: song,
           songTitle: songTitle,
           originText: originText,
+          // storyTextFile: storyTextFile,
           storyText: storyText,
           songText: songText,
           underReview: true,
@@ -86,15 +86,11 @@ const Form = () => {
 
         let imageUrl: string | null = null;
 
-        console.log("songImage:", songImage);
-
         if (songImage) {
           const storageRef = ref(firebaseStorage, songImage.name);
           await uploadBytes(storageRef, songImage);
           imageUrl = await getDownloadURL(storageRef);
         }
-
-        console.log("imageUrl:", imageUrl);
 
         const response = await submitStory(storyData, imageUrl);
 
@@ -109,7 +105,8 @@ const Form = () => {
         setLinkToSong("");
         setSongImage(null);
         setOriginText("");
-        setStoryText(undefined);
+        setStoryText("");
+        setStoryTextFile(null);
         setSongText(undefined);
       } catch (e) {
         console.error("error: ", e);
@@ -229,7 +226,9 @@ const Form = () => {
               required
             />
             <Button
-              onClick={() => setManualStoryTextInput(false)}
+              onClick={() => {
+                setManualStoryTextInput(false), setStoryText("");
+              }}
               variant="underlined"
               style={{ paddingTop: 10 }}
             >
@@ -247,7 +246,9 @@ const Form = () => {
               accept=".doc, .docx, .rtf, .txt, .pdf"
             />
             <Button
-              onClick={() => setManualStoryTextInput(true)}
+              onClick={() => {
+                setManualStoryTextInput(true);
+              }}
               variant="underlined"
               style={{ paddingTop: 10 }}
             >
@@ -272,7 +273,7 @@ const Form = () => {
       </div>
       <Button
         variant={
-          storyTitle === "" || isStoryText || isLoading
+          storyTitle === "" || !isStoryText || isLoading
             ? "disabled"
             : "secondary"
         }

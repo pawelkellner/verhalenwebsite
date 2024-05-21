@@ -1,7 +1,16 @@
-import React from "react";
+import React, { CSSProperties } from "react";
 import Link from "next/link";
 
 import Button, { ButtonProps } from "../button";
+
+interface LinkButtonProps {
+  children: React.ReactNode;
+  href: string;
+  onClick?: () => void;
+  className?: string;
+  buttonVariant?: ButtonProps["variant"];
+  style?: CSSProperties;
+}
 
 const LinkButton = ({
   children,
@@ -9,17 +18,16 @@ const LinkButton = ({
   onClick,
   className,
   buttonVariant,
-}: {
-  children: React.ReactNode;
-  href: string;
-  onClick?: () => void;
-  className?: string;
-  buttonVariant?: ButtonProps["variant"];
-}) => {
+  style,
+}: LinkButtonProps) => {
   return (
-    <Link className={className} href={href}>
+    <Link
+      className={className}
+      href={href}
+      style={{ ...style, fontWeight: 300 }}
+    >
       <Button
-        style={{ fontWeight: 300 }}
+        style={{ width: "100%" }}
         variant={buttonVariant ? buttonVariant : "unstyled"}
         onClick={onClick}
       >

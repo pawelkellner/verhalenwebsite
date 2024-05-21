@@ -34,6 +34,7 @@ const FormAdmin = ({
   songImageData,
   originTextData,
   storyTextData,
+  // storyTextFileData
   songTextData,
 }) => {
   const [author, setAuthor] = useState(authorData);
@@ -41,7 +42,10 @@ const FormAdmin = ({
 
   const [songTitle, setSongTitle] = useState(songTitleData);
   const [song, setSong] = useState(songData);
-  const [searchQuery, setSearchQuery] = useState(songTitleData);
+
+  const [searchQuery, setSearchQuery] = useState(
+    songData.name + " - " + songData.artist
+  );
   const [searchResults, setSearchResults] = useState([]);
   const [selectedResult, setSelectedResult] = useState([]);
   const [artistAlbums, setArtistAlbums] = useState([]);
@@ -51,16 +55,22 @@ const FormAdmin = ({
   const [songImage, setSongImage] = useState<File | null>(songImageData);
   const [originText, setOriginText] = useState(originTextData);
   const [storyText, setStoryText] = useState<string | undefined>(storyTextData);
+  const [storyTextFile, setStoryTextFile] = useState<File | null>(null);
   const [songText, setSongText] = useState<string | undefined>(songTextData);
+  3;
+
+  const [manualSongInput, setManualSongInput] = useState(false);
+  const [manualStoryTextInput, setManualStoryTextInput] = useState(
+    storyText && storyText.length > 1 ? true : false
+  );
 
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
   const router = useRouter();
 
-  useEffect(() => {
-    setSongText(songTextData);
-  }, []);
+  const isStoryText =
+    (storyText && storyText?.length > 1) || storyTextFile !== undefined;
 
   async function getSong(res) {
     setSong(res);
@@ -72,13 +82,7 @@ const FormAdmin = ({
   const addItem = async (e) => {
     e.preventDefault();
 
-    if (
-      storyTitle === "" ||
-      storyText === "" ||
-      songText === null ||
-      isLoading
-    )
-      return;
+    if (storyTitle === "" || !isStoryText || isLoading) return;
     else {
       setIsSuccess(false);
       setIsLoading(true);
@@ -89,21 +93,19 @@ const FormAdmin = ({
           song: song,
           songTitle: songTitle,
           originText: originText,
+          // storyTextFile: storyTextFile,
           storyText: storyText,
           songText: songText,
+          underReview: true,
         };
 
         let imageUrl: string | null = null;
-
-        console.log("songImage:", songImage);
 
         if (songImage) {
           const storageRef = ref(firebaseStorage, songImage.name);
           await uploadBytes(storageRef, songImage);
           imageUrl = await getDownloadURL(storageRef);
         }
-
-        console.log("imageUrl:", imageUrl);
 
         const response = await submitStory(storyData, imageUrl);
 
@@ -118,7 +120,8 @@ const FormAdmin = ({
         setLinkToSong("");
         setSongImage(null);
         setOriginText("");
-        setStoryText(undefined);
+        setStoryText("");
+        setStoryTextFile(null);
         setSongText(undefined);
       } catch (e) {
         console.error("error: ", e);
@@ -133,10 +136,11 @@ const FormAdmin = ({
       <TextInput
         type="text"
         name="story_author"
-        label="Vul hier je naam in als de auteur van dit verhaal"
+        label="Auteur verhaal"
         placeholder="Auteur"
         onChange={(e) => setAuthor(e.target.value)}
         value={author}
+        required
       />
       <TextInput
         type="text"
@@ -147,8 +151,9 @@ const FormAdmin = ({
         value={storyTitle}
         required
       />
-      <div className="row">
-        { songTitle === '' && (
+      <div>
+        <div className="row">
+          {!manualSongInput && (
             <SpotifySearch
               getSong={getSong}
               setSong={setSong}
@@ -163,74 +168,129 @@ const FormAdmin = ({
               artistSongs={artistSongs}
               setArtistSongs={setArtistSongs}
             />
+          )}
+          <TextInput
+            type="text"
+            name="link_to_song"
+            label="Link naar het liedje (Spotify, Youtube oid)"
+            placeholder="Link"
+            onChange={(e) => setLinkToSong(e.target.value)}
+            value={linkToSong}
+          />
+        </div>
+        {song !== "" && !manualSongInput && (
+          <Button
+            onClick={() => {
+              setManualSongInput(true), setSong("");
+            }}
+            variant="underlined"
+            style={{ paddingTop: 10 }}
+          >
+            Vul handmatig in
+          </Button>
         )}
-        <TextInput
-          type="text"
-          name="link_to_song"
-          label="Link naar het liedje (Spotify, Youtube oid)"
-          placeholder="Link"
-          onChange={(e) => setLinkToSong(e.target.value)}
-          value={linkToSong}
-          required
-        />
       </div>
-        { song === ''  && (
-          <div className='row'>
-              <TextInput
-                type="file"
-                name="song_image"
-                label="Afbeelding"
-                onChange={(e) => setSongImage(e.target.files[0])}
-                accept="image/png, image/jpeg"
-              />
-              <TextInput
-                  type="text"
-                  name="song_info"
-                  label="Arties en titel van het liedje (Zonder Spotify)"
-                  placeholder={"Arties en titel van het liedje"}
-                  onChange={(e) => setSongTitle(e.target.value)}
-                  value={songTitle}
-              />
+      <div>
+        {manualSongInput && (
+          <div className="row">
+            <TextInput
+              type="file"
+              name="song_image"
+              label="Afbeelding voor lied"
+              onChange={(e) => setSongImage(e.target.files[0])}
+              accept="image/png, image/jpeg"
+            />
+            <TextInput
+              type="text"
+              name="song_info"
+              label="Artiest en titel van het liedje"
+              placeholder={"Artiest en titel van het liedje"}
+              onChange={(e) => setSongTitle(e.target.value)}
+              value={songTitle}
+            />
           </div>
         )}
+        {manualSongInput && (
+          <Button
+            onClick={() => {
+              setManualSongInput(false), setSongTitle(""), setSongImage(null);
+            }}
+            variant="underlined"
+            style={{ paddingTop: 10 }}
+          >
+            Terug naar de Spotify zoeker
+          </Button>
+        )}
+      </div>
       <TextArea
         name="origin_text"
-        label="Totstandkomming"
-        placeholder="Totstandkomming"
+        label="Extra informatie (zichtbaar bij verhaaltje)"
+        placeholder="Extra informatie"
         onChange={(e) => setOriginText(e.target.value)}
         value={originText}
         cols={30}
         rows={5}
       />
-      <Editor
-        label="Verhaal tekst"
-        onChange={(value) => setStoryText(value)}
-        value={storyText}
-        required
-      />
+      <div>
+        {manualStoryTextInput && (
+          <>
+            <Editor
+              label="Verhaal tekst"
+              onChange={(value) => setStoryText(value)}
+              value={storyText}
+              required
+            />
+            <Button
+              onClick={() => {
+                setManualStoryTextInput(false), setStoryText("");
+              }}
+              variant="underlined"
+              style={{ paddingTop: 10 }}
+            >
+              Terug naar document uploaden
+            </Button>
+          </>
+        )}
+        {!manualStoryTextInput && (
+          <>
+            <TextInput
+              type="file"
+              name="story_text"
+              label="Verhaal tekst*"
+              onChange={(e) => setStoryTextFile(e.target.files[0])}
+              accept=".doc, .docx, .rtf, .txt, .pdf"
+            />
+            <Button
+              onClick={() => {
+                setManualStoryTextInput(true);
+              }}
+              variant="underlined"
+              style={{ paddingTop: 10 }}
+            >
+              Of schrijf het handmatig
+            </Button>
+          </>
+        )}
+      </div>
       <Editor
         label="Songtekst"
         onChange={(value) => setSongText(value)}
         value={songText}
-        required
       />
       <div className={lineStyle.line} />
 
       <Button
         variant={
-          storyTitle === "" ||
-          storyText === "" ||
-          songText === "" ||
-          isLoading
+          storyTitle === "" || !isStoryText || isLoading
             ? "disabled"
             : "secondary"
         }
         style={{ width: "100%" }}
         // onClick={addItem}
+        onClick={() => console.log(linkToSongData)}
       >
         Aanpassingen opslaan
       </Button>
-
       <div
         style={{
           width: "100%",
@@ -245,6 +305,7 @@ const FormAdmin = ({
             Een moment, je verhaal wordt opgestuurd
           </Paragraph>
         )}
+
         {isSuccess && (
           <>
             <Paragraph variant="sm">Verhaal bewerken is gelukt</Paragraph>
