@@ -60,7 +60,6 @@ const Form = () => {
 
   async function getSong(res) {
     setSong(res);
-    // setSongTitle(`${res.artist} - ${res.name}`);
 
     const lyricResult = await getLyrics(res.artist, res.name);
     setSongText(lyricResult || undefined);

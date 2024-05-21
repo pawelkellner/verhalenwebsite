@@ -9,7 +9,9 @@
 
     
     @include mobile {
-        max-width: calc(50% - 30px);
+        &:not([data-editor=true]){
+            max-width: calc(50% - 30px);
+        }
 
     }
 

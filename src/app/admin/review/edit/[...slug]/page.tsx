@@ -28,12 +28,11 @@ export default async function Story({ params }: { params: { slug: string } }) {
         <FormAdmin
           authorData={story?.author}
           storyTitleData={story?.storyTitle}
+          songData={story?.song ? story?.song : ''}
           songTitleData={story?.songTitle}
           linkToSongData={story?.linkToSong}
           songImageData={story?.songImage}
           originTextData={story?.originText}
-          quoteTextData={story?.quoteText}
-          quoteAuthorData={story?.quoteAuthor}
           storyTextData={story?.storyText}
           songTextData={story?.songText}
         />

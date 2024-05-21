@@ -20,7 +20,7 @@ export interface Verhaal {
     };
     songTitle: string;
     songText: string | TrustedHTML;
-    songImage?: string;
+    songImage?: string | StaticImport;
     songOrigin: string;
     linkToSong: string | StaticImport;
     quoteAuthor: string;

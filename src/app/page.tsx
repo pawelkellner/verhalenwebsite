@@ -82,7 +82,7 @@ export default function Home() {
                   key={index}
                   id={story.id}
                   title={story.storyTitle}
-                  image={story.songImage}
+                  image={story.song ? story.song.albumImage : story.songImage}
                   text={story.storyText}
                   author={story.author}
                   songName={ story.song ? `${story.song.name} - ${story.song.artist}` : story.songTitle}
