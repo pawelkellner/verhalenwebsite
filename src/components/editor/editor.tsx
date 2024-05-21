@@ -28,7 +28,7 @@ const TextEditor = ({
 
   return (
     <div className={styles.input__group}>
-      <Paragraph>
+      <Paragraph variant="sm">
         {label}
         {required && "*"}
       </Paragraph>

@@ -31,6 +31,7 @@ const Form = () => {
 
   const [songTitle, setSongTitle] = useState("");
   const [song, setSong] = useState("");
+
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [selectedResult, setSelectedResult] = useState([]);
@@ -41,7 +42,14 @@ const Form = () => {
   const [songImage, setSongImage] = useState<File | null>(null);
   const [originText, setOriginText] = useState("");
   const [storyText, setStoryText] = useState<string | undefined>(undefined);
+  const [storyTextFile, setStoryTextFile] = useState<File | undefined>(
+    undefined
+  );
   const [songText, setSongText] = useState<string | undefined>(undefined);
+  3;
+
+  const [manualSongInput, setManualSongInput] = useState(false);
+  const [inputUpload, setInputUoload] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -49,7 +57,7 @@ const Form = () => {
   const router = useRouter();
 
   async function getSong(res) {
-      setSong(res)
+    setSong(res);
     // setSongTitle(`${res.artist} - ${res.name}`);
 
     const lyricResult = await getLyrics(res.artist, res.name);
@@ -59,12 +67,7 @@ const Form = () => {
   const addItem = async (e) => {
     e.preventDefault();
 
-    if (
-      storyTitle === "" ||
-      storyText === "" ||
-      songText === null ||
-      isLoading
-    )
+    if (storyTitle === "" || storyText === "" || songText === null || isLoading)
       return;
     else {
       setIsSuccess(false);
@@ -135,51 +138,73 @@ const Form = () => {
         value={storyTitle}
         required
       />
-      <div className="row">
-          { songTitle === '' && (
-              <SpotifySearch
-                  getSong={getSong}
-                  setSong={setSong}
-                  searchQuery={searchQuery}
-                  setSearchQuery={setSearchQuery}
-                  searchResults={searchResults}
-                  setSearchResults={setSearchResults}
-                  selectedResult={selectedResult}
-                  setSelectedResult={setSelectedResult}
-                  artistAlbums={artistAlbums}
-                  setArtistAlbums={setArtistAlbums}
-                  artistSongs={artistSongs}
-                  setArtistSongs={setArtistSongs}
-              />
+      <div>
+        <div className="row">
+          {!manualSongInput && (
+            <SpotifySearch
+              getSong={getSong}
+              setSong={setSong}
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              searchResults={searchResults}
+              setSearchResults={setSearchResults}
+              selectedResult={selectedResult}
+              setSelectedResult={setSelectedResult}
+              artistAlbums={artistAlbums}
+              setArtistAlbums={setArtistAlbums}
+              artistSongs={artistSongs}
+              setArtistSongs={setArtistSongs}
+            />
           )}
           <TextInput
-          type="text"
-          name="link_to_song"
-          label="Link naar het liedje (Spotify, Youtube oid)"
-          placeholder="Link"
-          onChange={(e) => setLinkToSong(e.target.value)}
-          value={linkToSong}
-        />
-      </div>
-        { song === '' && (
-            <div className="row">
-              <TextInput
-                type="file"
-                name="song_image"
-                label="Album cover (Zonder Spotify)"
-                onChange={(e) => setSongImage(e.target.files[0])}
-                accept="image/png, image/jpeg"
-              />
-            <TextInput
-                type="text"
-                name="song_info"
-                label="Arties en titel van het liedje (Zonder Spotify)"
-                placeholder={"Arties en titel van het liedje"}
-                onChange={(e) => setSongTitle(e.target.value)}
-                value={songTitle}
-            />
-            </div>
+            type="text"
+            name="link_to_song"
+            label="Link naar het liedje (Spotify, Youtube oid)"
+            placeholder="Link"
+            onChange={(e) => setLinkToSong(e.target.value)}
+            value={linkToSong}
+          />
+        </div>
+        {song !== "" && !manualSongInput && (
+          <Button
+            onClick={() => setManualSongInput(true)}
+            variant="underlined"
+            style={{ paddingTop: 10 }}
+          >
+            Niet gevonden? Vul het handmatig in
+          </Button>
         )}
+      </div>
+      <div>
+        {manualSongInput && (
+          <div className="row">
+            <TextInput
+              type="file"
+              name="song_image"
+              label="Afbeelding voor lied"
+              onChange={(e) => setSongImage(e.target.files[0])}
+              accept="image/png, image/jpeg"
+            />
+            <TextInput
+              type="text"
+              name="song_info"
+              label="Artiest en titel van het liedje"
+              placeholder={"Artiest en titel van het liedje"}
+              onChange={(e) => setSongTitle(e.target.value)}
+              value={songTitle}
+            />
+          </div>
+        )}
+        {manualSongInput && (
+          <Button
+            onClick={() => setManualSongInput(false)}
+            variant="underlined"
+            style={{ paddingTop: 10 }}
+          >
+            Terug naar de Spotify zoeker
+          </Button>
+        )}
+      </div>
       <TextArea
         name="origin_text"
         label="Extra informatie (zichtbaar bij verhaaltje)"
@@ -189,12 +214,24 @@ const Form = () => {
         cols={30}
         rows={5}
       />
-      <Editor
-        label="Verhaal tekst"
-        onChange={(value) => setStoryText(value)}
-        value={storyText}
-        required
-      />
+      <div>
+        <Editor
+          label="Verhaal tekst"
+          onChange={(value) => setStoryText(value)}
+          value={storyText}
+          required
+        />
+        <Button variant="underlined" style={{ paddingTop: 10 }}>
+          Of upload een document
+        </Button>
+        <TextInput
+          type="file"
+          name="story_text"
+          label="Verhaal tekst*"
+          onChange={(e) => setStoryTextFile(e.target.files[0])}
+          accept=".doc, .docx, .rtf, .txt, .pdf"
+        />
+      </div>
       <Editor
         label="Songtekst"
         onChange={(value) => setSongText(value)}
@@ -203,7 +240,7 @@ const Form = () => {
       />
       <div className={lineStyle.line} />
       <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
-        <input type="checkbox" id="confirm" required/>
+        <input type="checkbox" id="confirm" required />
         <label htmlFor="confirm" style={{ marginTop: -3 }}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
@@ -212,10 +249,7 @@ const Form = () => {
       </div>
       <Button
         variant={
-          storyTitle === "" ||
-          storyText === "" ||
-          songText === "" ||
-          isLoading
+          storyTitle === "" || storyText === "" || songText === "" || isLoading
             ? "disabled"
             : "secondary"
         }

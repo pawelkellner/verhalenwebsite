@@ -140,7 +140,7 @@ function SpotifyApp({
           image: item.images[0]?.url,
         }));
 
-        console.log(albums)
+        console.log(albums);
 
         setArtistAlbums(albums);
         setSelectedResult([{ type: result.type, name: result.name }]);
@@ -148,7 +148,7 @@ function SpotifyApp({
         console.error("Error:", error.message);
       }
     } else {
-      setSong(result)
+      setSong(result);
       setSelectedResult([result]);
       getSong(result);
     }
@@ -206,7 +206,9 @@ function SpotifyApp({
             width: "100%",
           }}
         >
-          <label htmlFor={"spotify"}>Het liedje (Via Spotify)*</label>
+          <label htmlFor={"spotify"} style={{ fontSize: 18 }}>
+            Het liedje (Via Spotify)*
+          </label>
           <input
             id="spotify"
             className="search-input"
@@ -215,7 +217,7 @@ function SpotifyApp({
             onChange={(e) => {
               setSearchQuery(e.target.value);
             }}
-            placeholder="Zoek een artiest of het titel van het liedje"
+            placeholder="Zoek de artiest van het liedje"
             style={
               searchResults.length > 0
                 ? {
@@ -273,7 +275,7 @@ function SpotifyApp({
                 variant="unstyled"
                 style={{ position: "absolute", right: 0, top: 0 }}
                 onClick={() => {
-                  setSong('');
+                  setSong("");
                   setSearchResults([]);
                   setSearchQuery("");
                   setSelectedResult([]);

@@ -9,6 +9,7 @@ export interface ButtonProps {
     | "neutral"
     | "warning"
     | "disabled"
+    | "underlined"
     | "unstyled";
   className?: string;
   style?: CSSProperties;
@@ -52,6 +53,17 @@ const Button: FC<ButtonProps> = ({
           background: theme.grey[100],
           borderColor: theme.grey[100],
           color: theme.grey[300],
+        };
+      case "underlined":
+        return {
+          background: "none",
+          color: "inherit",
+          border: "none",
+          padding: 0,
+          font: "inherit",
+          cursor: "pointer",
+          outline: "inherit",
+          textDecoration: "underline",
         };
       case "unstyled":
         return {

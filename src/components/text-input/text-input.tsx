@@ -13,7 +13,7 @@ const TextInput = ({
 }: TextInputProps) => {
   return (
     <div className={styles.input__group}>
-      <label htmlFor={name}>
+      <label style={{ fontSize: 18 }} htmlFor={name}>
         {label}
         {required && "*"}
       </label>

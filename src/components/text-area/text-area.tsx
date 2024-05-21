@@ -14,7 +14,7 @@ const TextArea = ({
     <div className={styles.input__group}>
       <label htmlFor={name}>{label}</label>
       <textarea
-        style={{ resize: "none" }}
+        style={{ resize: "none", fontSize: 18 }}
         id={name}
         name={name}
         placeholder={placeholder}
