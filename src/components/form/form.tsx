@@ -78,6 +78,7 @@ const Form = () => {
           originText: originText,
           storyText: storyText,
           songText: songText,
+          underReview: false
         };
 
         let imageUrl: string | null = null;
