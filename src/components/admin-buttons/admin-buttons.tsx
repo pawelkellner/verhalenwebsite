@@ -19,7 +19,7 @@ const AdminButtons = ({ slug, story }) => {
   };
 
   const disapproved = async () => {
-    await approveStory(story)
+    await deleteStory(story)
     router.push("/admin/review");
   };
 
