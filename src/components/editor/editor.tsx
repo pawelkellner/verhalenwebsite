@@ -27,7 +27,7 @@ const TextEditor = ({
   }, [value]);
 
   return (
-    <div className={styles.input__group}>
+    <div data-editor={true} className={styles.input__group}>
       <Paragraph>
         {label}
         {required && "*"}

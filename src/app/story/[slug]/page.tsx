@@ -21,8 +21,6 @@ export default async function Story({ params }: { params: { slug: string } }) {
   const verhalen = await fetchVerhalen();
   // const story = stories.find((story) => story.id === slug);
   const story = verhalen?.find((story) => story.id === slug);
-  const date = new Date(Number(story?.createdAt)).toLocaleString("en-US");
-  console.log(date);
 
   console.log(story)
 
@@ -59,11 +57,11 @@ export default async function Story({ params }: { params: { slug: string } }) {
                 <Paragraph>Gepubliceerd op 25 maart, 2024</Paragraph>
               </div>
             </div>
-            {story?.linkToSong || story?.song ? (
+            {story?.songImage || story?.song ? (
               <div className={styles.story__spotifyPlayer}>
                 <span>
                   <Image
-                    src={story?.linkToSong ? story?.linkToSong : story?.song.albumImage}
+                    src={story?.songImage ? story?.songImage : story?.song.albumImage}
                     alt={"album cover"}
                     fill
                   />

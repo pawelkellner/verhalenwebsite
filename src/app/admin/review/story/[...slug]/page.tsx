@@ -46,6 +46,7 @@ export default async function Story({ params }: { params: { slug: string } }) {
             />
           </div>
           <div className={styles.story__information}>
+            <>
             <div className={styles.story__origin}>
               {story?.originText && <Paragraph>{story?.originText}</Paragraph>}
               <div className={styles.story__author}>
@@ -54,17 +55,11 @@ export default async function Story({ params }: { params: { slug: string } }) {
                 <Paragraph>Gepubliceerd op 25 maart, 2024</Paragraph>
               </div>
             </div>
-            {story?.quoteAuthor && (
-              <div className={styles.story__quote}>
-                <h1>“{story?.quoteText}”</h1>
-                <Paragraph>- {story?.quoteAuthor}</Paragraph>
-              </div>
-            )}
-            {story?.songImage && (
+            {story?.songImage || story?.song.albumImage && (
               <div className={styles.story__spotifyPlayer}>
                 <span>
                   <Image
-                    src={story?.songImage ? story?.songImage : ""}
+                    src={story?.songImage ? story?.songImage : story?.song.albumImage }
                     alt={"album cover"}
                     fill
                   />
@@ -73,6 +68,7 @@ export default async function Story({ params }: { params: { slug: string } }) {
                 </span>
               </div>
             )}
+          </>
           </div>
         </div>
       </MainLayout>

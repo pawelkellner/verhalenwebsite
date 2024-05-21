@@ -28,12 +28,11 @@ const Editor = dynamic(
 const FormAdmin = ({
   authorData,
   storyTitleData,
+  songData,
   songTitleData,
   linkToSongData,
   songImageData,
   originTextData,
-  quoteTextData,
-  quoteAuthorData,
   storyTextData,
   songTextData,
 }) => {
@@ -41,6 +40,7 @@ const FormAdmin = ({
   const [storyTitle, setStoryTitle] = useState(storyTitleData);
 
   const [songTitle, setSongTitle] = useState(songTitleData);
+  const [song, setSong] = useState(songData);
   const [searchQuery, setSearchQuery] = useState(songTitleData);
   const [searchResults, setSearchResults] = useState([]);
   const [selectedResult, setSelectedResult] = useState([]);
@@ -50,8 +50,6 @@ const FormAdmin = ({
 
   const [songImage, setSongImage] = useState<File | null>(songImageData);
   const [originText, setOriginText] = useState(originTextData);
-  const [quoteText, setQuoteText] = useState(quoteTextData);
-  const [quoteAuthor, setQuoteAuthor] = useState(quoteAuthorData);
   const [storyText, setStoryText] = useState<string | undefined>(storyTextData);
   const [songText, setSongText] = useState<string | undefined>(songTextData);
 
@@ -65,7 +63,7 @@ const FormAdmin = ({
   }, []);
 
   async function getSong(res) {
-    // setSongTitle(`${res.artist} - ${res.name}`);
+    setSong(res);
 
     const lyricResult = await getLyrics(res.artist, res.name);
     setSongText(lyricResult || undefined);
@@ -76,7 +74,6 @@ const FormAdmin = ({
 
     if (
       storyTitle === "" ||
-      songTitle === "" ||
       storyText === "" ||
       songText === null ||
       isLoading
@@ -89,9 +86,8 @@ const FormAdmin = ({
         const storyData = {
           author: author,
           storyTitle: storyTitle,
+          song: song,
           songTitle: songTitle,
-          quoteText: quoteText,
-          quoteAuthor: quoteAuthor,
           originText: originText,
           storyText: storyText,
           songText: songText,
@@ -121,8 +117,6 @@ const FormAdmin = ({
         setArtistSongs([]);
         setLinkToSong("");
         setSongImage(null);
-        setQuoteText("");
-        setQuoteAuthor("");
         setOriginText("");
         setStoryText(undefined);
         setSongText(undefined);
@@ -154,20 +148,22 @@ const FormAdmin = ({
         required
       />
       <div className="row">
-        <SpotifySearch
-          getSong={getSong}
-          setSong={setSongTitle}
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          searchResults={searchResults}
-          setSearchResults={setSearchResults}
-          selectedResult={selectedResult}
-          setSelectedResult={setSelectedResult}
-          artistAlbums={artistAlbums}
-          setArtistAlbums={setArtistAlbums}
-          artistSongs={artistSongs}
-          setArtistSongs={setArtistSongs}
-        />
+        { songTitle === '' && (
+            <SpotifySearch
+              getSong={getSong}
+              setSong={setSong}
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              searchResults={searchResults}
+              setSearchResults={setSearchResults}
+              selectedResult={selectedResult}
+              setSelectedResult={setSelectedResult}
+              artistAlbums={artistAlbums}
+              setArtistAlbums={setArtistAlbums}
+              artistSongs={artistSongs}
+              setArtistSongs={setArtistSongs}
+            />
+        )}
         <TextInput
           type="text"
           name="link_to_song"
@@ -178,13 +174,25 @@ const FormAdmin = ({
           required
         />
       </div>
-      <TextInput
-        type="file"
-        name="song_image"
-        label="Afbeelding"
-        onChange={(e) => setSongImage(e.target.files[0])}
-        accept="image/png, image/jpeg"
-      />
+        { song === ''  && (
+          <div className='row'>
+              <TextInput
+                type="file"
+                name="song_image"
+                label="Afbeelding"
+                onChange={(e) => setSongImage(e.target.files[0])}
+                accept="image/png, image/jpeg"
+              />
+              <TextInput
+                  type="text"
+                  name="song_info"
+                  label="Arties en titel van het liedje (Zonder Spotify)"
+                  placeholder={"Arties en titel van het liedje"}
+                  onChange={(e) => setSongTitle(e.target.value)}
+                  value={songTitle}
+              />
+          </div>
+        )}
       <TextArea
         name="origin_text"
         label="Totstandkomming"
@@ -194,25 +202,6 @@ const FormAdmin = ({
         cols={30}
         rows={5}
       />
-      <div className="row">
-        <TextArea
-          name="quote_text"
-          label="Quote"
-          placeholder="Verhaal"
-          onChange={(e) => setQuoteText(e.target.value)}
-          value={quoteText}
-          cols={30}
-          rows={5}
-        />
-        <TextInput
-          type="text"
-          name="quote_author"
-          label="Quote auteur"
-          placeholder="Auteur"
-          onChange={(e) => setQuoteAuthor(e.target.value)}
-          value={quoteAuthor}
-        />
-      </div>
       <Editor
         label="Verhaal tekst"
         onChange={(value) => setStoryText(value)}
@@ -230,7 +219,6 @@ const FormAdmin = ({
       <Button
         variant={
           storyTitle === "" ||
-          songTitle === "" ||
           storyText === "" ||
           songText === "" ||
           isLoading

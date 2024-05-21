@@ -83,10 +83,10 @@ export default async function Page({
                 key={index}
                 id={story.id}
                 title={story.storyTitle}
-                image={story.songImage}
+                image={story.song ? story.song.albumImage : story.songImage}
                 text={story.storyText}
                 author={story.author}
-                songName={story.songTitle}
+                songName={story.song ? `${story?.song.name} - ${story?.song.artist}` : story?.songTitle}
               />
             ))}
       </div>

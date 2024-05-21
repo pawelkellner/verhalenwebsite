@@ -68,20 +68,20 @@ const StoryCard = ({
     }
 
     if (typeof text === "string") {
-      text = text.replace(/<[^>]*>/g, "");
+      text = text.replace(/<[^>]*>/g, " ").replace(/&nbsp;/g, " ");
 
       if (typeof text === "string") {
-        newIntroText = text.slice(0, amountOfChars);
-        switch (newIntroText.slice(-1)) {
-          case ",":
-          case ".":
-          case " ":
-            newIntroText = newIntroText.slice(0, newIntroText.length - 1);
-            break;
-        }
+          newIntroText = text.slice(0, amountOfChars);
+          switch (newIntroText.slice(-1)) {
+            case ",":
+            case ".":
+            case " ":
+              newIntroText = newIntroText.slice(0, newIntroText.length - 1);
+              break;
+          }
 
-        newIntroText += "...";
-        setIntroText(newIntroText);
+          newIntroText += "...";
+          setIntroText(newIntroText);
       }
     }
   }

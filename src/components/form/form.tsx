@@ -49,8 +49,7 @@ const Form = () => {
   const router = useRouter();
 
   async function getSong(res) {
-      setSong(res)
-    // setSongTitle(`${res.artist} - ${res.name}`);
+    setSong(res)
 
     const lyricResult = await getLyrics(res.artist, res.name);
     setSongText(lyricResult || undefined);

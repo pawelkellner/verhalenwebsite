@@ -7,11 +7,9 @@ import { db } from "../firebase";
 
 export async function submitStory(storyData, imageUrl) {
     try {
-
-
         const docRef = await addDoc(collection(db, "verhalen"), {
             ...storyData,
-            linkToSong: imageUrl,
+            songImage: imageUrl,
             createdAt: serverTimestamp(),
         });
 
