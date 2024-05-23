@@ -29,6 +29,7 @@ const Editor = dynamic(
 const Form = () => {
   const [author, setAuthor] = useState("");
   const [storyTitle, setStoryTitle] = useState("");
+  const [checkboxChecked, setCheckboxChecked] = useState(false);
 
   const [songTitle, setSongTitle] = useState("");
   const [song, setSong] = useState("");
@@ -50,13 +51,14 @@ const Form = () => {
   const [manualSongInput, setManualSongInput] = useState(false);
   const [manualStoryTextInput, setManualStoryTextInput] = useState(false);
 
+  const [alertText, setAlertText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
   const router = useRouter();
 
   const isStoryText =
-    (storyText && storyText?.length > 1) || storyTextFile !== undefined;
+    (storyText ? storyText?.length > 1 : false) || storyTextFile !== null;
 
   async function getSong(res) {
     setSong(res);
@@ -68,10 +70,26 @@ const Form = () => {
   const addItem = async (e) => {
     e.preventDefault();
 
-    if (storyTitle === "" || !isStoryText || isLoading) return;
+    if (storyTitle === "") {
+      setAlertText("Verhaal titel mist");
+      return;
+    }
+
+    if (!isStoryText) {
+      setAlertText("Verhaal tekst mist");
+      return;
+    }
+
+    if (!checkboxChecked) {
+      setAlertText("Gelieve het vakje aan te vinken voordat je doorgaat.");
+      return;
+    }
+
+    if (isLoading) return;
     else {
       setIsSuccess(false);
       setIsLoading(true);
+      setAlertText("");
 
       try {
         let updatedAuthor = author;
@@ -256,6 +274,7 @@ const Form = () => {
             <Button
               onClick={() => {
                 setManualStoryTextInput(true);
+                setStoryTextFile(null);
               }}
               variant="underlined"
               style={{ paddingTop: 10 }}
@@ -272,7 +291,12 @@ const Form = () => {
       />
       <div className={lineStyle.line} />
       <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
-        <input type="checkbox" id="confirm" required />
+        <input
+          type="checkbox"
+          id="confirm"
+          onChange={() => setCheckboxChecked(true)}
+          required
+        />
         <label htmlFor="confirm" style={{ marginTop: -3 }}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
@@ -300,6 +324,7 @@ const Form = () => {
           gap: 32,
         }}
       >
+        {alertText && <Paragraph color="red">{alertText}</Paragraph>}
         {isLoading && (
           <Paragraph variant="sm">
             Een moment, je verhaal wordt opgestuurd
