@@ -107,7 +107,7 @@ const Form = () => {
           // storyTextFile: storyTextFile,
           storyText: storyText,
           songText: songText,
-          underReview: true,
+          underReview: isLoggedIn ? false : true,
         };
 
         let imageUrl: string | null = null;
