@@ -17,16 +17,12 @@ import LogoSvg from "../svg/LogoSvg";
 const Header = () => {
   const router = usePathname();
 
-  const { state, dispatch } = useAuth();
+  const { state } = useAuth();
 
   const [isWhite, setIsWhite] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [eventAdded, setEventAdded] = useState(false);
   const [scrollHeight, setScrollHeight] = useState(0);
-
-  useEffect(() => {
-    console.log("HERE", state.isUserAuthenticated);
-  }, [state.isUserAuthenticated]);
 
   useEffect(() => {
     if (router !== "/") {

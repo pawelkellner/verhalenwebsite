@@ -1,7 +1,7 @@
 "use client";
 import style from "./page.module.scss";
-import React, { useState, useEffect, useReducer } from "react";
-import { authLogin, isUserLoggedIn, authLogout } from "../../app/actions";
+import React, { useState, useEffect } from "react";
+import { authLogin, isUserLoggedIn } from "../../app/actions";
 import Button from "../../components/button";
 import { useRouter } from "next/navigation";
 import TextInput from "../../components/text-input/text-input";
@@ -46,12 +46,6 @@ export default function AuthLogin() {
       type: ActionTypes.AUTHENTICATE_USER,
       value: response !== false,
     });
-  }
-
-  async function logoutUser() {
-    await authLogout();
-    dispatch({ type: ActionTypes.AUTHENTICATE_USER, value: false });
-    checkAuth();
   }
 
   return (
@@ -99,19 +93,6 @@ export default function AuthLogin() {
           </div>
         </>
       )}
-      <div className={textInputStyles.input__group}>
-        {state.isUserAuthenticated && (
-          <Button
-            variant="primary"
-            style={{
-              width: "100%",
-            }}
-            onClick={() => logoutUser()}
-          >
-            Log out
-          </Button>
-        )}
-      </div>
     </MainLayout>
   );
 }
