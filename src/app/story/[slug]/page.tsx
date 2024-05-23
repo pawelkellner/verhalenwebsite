@@ -5,8 +5,6 @@ import Image from "next/image";
 
 import styles from "../page.module.scss";
 
-import { stories } from "../../../example-stories";
-
 import MainLayout from "../../../components/main-layout/main-layout";
 import PlayButtonSvg from "../../../components/svg/PlayButtonSvg";
 import PageTitle from "../../../components/page-title/page-title";
@@ -16,13 +14,12 @@ import LinkButton from "../../../components/link-button/link-button";
 import { fetchVerhalen } from "../../utils";
 
 export default async function Story({ params }: { params: { slug: string } }) {
-  // const slug = parseInt(params.slug);
   const slug = params.slug;
   const verhalen = await fetchVerhalen();
-  // const story = stories.find((story) => story.id === slug);
   const story = verhalen?.find((story) => story.id === slug);
 
-  console.log(story)
+  const verhalenIds = verhalen?.map((story) => story.id) || [];
+  const randomId = verhalenIds[Math.floor(Math.random() * verhalenIds.length)];
 
   return (
     <>
@@ -31,7 +28,11 @@ export default async function Story({ params }: { params: { slug: string } }) {
           title={
             story?.storyTitle ? story.storyTitle : "Titel niet beschikbaar"
           }
-          songTitle={story?.song ? `${story?.song.name} - ${story?.song.artist}` : story?.songTitle}
+          songTitle={
+            story?.song
+              ? `${story?.song.name} - ${story?.song.artist}`
+              : story?.songTitle
+          }
           paddingBottom={true}
           storyPage={true}
         />
@@ -61,7 +62,11 @@ export default async function Story({ params }: { params: { slug: string } }) {
               <div className={styles.story__spotifyPlayer}>
                 <span>
                   <Image
-                    src={story?.songImage ? story?.songImage : story?.song.albumImage}
+                    src={
+                      story?.songImage
+                        ? story?.songImage
+                        : story?.song.albumImage
+                    }
                     alt={"album cover"}
                     fill
                   />
@@ -69,7 +74,9 @@ export default async function Story({ params }: { params: { slug: string } }) {
                   <PlayButtonSvg />
                 </span>
               </div>
-            ) : ''}
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </MainLayout>
@@ -77,7 +84,8 @@ export default async function Story({ params }: { params: { slug: string } }) {
         <MainLayout>
           <div>
             <Paragraph variant="md">
-              Songtekst van &apos;{story?.song ? story?.song.name : story?.songTitle }&apos;
+              Songtekst van &apos;
+              {story?.song ? story?.song.name : story?.songTitle}&apos;
             </Paragraph>
             <div
               dangerouslySetInnerHTML={{
@@ -92,7 +100,7 @@ export default async function Story({ params }: { params: { slug: string } }) {
       </div>
       <MainLayout>
         <div className={styles.story__buttons}>
-          <LinkButton href={`/story/${slug + 1}`} buttonVariant="secondary">
+          <LinkButton href={`/story/${randomId}`} buttonVariant="secondary">
             Lees nog een verhaal
           </LinkButton>
           <Paragraph>Of</Paragraph>
