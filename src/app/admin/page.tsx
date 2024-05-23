@@ -1,98 +1,117 @@
 "use client";
-
 import style from "./page.module.scss";
-import React, { useState } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import { authLogin, isUserLoggedIn, authLogout } from "../../app/actions";
 import Button from "../../components/button";
-import LinkButton from "../../components/link-button/link-button";
 import { useRouter } from "next/navigation";
+import TextInput from "../../components/text-input/text-input";
+import MainLayout from "../../components/main-layout/main-layout";
+import textInputStyles from "../../components/text-input/text-input.module.scss";
+import { ActionTypes } from "../../store/auth-reducer";
+import { useAuth } from "../../auth-context";
 
 export default function AuthLogin() {
+  const { state, dispatch } = useAuth();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const router = useRouter();
 
-  async function loginWithCredentials() {
-    const response = await authLogin("testemail@m.com", "testpassword");
-    console.log("user email:", response);
-    // router.replace("/");
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
+  async function login() {
+    await authLogin(email, password);
+    router.replace("/admin/review");
   }
+
+  async function loginWithCredentials() {
+    await authLogin("testemail@m.com", "testpassword");
+    router.replace("/admin/review");
+    dispatch({
+      type: ActionTypes.AUTHENTICATE_USER,
+      value: true,
+    });
+  }
+
+  useEffect(() => {
+    console.log("HERE2", state.isUserAuthenticated);
+  }, [state.isUserAuthenticated]);
 
   async function checkAuth() {
     const response = await isUserLoggedIn();
-    if (response !== false) {
-      console.log("user email:", response);
-      // router.replace("/");
-    } else {
-      console.log("user is not logged in");
-    }
+    dispatch({
+      type: ActionTypes.AUTHENTICATE_USER,
+      value: response !== false,
+    });
   }
 
   async function logoutUser() {
-    try {
-      await authLogout();
-    } catch (e) {
-      console.log(e);
-    }
+    await authLogout();
+    dispatch({ type: ActionTypes.AUTHENTICATE_USER, value: false });
     checkAuth();
   }
 
   return (
-    <div className={style.about__container}>
-      <Button
-        variant="primary"
-        style={{
-          width: "100%",
-          minWidth: 200,
-          maxWidth: 500,
-        }}
-        onClick={() => loginWithCredentials()}
-      >
-        Log in
-      </Button>
-      <Button
-        variant="secondary"
-        style={{
-          width: "100%",
-          minWidth: 200,
-          maxWidth: 500,
-        }}
-        onClick={() => checkAuth()}
-      >
-        Check auth
-      </Button>
-      <Button
-        variant="secondary"
-        style={{
-          width: "100%",
-          minWidth: 200,
-          maxWidth: 500,
-        }}
-        onClick={() => logoutUser()}
-      >
-        Log out
-      </Button>
-    </div>
+    <MainLayout className={style.about__container}>
+      {!state.isUserAuthenticated && (
+        <>
+          <TextInput
+            label="Email"
+            type="email"
+            name="email"
+            placeholder="Email"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+          />
+          <TextInput
+            label="Wachtwoord"
+            type="password"
+            name="password"
+            placeholder="Wachtwoord"
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+          />
+          <div className={textInputStyles.input__group}>
+            <Button
+              variant="primary"
+              style={{
+                marginTop: 12,
+                width: "100%",
+              }}
+              onClick={() => login()}
+            >
+              Log in
+            </Button>
+            <Button
+              variant="secondary"
+              style={{
+                width: "100%",
+              }}
+              onClick={() => {
+                loginWithCredentials();
+              }}
+            >
+              DEV LOGIN
+            </Button>
+          </div>
+        </>
+      )}
+      <div className={textInputStyles.input__group}>
+        {state.isUserAuthenticated && (
+          <Button
+            variant="primary"
+            style={{
+              width: "100%",
+            }}
+            onClick={() => logoutUser()}
+          >
+            Log out
+          </Button>
+        )}
+      </div>
+    </MainLayout>
   );
-}
-
-// const [email, setEmail] = useState('');
-// const [password, setPassword] = useState('');
-// const [error, setError] = useState(null);
-
-{
-  /* <h2>Login</h2>
-            <p>Email</p>
-            <input
-                type="text"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-            />
-            <p>Password</p>
-            <input
-                type="password" // Change type to 'password'
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
-          
-            <button>Login</button>
-            {error && <p style={{ color: 'red' }}>{error}</p>} */
 }

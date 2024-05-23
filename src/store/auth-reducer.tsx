@@ -14,7 +14,7 @@ export interface Action {
 }
 
 export const initialState: State = {
-  isUserAuthenticated: true,
+  isUserAuthenticated: false,
 };
 
 export const reducer = (state: State, action: Action): State => {

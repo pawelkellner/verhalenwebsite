@@ -1,11 +1,11 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useReducer } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 import styles from "./styles.module.scss";
 
-import { isUserLoggedIn } from "../../app/actions";
+import { useAuth } from "../../auth-context";
 import Heading from "../typography/heading";
 import Paragraph from "../typography/paragraph";
 import Button from "../button";
@@ -17,7 +17,7 @@ import LogoSvg from "../svg/LogoSvg";
 const Header = () => {
   const router = usePathname();
 
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { state, dispatch } = useAuth();
 
   const [isWhite, setIsWhite] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -25,8 +25,8 @@ const Header = () => {
   const [scrollHeight, setScrollHeight] = useState(0);
 
   useEffect(() => {
-    checkAuth();
-  }, []);
+    console.log("HERE", state.isUserAuthenticated);
+  }, [state.isUserAuthenticated]);
 
   useEffect(() => {
     if (router !== "/") {
@@ -37,17 +37,6 @@ const Header = () => {
       setIsWhite(false);
     }
   }, [scrollHeight, router]);
-
-  async function checkAuth() {
-    const response = await isUserLoggedIn();
-    if (response !== false) {
-      console.log("user email:", response);
-      setIsAuthenticated(true);
-    } else {
-      console.log("user is not logged in");
-      setIsAuthenticated(false);
-    }
-  }
 
   function toggleMenu() {
     setIsMenuOpen(!isMenuOpen);
@@ -85,7 +74,7 @@ const Header = () => {
         </Link>
         {(router === "/" || router.includes("stories")) && <Search />}
         <div className={styles.nav__buttons}>
-          {isAuthenticated && (
+          {state.isUserAuthenticated && (
             <LinkButton href="/admin/review">Beheerder paneel</LinkButton>
           )}
 
@@ -116,7 +105,7 @@ const Header = () => {
             <a href="/write">
               <Paragraph variant="sm">Schrijven</Paragraph>
             </a>
-            {isAuthenticated && (
+            {state.isUserAuthenticated && (
               <a href="/admin/review">
                 <Paragraph variant="sm">Beheerder paneel</Paragraph>
               </a>

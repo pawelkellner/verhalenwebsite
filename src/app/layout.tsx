@@ -3,6 +3,7 @@ import "./globals.scss";
 import localFont from "next/font/local";
 import Header from "../components/header/header";
 import Footer from "../components/footer/footer";
+import { AuthProvider } from "../auth-context";
 
 export const metadata = {
   title: "SoundStories",
@@ -34,9 +35,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={font.className}>
-        <Header />
-        {children}
-        <Footer />
+        <AuthProvider>
+          <Header />
+          {children}
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

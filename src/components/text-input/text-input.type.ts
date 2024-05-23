@@ -1,5 +1,7 @@
+import { CSSProperties } from "react"
+
 type TextInputProps = {
-    type: 'text' | 'file'
+    type: 'text' | 'file' | 'password' | 'email'
     name: string
     label: string
     placeholder?: string
@@ -7,6 +9,7 @@ type TextInputProps = {
     value?: string
     required?: boolean
     accept?: string
+    style?: CSSProperties
 }
 
 export default TextInputProps
