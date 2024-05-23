@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import "./form.scss";
@@ -16,7 +16,8 @@ import Paragraph from "../typography/paragraph";
 import SpotifySearch from "../spotify-search/spotify-search.jsx";
 
 import { storage as firebaseStorage } from "../../firebase";
-import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { isUserLoggedIn } from "../../app/actions";
 
 const Editor = dynamic(
   () => {
@@ -71,9 +72,16 @@ const Form = () => {
     else {
       setIsSuccess(false);
       setIsLoading(true);
+
       try {
+        let updatedAuthor = author;
+        const isLoggedIn = await isUserLoggedIn();
+        if (!isLoggedIn) {
+          updatedAuthor += " (gastgebruiker)";
+        }
+
         const storyData = {
-          author: author,
+          author: updatedAuthor,
           storyTitle: storyTitle,
           song: song,
           songTitle: songTitle,

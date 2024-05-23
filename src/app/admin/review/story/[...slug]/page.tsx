@@ -20,7 +20,6 @@ export default async function Story({ params }: { params: { slug: string } }) {
   const verhalen = await fetchVerhalen();
 
   const story = verhalen?.find((story) => story.id === slug);
-  const date = new Date(Number(story?.createdAt)).toLocaleString("en-US");
 
   return (
     <>
