@@ -1,7 +1,7 @@
 import React, { FC, CSSProperties } from "react";
 
 interface HeadingProps {
-  variant?: "xl" | "lg";
+  variant?: "xl" | "lg" | "sm";
   fontWeight?: 200 | 300 | 400 | 500 | 600;
   children: React.ReactNode;
 }
@@ -24,6 +24,13 @@ const Heading: FC<HeadingProps> = ({
         return {
           fontSize: "26px",
           lineHeight: "26px",
+          fontWeight: fontWeight ? fontWeight : 400,
+        };
+
+      case "sm":
+        return {
+          fontSize: "22px",
+          lineHeight: "22px",
           fontWeight: fontWeight ? fontWeight : 400,
         };
 

@@ -1,8 +1,13 @@
 .about__container {
     max-width: 550px;
-    height: 50vh;
     padding-top: 20px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 40px;
+}
+
+.about__section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
