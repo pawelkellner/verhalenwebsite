@@ -1,8 +1,8 @@
 import { cache } from 'react';
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
-import { db } from "../firebase";
+import { db } from "./firebase";
 import * as url from "url";
-import {StaticImport} from "next/dist/shared/lib/get-img-props";
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
 export interface Verhaal {
     id: string;
@@ -43,3 +43,16 @@ export const fetchVerhalen = (async () => {
         console.error("Error fetching documents: ", error);
     }
 })
+
+export function formatDate(createdAt: {
+    seconds: number;
+    nanoseconds: number;
+}): string {
+    const date = new Date(createdAt.seconds * 1000);
+    const options: Intl.DateTimeFormatOptions = {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+    };
+    return date.toLocaleDateString("nl-NL", options);
+}

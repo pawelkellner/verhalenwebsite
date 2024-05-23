@@ -3,6 +3,9 @@ import React from "react";
 
 import Image from "next/image";
 
+import { fetchVerhalen } from "../../../utils";
+import { formatDate } from "../../../utils";
+
 import styles from "../page.module.scss";
 
 import MainLayout from "../../../components/main-layout/main-layout";
@@ -11,7 +14,6 @@ import PageTitle from "../../../components/page-title/page-title";
 import Paragraph from "../../../components/typography/paragraph";
 import Heading from "../../../components/typography/heading";
 import LinkButton from "../../../components/link-button/link-button";
-import { fetchVerhalen } from "../../utils";
 
 export default async function Story({ params }: { params: { slug: string } }) {
   const slug = params.slug;
@@ -55,7 +57,12 @@ export default async function Story({ params }: { params: { slug: string } }) {
               <div className={styles.story__author}>
                 <Paragraph>Verhaal geschreven door {story?.author}</Paragraph>
 
-                <Paragraph>Gepubliceerd op 25 maart, 2024</Paragraph>
+                <Paragraph>
+                  Gepubliceerd op{" "}
+                  {story?.createdAt
+                    ? formatDate(story.createdAt)
+                    : "Niet beschikbaar"}
+                </Paragraph>
               </div>
             </div>
             {story?.songImage || story?.song ? (

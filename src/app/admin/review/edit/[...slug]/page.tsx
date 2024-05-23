@@ -5,7 +5,7 @@ import "../../../../write/page.scss";
 
 import MainLayout from "../../../../../components/main-layout/main-layout";
 import PageTitle from "../../../../../components/page-title/page-title";
-import { fetchVerhalen } from "../../../../utils";
+import { fetchVerhalen } from "../../../../../utils";
 import FormAdmin from "../../../../../components/form-admin/form-admin";
 
 export default async function Story({ params }: { params: { slug: string } }) {
@@ -28,7 +28,7 @@ export default async function Story({ params }: { params: { slug: string } }) {
         <FormAdmin
           authorData={story?.author}
           storyTitleData={story?.storyTitle}
-          songData={story?.song ? story?.song : ''}
+          songData={story?.song ? story?.song : ""}
           songTitleData={story?.songTitle}
           linkToSongData={story?.linkToSong}
           songImageData={story?.songImage}

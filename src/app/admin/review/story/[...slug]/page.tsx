@@ -3,7 +3,8 @@ import React from "react";
 
 import Image from "next/image";
 
-import { fetchVerhalen } from "../../../../utils";
+import { fetchVerhalen } from "../../../../../utils";
+import { formatDate } from "../../../../../utils";
 
 import styles from "../../../../story/page.module.scss";
 
@@ -28,7 +29,11 @@ export default async function Story({ params }: { params: { slug: string } }) {
           title={
             story?.storyTitle ? story.storyTitle : "Titel niet beschikbaar"
           }
-          songTitle={story?.song ? `${story?.song.name} - ${story?.song.artist}` : story?.songTitle}
+          songTitle={
+            story?.song
+              ? `${story?.song.name} - ${story?.song.artist}`
+              : story?.songTitle
+          }
           paddingBottom={true}
           storyPage={true}
         />
@@ -47,28 +52,40 @@ export default async function Story({ params }: { params: { slug: string } }) {
           </div>
           <div className={styles.story__information}>
             <>
-            <div className={styles.story__origin}>
-              {story?.originText && <Paragraph>{story?.originText}</Paragraph>}
-              <div className={styles.story__author}>
-                <Paragraph>Verhaal geschreven door {story?.author}</Paragraph>
+              <div className={styles.story__origin}>
+                {story?.originText && (
+                  <Paragraph>{story?.originText}</Paragraph>
+                )}
+                <div className={styles.story__author}>
+                  <Paragraph>Verhaal geschreven door {story?.author}</Paragraph>
 
-                <Paragraph>Gepubliceerd op 25 maart, 2024</Paragraph>
+                  <Paragraph>
+                    Gepubliceerd op{" "}
+                    {story?.createdAt
+                      ? formatDate(story.createdAt)
+                      : "Niet beschikbaar"}
+                  </Paragraph>
+                </div>
               </div>
-            </div>
-            {story?.songImage || story?.song.albumImage && (
-              <div className={styles.story__spotifyPlayer}>
-                <span>
-                  <Image
-                    src={story?.songImage ? story?.songImage : story?.song.albumImage }
-                    alt={"album cover"}
-                    fill
-                  />
-                  <span />
-                  <PlayButtonSvg />
-                </span>
-              </div>
-            )}
-          </>
+              {story?.songImage ||
+                (story?.song.albumImage && (
+                  <div className={styles.story__spotifyPlayer}>
+                    <span>
+                      <Image
+                        src={
+                          story?.songImage
+                            ? story?.songImage
+                            : story?.song.albumImage
+                        }
+                        alt={"album cover"}
+                        fill
+                      />
+                      <span />
+                      <PlayButtonSvg />
+                    </span>
+                  </div>
+                ))}
+            </>
           </div>
         </div>
       </MainLayout>
@@ -76,7 +93,8 @@ export default async function Story({ params }: { params: { slug: string } }) {
         <MainLayout>
           <div>
             <Paragraph variant="md">
-              Songtekst van &apos;{ story?.song ? story?.song.name : story?.songTitle}&apos;
+              Songtekst van &apos;
+              {story?.song ? story?.song.name : story?.songTitle}&apos;
             </Paragraph>
             <div
               dangerouslySetInnerHTML={{

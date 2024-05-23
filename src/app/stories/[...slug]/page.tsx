@@ -2,7 +2,7 @@ import React from "react";
 
 import filteredVerhalen from "../../../components/firebase/filteredVerhalen";
 
-import { Verhaal } from "../../utils";
+import { Verhaal } from "../../../utils";
 
 import styles from "../page.module.scss";
 
@@ -40,7 +40,6 @@ export default async function Page({
   const searchTerm = params.slug[1];
 
   const filterStories = (story: Verhaal) => {
-
     if (!searchTerm) {
       return true;
     }
@@ -84,7 +83,11 @@ export default async function Page({
                 image={story.song ? story.song.albumImage : story.songImage}
                 text={story.storyText}
                 author={story.author}
-                songName={story.song ? `${story?.song.name} - ${story?.song.artist}` : story?.songTitle}
+                songName={
+                  story.song
+                    ? `${story?.song.name} - ${story?.song.artist}`
+                    : story?.songTitle
+                }
               />
             ))}
       </div>

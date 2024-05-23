@@ -7,7 +7,7 @@ import styles from "./page.module.scss";
 
 import { useState } from "react";
 import { stories } from "../example-stories";
-import { Verhaal } from "./utils";
+import { Verhaal } from "../utils";
 
 import MainLayout from "../components/main-layout/main-layout";
 import Pagination from "../components/pagination/pagination";
