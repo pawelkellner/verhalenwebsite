@@ -9,7 +9,7 @@ const Footer = () => {
       <div className="container">
         <div className="footer__links">
           <Link href="/about">
-            <Paragraph variant="md">Over Muziek verhalen</Paragraph>
+            <Paragraph variant="md">Over SoundStories</Paragraph>
           </Link>
           <Link href="/write">
             <Paragraph variant="md">Schrijf jouw verhaal</Paragraph>
@@ -19,7 +19,7 @@ const Footer = () => {
           </Link>
         </div>
         <div className="footer__copyright">
-          <Paragraph variant="md">©2024 Muziek Verhalen</Paragraph>
+          <Paragraph variant="md">©2024 SoundStories</Paragraph>
         </div>
         <div className="footer__logo">
           <LogoSvg />

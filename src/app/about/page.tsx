@@ -9,13 +9,13 @@ import Paragraph from "../../components/typography/paragraph";
 
 export const metadata = {
   title: "Over",
-  description: "Over Verhalen website",
+  description: "Over SoundStories",
 };
 
 export default function About() {
   return (
     <MainLayout>
-      <PageTitle title="Over Muziek Verhalen" />
+      <PageTitle title="Over SoundStories" />
       <div className={style.about__container}>
         <Heading variant="lg" fontWeight={300}>
           Lorem ipsum

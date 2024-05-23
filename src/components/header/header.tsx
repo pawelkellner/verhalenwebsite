@@ -79,7 +79,7 @@ const Header = () => {
           >
             <LogoSvg />
             <Heading variant="lg" fontWeight={300}>
-              Muziek verhalen
+              SoundStories
             </Heading>
           </Button>
         </Link>
@@ -89,7 +89,7 @@ const Header = () => {
             <LinkButton href="/admin/review">Beheerder paneel</LinkButton>
           )}
 
-          <LinkButton href="/about">Over Muziek verhalen</LinkButton>
+          <LinkButton href="/about">Over SoundStories</LinkButton>
 
           <LinkButton href="/write" buttonVariant="primary">
             Schrijven
@@ -111,7 +111,7 @@ const Header = () => {
         <div className={styles.nav__hamburgerMenu}>
           <div className="container">
             <a href="/about">
-              <Paragraph variant="sm">Over Muziek verhalen</Paragraph>
+              <Paragraph variant="sm">Over SoundStories</Paragraph>
             </a>
             <a href="/write">
               <Paragraph variant="sm">Schrijven</Paragraph>

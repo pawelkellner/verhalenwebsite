@@ -5,8 +5,8 @@ import Header from "../components/header/header";
 import Footer from "../components/footer/footer";
 
 export const metadata = {
-  title: "Verhalen website",
-  description: "Verhalen website",
+  title: "SoundStories",
+  description: "SoundStories",
 };
 
 export const font = localFont({
