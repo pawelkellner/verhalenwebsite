@@ -116,6 +116,11 @@ const Header = () => {
             <a href="/write">
               <Paragraph variant="sm">Schrijven</Paragraph>
             </a>
+            {isAuthenticated && (
+              <a href="/admin/review">
+                <Paragraph variant="sm">Beheerder paneel</Paragraph>
+              </a>
+            )}
           </div>
         </div>
       )}
