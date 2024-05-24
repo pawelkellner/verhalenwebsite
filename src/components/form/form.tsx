@@ -62,6 +62,7 @@ const Form = () => {
 
   async function getSong(res) {
     setSong(res);
+    console.log("song:", res)
 
     const lyricResult = await getLyrics(res.artist, res.name);
     setSongText(lyricResult || undefined);

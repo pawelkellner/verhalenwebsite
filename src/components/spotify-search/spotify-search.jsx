@@ -97,6 +97,7 @@ function SpotifyApp({
             type: "Track",
             name: item.name,
             artist: item.artists[0].name,
+            url: item.external_urls.spotify,
             album: item.album.name,
             albumImage:
               item.album.images.length > 0 ? item.album.images[0].url : null,
@@ -105,14 +106,12 @@ function SpotifyApp({
 
       setSearchResults([...artists, ...tracks]);
 
-      console.log([...artists, ...tracks]);
     } catch (error) {
       console.error("Error:", error.message);
     }
   }
 
   async function resultSelected(result) {
-    console.log(result);
     if (result.type === "Artist") {
       setArtistAlbums([]);
       setArtistSongs([]);
@@ -137,8 +136,6 @@ function SpotifyApp({
           name: item.name,
           image: item.images[0]?.url,
         }));
-
-        console.log(albums);
 
         setArtistAlbums(albums);
         setSelectedResult([{ type: result.type, name: result.name }]);
@@ -169,20 +166,18 @@ function SpotifyApp({
 
       const data = await response.json();
 
-      console.log(data);
-
       const tracks = data.items.map((item) => ({
         id: item.id,
         type: "Track",
         name: item.name,
         artist: item.artists[0].name,
         album: album.name,
+        url: item.external_urls.spotify,
         albumImage: album.image,
       }));
 
       setArtistAlbums([album]);
       setArtistSongs(tracks);
-      console.log(tracks);
     } catch (error) {
       console.error("Error:", error.message);
     }
