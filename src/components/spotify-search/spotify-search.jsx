@@ -104,7 +104,7 @@ function SpotifyApp({
           }))
         : [];
 
-      setSearchResults([...artists, ...tracks]);
+      setSearchResults([...tracks, ...artists ]);
 
     } catch (error) {
       console.error("Error:", error.message);
