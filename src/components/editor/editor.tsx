@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Paragraph from "../typography/paragraph";
 import styles from "../text-input/text-input.module.scss";
+import "../../app/globals.scss";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 
 const TextEditor = ({
