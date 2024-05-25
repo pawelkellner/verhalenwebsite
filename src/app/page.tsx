@@ -41,6 +41,40 @@ export default function Home() {
       });
   }, []);
 
+    const renderSkeletonCards = () => {
+        return (
+            <>
+                <StoryCard
+                    key={1}
+                    id={"idoski"}
+                    title={"Lorem ipsum dolor sit amet"}
+                    text={"Lorem ipsum dolor sit amet"}
+                    author={"Lorem ipsum"}
+                    songName={"Lorem ipsum dolor"}
+                    skeleton={true}
+                />
+                <StoryCard
+                    key={2}
+                    id={"idoski"}
+                    title={"Lorem ipsum dolor sit amet"}
+                    text={"Lorem ipsum dolor sit amet"}
+                    author={"Lorem ipsum"}
+                    songName={"Lorem ipsum dolor"}
+                    skeleton={true}
+                />
+                <StoryCard
+                    key={3}
+                    id={"idoski"}
+                    title={"Lorem ipsum dolor sit amet"}
+                    text={"Lorem ipsum dolor sit amet"}
+                    author={"Lorem ipsum"}
+                    songName={"Lorem ipsum dolor"}
+                    skeleton={true}
+                />
+            </>
+        );
+    };
+
   return (
     <>
       <Hero />
@@ -48,35 +82,7 @@ export default function Home() {
         <PageTitle noTopPadding title="Recente verhalen" />
         <div className={styles.cards__container}>
           {loading && (
-            <>
-              <StoryCard
-                key={1}
-                id={"idoski"}
-                title={"Lorem ipsum dolor sit amet"}
-                text={"Lorem ipsum dolor sit amet"}
-                author={"Lorem ipsum"}
-                songName={"Lorem ipsum dolor"}
-                skeleton={true}
-              />
-              <StoryCard
-                key={2}
-                id={"idoski"}
-                title={"Lorem ipsum dolor sit amet"}
-                text={"Lorem ipsum dolor sit amet"}
-                author={"Lorem ipsum"}
-                songName={"Lorem ipsum dolor"}
-                skeleton={true}
-              />
-              <StoryCard
-                key={3}
-                id={"idoski"}
-                title={"Lorem ipsum dolor sit amet"}
-                text={"Lorem ipsum dolor sit amet"}
-                author={"Lorem ipsum"}
-                songName={"Lorem ipsum dolor"}
-                skeleton={true}
-              />
-            </>
+            renderSkeletonCards()
           )}
           {limitedStories?.map((story, index) => (
             <StoryCard

@@ -9,10 +9,10 @@ export async function GET() {
         const verhalenData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Verhaal));
 
         // Filter verhalenData to only include objects where underReview is false
-        const filteredVerhalenData = verhalenData.filter(verhaal => !verhaal.underReview === true);
+        // const filteredVerhalenData = verhalenData.filter(verhaal => !verhaal.underReview === true);
 
         return new Response(JSON.stringify({
-            body: filteredVerhalenData,
+            body: verhalenData,
         }), {
             headers: {
                 "Content-Type": "application/json",

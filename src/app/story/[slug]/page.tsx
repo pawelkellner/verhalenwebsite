@@ -16,12 +16,36 @@ import Heading from "../../../components/typography/heading";
 import LinkButton from "../../../components/link-button/link-button";
 
 export default async function Story({ params }: { params: { slug: string } }) {
+  const monthsArray = [
+      'januari',
+      'februari',
+      'maart',
+      'april',
+      'mei',
+      'juni',
+      'juli',
+      'augustus',
+      'september',
+      'october',
+      'november',
+      'december'
+  ];
+
+  let date:string = '';
+
   const slug = params.slug;
   const verhalen = await fetchVerhalen();
   const story = verhalen?.find((story) => story.id === slug);
 
   const verhalenIds = verhalen?.map((story) => story.id) || [];
   const randomId = verhalenIds[Math.floor(Math.random() * verhalenIds.length)];
+
+  if( story ) {
+    const jsUnixTS = ( story.createdAt.seconds + story.createdAt.nanoseconds*10**-9 ) * 1000;
+    const fullDate = new Date(jsUnixTS);
+
+    date = `${fullDate.getDate()} ${monthsArray[fullDate.getMonth()]}, ${fullDate.getFullYear()}`
+  }
 
   return (
     <>
@@ -59,8 +83,8 @@ export default async function Story({ params }: { params: { slug: string } }) {
 
                 <Paragraph>
                   Gepubliceerd op{" "}
-                  {story?.createdAt
-                    ? formatDate(story.createdAt)
+                  {date
+                    ? date
                     : "Niet beschikbaar"}
                 </Paragraph>
               </div>
