@@ -5,8 +5,6 @@ export async function POST(request) {
     const storyData = JSON.parse(formData.get('storyData'));
     const storyTextFile = formData.get('storyTextFile');
 
-    console.log("HERE", storyTextFile)
-
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
