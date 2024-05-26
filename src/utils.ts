@@ -1,7 +1,5 @@
-import { cache } from 'react';
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "./firebase";
-import * as url from "url";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
 export interface Verhaal {
@@ -55,4 +53,16 @@ export function formatDate(createdAt: {
         year: "numeric",
     };
     return date.toLocaleDateString("nl-NL", options);
+}
+
+export const sortStories = (stories, underReview) => {
+    return stories?.sort((a, b) => {
+        const dateA = new Date(
+            a.createdAt.seconds * 1000 + a.createdAt.nanoseconds / 1000000
+        ).getTime();
+        const dateB = new Date(
+            b.createdAt.seconds * 1000 + b.createdAt.nanoseconds / 1000000
+        ).getTime();
+        return dateB - dateA;
+    }).filter((item) => item.underReview === underReview)
 }

@@ -6,8 +6,7 @@ import Link from "next/link";
 import styles from "./page.module.scss";
 
 import { useState } from "react";
-import { stories } from "../example-stories";
-import { Verhaal } from "../utils";
+import {sortStories, Verhaal} from "../utils";
 
 import MainLayout from "../components/main-layout/main-layout";
 import Pagination from "../components/pagination/pagination";
@@ -26,17 +25,8 @@ export default function Home() {
     })
       .then((res) => res.json())
       .then((data) => {
-        const sortedVerhalen = data.body?.sort((a, b) => {
-          const dateA = new Date(
-            a.createdAt.seconds * 1000 + a.createdAt.nanoseconds / 1000000
-          ).getTime();
-          const dateB = new Date(
-            b.createdAt.seconds * 1000 + b.createdAt.nanoseconds / 1000000
-          ).getTime();
-          return dateB - dateA;
-        });
-        setStories(sortedVerhalen);
-        setLimitedStories(sortedVerhalen.slice(0, 7));
+        setStories(sortStories(data.body, false));
+        setLimitedStories(sortStories(data.body, false).slice(0, 7));
         setLoading(false);
       });
   }, []);

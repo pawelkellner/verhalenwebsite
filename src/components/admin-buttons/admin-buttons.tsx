@@ -25,7 +25,7 @@ const AdminButtons = ({ slug, story }) => {
 
   return (
     <div className={styles.story__buttons}>
-        { story.underReview && (
+        { story?.underReview && (
             <>
                 <Button onClick={() => approved()} variant="primary">
                     Goedkeuren

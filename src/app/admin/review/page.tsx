@@ -7,6 +7,8 @@ import MainLayout from "../../../components/main-layout/main-layout";
 import PageTitle from "../../../components/page-title/page-title";
 import StoryCard from "../../../components/story-card/story-card";
 import {Verhaal} from "../../../utils";
+import TextInput from "../../../components/text-input/text-input";
+import { sortStories } from "../../../utils";
 
 export default function Page() {
 
@@ -25,18 +27,6 @@ export default function Page() {
           setLoading(false);
         });
   }, []);
-
-  const sortStories = (stories, underReview) => {
-    return stories?.sort((a, b) => {
-      const dateA = new Date(
-          a.createdAt.seconds * 1000 + a.createdAt.nanoseconds / 1000000
-      ).getTime();
-      const dateB = new Date(
-          b.createdAt.seconds * 1000 + b.createdAt.nanoseconds / 1000000
-      ).getTime();
-      return dateB - dateA;
-    }).filter((item) => item.underReview === underReview)
-  }
 
   const renderSkeletonCards = () => {
     return (
@@ -72,15 +62,20 @@ export default function Page() {
     );
   }
 
+  // const changeStories = (e) => {
+  //     const searchTerm = e.target.value;
+  // }
+
   return (
     <>
       <MainLayout>
         <PageTitle title="Niet gekeurde verhalen" />
+      {/*<TextInput type={"text"} name={'underReviewSearch'} label={"Zoek verhalen"} onChange={changeStories} />*/}
         <div className={styles.cards__container}>
           { loading && (
               renderSkeletonCards()
           )}
-          { sortStories(stories, true).map( (story, index) => (
+          { sortStories(stories, true)?.map( (story, index) => (
               <StoryCard
                   key={index}
                   id={story.id}
@@ -102,7 +97,7 @@ export default function Page() {
           { loading && (
               renderSkeletonCards()
           )}
-          { sortStories(stories, false).map( (story, index) => (
+          { sortStories(stories, false)?.map( (story, index) => (
               <StoryCard
                   key={index}
                   id={story.id}
