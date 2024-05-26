@@ -62,7 +62,7 @@ const Form = () => {
 
   async function getSong(res) {
     setSong(res);
-    setLinkToSong(res.url)
+    setLinkToSong(res.url);
 
     const lyricResult = await getLyrics(res.artist, res.name);
     setSongText(lyricResult || undefined);
@@ -98,6 +98,7 @@ const Form = () => {
         if (!isLoggedIn) {
           updatedAuthor += " (gastgebruiker)";
         }
+        console.log("here", isLoggedIn);
 
         const storyData = {
           author: updatedAuthor,

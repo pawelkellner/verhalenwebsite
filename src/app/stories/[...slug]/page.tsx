@@ -11,8 +11,6 @@ import Pagination from "../../../components/pagination/pagination";
 import PageTitle from "../../../components/page-title/page-title";
 import StoryCard from "../../../components/story-card/story-card";
 
-import { stories } from "../../../example-stories";
-
 export default async function Page({
   params,
 }: {
@@ -31,12 +29,6 @@ export default async function Page({
   });
 
   const storiesPerPage = 8;
-  const maxIndex = Math.ceil(
-    (sortedVerhalen ? sortedVerhalen?.length : storiesPerPage) / storiesPerPage
-  );
-  const activeIndex = parseInt(params.slug[0]);
-  const startIndex = (activeIndex - 1) * storiesPerPage;
-
   const searchTerm = params.slug[1];
 
   const filterStories = (story: Verhaal) => {
@@ -54,12 +46,33 @@ export default async function Page({
       JSON.stringify(story.storyText)
         .toLowerCase()
         .includes(searchTerm.toLowerCase());
-    const songNameMatch =
+    const songMatch =
       story.songTitle &&
       story.songTitle.toLowerCase().includes(searchTerm.toLowerCase());
+    const songNameMatch =
+      story.song.name &&
+      story.song.name.toLowerCase().includes(searchTerm.toLowerCase());
+    const songArtistMatch =
+      story.song.artist &&
+      story.song.artist.toLowerCase().includes(searchTerm.toLowerCase());
+    const authorNameMatch =
+      story.author &&
+      story.author.toLowerCase().includes(searchTerm.toLowerCase());
 
-    return titleMatch || textMatch || songNameMatch;
+    return (
+      titleMatch ||
+      textMatch ||
+      songMatch ||
+      songNameMatch ||
+      songArtistMatch ||
+      authorNameMatch
+    );
   };
+
+  const filteredStories = sortedVerhalen?.filter(filterStories) || [];
+  const maxIndex = Math.ceil(filteredStories.length / storiesPerPage);
+  const activeIndex = parseInt(params.slug[0], 10) || 1;
+  const startIndex = (activeIndex - 1) * storiesPerPage;
 
   return (
     <MainLayout>
@@ -71,25 +84,23 @@ export default async function Page({
         }
       />
       <div className={styles.cards__container}>
-        {sortedVerhalen &&
-          sortedVerhalen
-            .slice(startIndex, startIndex + storiesPerPage)
-            .filter(filterStories)
-            .map((story, index) => (
-              <StoryCard
-                key={index}
-                id={story.id}
-                title={story.storyTitle}
-                image={story.song ? story.song.albumImage : story.songImage}
-                text={story.storyText}
-                author={story.author}
-                songName={
-                  story.song
-                    ? `${story?.song.name} - ${story?.song.artist}`
-                    : story?.songTitle
-                }
-              />
-            ))}
+        {filteredStories
+          .slice(startIndex, startIndex + storiesPerPage)
+          .map((story, index) => (
+            <StoryCard
+              key={index}
+              id={story.id}
+              title={story.storyTitle}
+              image={story.song ? story.song.albumImage : story.songImage}
+              text={story.storyText}
+              author={story.author}
+              songName={
+                story.song
+                  ? `${story?.song.name} - ${story?.song.artist}`
+                  : story?.songTitle
+              }
+            />
+          ))}
       </div>
       <Pagination
         maxIndex={maxIndex}
