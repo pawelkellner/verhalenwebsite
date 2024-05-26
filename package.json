@@ -19,7 +19,8 @@
     "ckeditor5-custom-build": "file:src/ckeditor5",
     "dotenv": "^16.4.5",
     "firebase": "^10.10.0",
-    "next": "14.1.4"
+    "next": "14.1.4",
+    "nodemailer": "^6.9.13"
   },
   "devDependencies": {
     "@types/node": "20.12.2",

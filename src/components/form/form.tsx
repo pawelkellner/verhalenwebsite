@@ -96,7 +96,9 @@ const Form = () => {
         let updatedAuthor = author;
         const isLoggedIn = await isUserLoggedIn();
         if (!isLoggedIn) {
-          updatedAuthor += " (gastgebruiker)";
+          updatedAuthor.length > 0
+            ? (updatedAuthor += " (gastgebruiker)")
+            : (updatedAuthor += "een gastgebruiker");
         }
         console.log("here", isLoggedIn);
 
@@ -106,21 +108,30 @@ const Form = () => {
           song: song,
           songTitle: songTitle,
           originText: originText,
-          // storyTextFile: storyTextFile,
           storyText: storyText,
           songText: songText,
           underReview: isLoggedIn ? false : true,
         };
 
         let imageUrl: string | null = null;
-
         if (songImage) {
           const storageRef = ref(firebaseStorage, songImage.name);
           await uploadBytes(storageRef, songImage);
           imageUrl = await getDownloadURL(storageRef);
         }
 
-        const response = await submitStory(storyData, imageUrl);
+        if (!isLoggedIn) {
+          const formData = new FormData();
+          formData.append("storyData", JSON.stringify(storyData));
+          storyTextFile && formData.append("storyTextFile", storyTextFile);
+
+          await fetch("/api/send-email", {
+            method: "POST",
+            body: formData,
+          });
+        }
+
+        await submitStory(storyData, imageUrl);
 
         setAuthor("");
         setStoryTitle("");
@@ -273,6 +284,7 @@ const Form = () => {
               onChange={(e) => setStoryTextFile(e.target.files[0])}
               accept=".doc, .docx, .rtf, .txt, .pdf"
             />
+
             <Button
               onClick={() => {
                 setManualStoryTextInput(true);
