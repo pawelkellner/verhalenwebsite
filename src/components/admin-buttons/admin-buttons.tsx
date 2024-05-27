@@ -14,12 +14,12 @@ const AdminButtons = ({ slug, story }) => {
   const router = useRouter();
 
   const approved = async () => {
-    await approveStory(story)
+    await approveStory(story);
     router.push("/admin/review");
   };
 
   const disapproved = async () => {
-    await deleteStory(story)
+    await deleteStory(story);
     router.push("/admin/review");
   };
 
@@ -36,14 +36,14 @@ const AdminButtons = ({ slug, story }) => {
       <LinkButton href={`/admin/review/edit/${slug}`} buttonVariant="secondary">
         Bewerken
       </LinkButton>
-        {/*{ !story.underReview  && (*/}
-            <>
-              <Paragraph>Of</Paragraph>
-              <Button onClick={() => disapproved()} variant="warning">
-                Afkeuren
-              </Button>
-            </>
-        {/*)}*/}
+      {/*{ !story.underReview  && (*/}
+      <>
+        <Paragraph>Of</Paragraph>
+        <Button onClick={() => disapproved()} variant="warning">
+          Afkeuren
+        </Button>
+      </>
+      {/*)}*/}
     </div>
   );
 };

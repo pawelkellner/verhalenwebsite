@@ -2,12 +2,16 @@
 import React, {useEffect, useState} from "react";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 import {Verhaal} from "../../../utils";
 import { formatDate } from "../../../utils";
+import { useAuth } from "../../../auth-context";
+import { deleteStory } from "../../actions";
 
 import styles from "../page.module.scss";
 
+import Button from "../../../components/button";
 import MainLayout from "../../../components/main-layout/main-layout";
 import PlayButtonSvg from "../../../components/svg/PlayButtonSvg";
 import PageTitle from "../../../components/page-title/page-title";
@@ -20,22 +24,25 @@ export default function Story({ params }: { params: { slug: string } }) {
   const [story, setStory] = useState<Verhaal>();
   const [loading, setLoading] = useState(true);
 
+  const { state } = useAuth();
+  const router = useRouter();
+
   const monthsArray = [
-      'januari',
-      'februari',
-      'maart',
-      'april',
-      'mei',
-      'juni',
-      'juli',
-      'augustus',
-      'september',
-      'october',
-      'november',
-      'december'
+    "januari",
+    "februari",
+    "maart",
+    "april",
+    "mei",
+    "juni",
+    "juli",
+    "augustus",
+    "september",
+    "october",
+    "november",
+    "december",
   ];
 
-  let date:string = '';
+  let date: string = "";
 
     useEffect(() => {
         fetch(`${process.env.NEXT_PUBLIC_FETCH_API_LINK}/api`, {
@@ -54,12 +61,20 @@ export default function Story({ params }: { params: { slug: string } }) {
   const verhalenIds = stories?.map((story) => story.id) || [];
   const randomId = verhalenIds[Math.floor(Math.random() * verhalenIds.length)];
 
-  if( story ) {
-    const jsUnixTS = ( story.createdAt.seconds + story.createdAt.nanoseconds*10**-9 ) * 1000;
+  if (story) {
+    const jsUnixTS =
+      (story.createdAt.seconds + story.createdAt.nanoseconds * 10 ** -9) * 1000;
     const fullDate = new Date(jsUnixTS);
 
-    date = `${fullDate.getDate()} ${monthsArray[fullDate.getMonth()]}, ${fullDate.getFullYear()}`
+    date = `${fullDate.getDate()} ${
+      monthsArray[fullDate.getMonth()]
+    }, ${fullDate.getFullYear()}`;
   }
+
+  const handleDeleteStory = async () => {
+    await deleteStory(story);
+    router.push("/");
+  };
 
   return (
     <>
@@ -96,10 +111,7 @@ export default function Story({ params }: { params: { slug: string } }) {
                 <Paragraph>Verhaal geschreven door {story?.author}</Paragraph>
 
                 <Paragraph>
-                  Gepubliceerd op{" "}
-                  {date
-                    ? date
-                    : "Niet beschikbaar"}
+                  Gepubliceerd op {date ? date : "Niet beschikbaar"}
                 </Paragraph>
               </div>
             </div>
@@ -152,6 +164,14 @@ export default function Story({ params }: { params: { slug: string } }) {
           <LinkButton href="/write" buttonVariant="secondary">
             Schrijf er zelf een
           </LinkButton>
+          {state.isUserAuthenticated === true && (
+            <>
+              <Paragraph>Of</Paragraph>
+              <Button onClick={() => handleDeleteStory()} variant="warning">
+                Verhaal verwijderen
+              </Button>
+            </>
+          )}
         </div>
       </MainLayout>
     </>

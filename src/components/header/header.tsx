@@ -25,6 +25,10 @@ const Header = () => {
   const [scrollHeight, setScrollHeight] = useState(0);
 
   useEffect(() => {
+    console.log("AUTH:", state.isUserAuthenticated);
+  }, [router]);
+
+  useEffect(() => {
     if (router !== "/") {
       setIsWhite(true);
     } else if (router === "/" && scrollHeight >= 50) {
