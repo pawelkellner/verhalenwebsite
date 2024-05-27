@@ -59,8 +59,6 @@ export default function Story({ params }: { params: { slug: string } }) {
 
   return (
       <>
-      { story ? (
-        <>
           <MainLayout>
             <PageTitle
               title={
@@ -148,7 +146,5 @@ export default function Story({ params }: { params: { slug: string } }) {
             <AdminButtons slug={slug} story={story} />
           </MainLayout>
         </>
-      ) : 'Loading...' }
-    </>
   );
 }
