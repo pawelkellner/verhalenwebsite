@@ -30,7 +30,7 @@ export default async function Story({ params }: { params: { slug: string } }) {
           storyTitleData={story?.storyTitle}
           songData={story?.song ? story?.song : ""}
           songTitleData={story?.songTitle}
-          linkToSongData={story?.linkToSong}
+          linkToSongData={story?.song?.url}
           songImageData={story?.songImage}
           originTextData={story?.originText}
           storyTextData={story?.storyText}

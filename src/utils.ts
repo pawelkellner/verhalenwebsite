@@ -17,12 +17,13 @@ export interface Verhaal {
         id: string;
         name: string;
         type: string;
+        url: string;
     };
     songTitle: string;
     songText: string | TrustedHTML;
     songImage?: string | StaticImport;
     songOrigin: string;
-    linkToSong: string | StaticImport;
+    // linkToSong: string | StaticImport;
     quoteAuthor: string;
     quoteText: string;
     originText: string;
