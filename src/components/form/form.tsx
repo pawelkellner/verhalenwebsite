@@ -97,8 +97,8 @@ const Form = () => {
         const isLoggedIn = await isUserLoggedIn();
         if (!isLoggedIn) {
           updatedAuthor.length > 0
-            ? (updatedAuthor += " (gastgebruiker)")
-            : (updatedAuthor += "een gastgebruiker");
+            ? (updatedAuthor += " (gastschrijver)")
+            : (updatedAuthor += "een gastschrijver");
         }
         console.log("here", isLoggedIn);
 
@@ -120,16 +120,16 @@ const Form = () => {
           imageUrl = await getDownloadURL(storageRef);
         }
 
-        if (!isLoggedIn) {
-          const formData = new FormData();
-          formData.append("storyData", JSON.stringify(storyData));
-          storyTextFile && formData.append("storyTextFile", storyTextFile);
+        // if (!isLoggedIn) {
+        //   const formData = new FormData();
+        //   formData.append("storyData", JSON.stringify(storyData));
+        //   storyTextFile && formData.append("storyTextFile", storyTextFile);
 
-          await fetch("/api/send-email", {
-            method: "POST",
-            body: formData,
-          });
-        }
+        //   await fetch("/api/send-email", {
+        //     method: "POST",
+        //     body: formData,
+        //   });
+        // }
 
         await submitStory(storyData, imageUrl);
 

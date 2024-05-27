@@ -4,23 +4,17 @@ import type { NextRequest } from 'next/server';
 import { isUserLoggedIn } from './app/actions';
 
 export async function middleware(request: NextRequest) {
-    // console.log('Executing middleware');
-    // try {
-    //     const isAuthenticated = await isUserLoggedIn();
+    try {
+        const isAuthenticated = await isUserLoggedIn();
+        if (!isAuthenticated) {
+            return NextResponse.redirect(new URL('/admin', request.url));
+        }
 
-    //     console.log('Is authenticated:', isAuthenticated);
+    } catch (error) {
+        console.error(error);
+    }
 
-    //     if (!isAuthenticated) {
-    //         console.log('Redirecting to login page');
-    //         return NextResponse.redirect(new URL('/admin', request.url));
-    //     }
-
-    //     console.log('Continuing to next handler');
-    // } catch (error) {
-    //     console.error('Error in authentication check:', error);
-    // }
-
-    // return NextResponse.next();
+    return NextResponse.next();
 }
 
 export const config = {
