@@ -1,10 +1,10 @@
 "use client";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-import {Verhaal} from "../../../utils";
+import { Verhaal } from "../../../utils";
 import { formatDate } from "../../../utils";
 import { useAuth } from "../../../auth-context";
 import { deleteStory } from "../../actions";
@@ -44,17 +44,17 @@ export default function Story({ params }: { params: { slug: string } }) {
 
   let date: string = "";
 
-    useEffect(() => {
-        fetch(`${process.env.NEXT_PUBLIC_FETCH_API_LINK}/api`, {
-            method: "GET",
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                setStories(data.body);
-                setStory(data.body?.find((item) => item.id === slug));
-                setLoading(false);
-            });
-    }, []);
+  useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_FETCH_API_LINK}/api`, {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setStories(data.body);
+        setStory(data.body?.find((item) => item.id === slug));
+        setLoading(false);
+      });
+  }, []);
 
   const slug = params.slug;
 
@@ -116,7 +116,10 @@ export default function Story({ params }: { params: { slug: string } }) {
               </div>
             </div>
             {story?.songImage || story?.song ? (
-              <div className={styles.story__spotifyPlayer}>
+              <a
+                href={story.song.url ? story.song.url : ""}
+                className={styles.story__spotifyPlayer}
+              >
                 <span>
                   <Image
                     src={
@@ -130,7 +133,7 @@ export default function Story({ params }: { params: { slug: string } }) {
                   <span />
                   <PlayButtonSvg />
                 </span>
-              </div>
+              </a>
             ) : (
               ""
             )}
