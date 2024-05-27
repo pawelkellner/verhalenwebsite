@@ -1,8 +1,7 @@
-import React from "react";
+"use client"
+import React, {useEffect, useState} from "react";
 
-import filteredVerhalen from "../../../components/firebase/filteredVerhalen";
-
-import { Verhaal } from "../../../utils";
+import {sortStories, Verhaal} from "../../../utils";
 
 import styles from "../page.module.scss";
 
@@ -11,22 +10,24 @@ import Pagination from "../../../components/pagination/pagination";
 import PageTitle from "../../../components/page-title/page-title";
 import StoryCard from "../../../components/story-card/story-card";
 
-export default async function Page({
+export default function Page({
   params,
 }: {
   params: { slug: { index: string; searchTerm?: string } };
 }) {
-  const verhalen = await filteredVerhalen(false);
+  const [stories, setStories] = useState<Verhaal[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const sortedVerhalen = verhalen?.sort((a, b) => {
-    const dateA = new Date(
-      a.createdAt.seconds * 1000 + a.createdAt.nanoseconds / 1000000
-    ).getTime();
-    const dateB = new Date(
-      b.createdAt.seconds * 1000 + b.createdAt.nanoseconds / 1000000
-    ).getTime();
-    return dateB - dateA;
-  });
+  useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_FETCH_API_LINK}/api`, {
+      method: "GET",
+    })
+        .then((res) => res.json())
+        .then((data) => {
+          setStories(sortStories(data.body, false));
+          setLoading(false);
+        });
+  }, []);
 
   const storiesPerPage = 8;
   const searchTerm = params.slug[1];
@@ -69,7 +70,7 @@ export default async function Page({
     );
   };
 
-  const filteredStories = sortedVerhalen?.filter(filterStories) || [];
+  const filteredStories = stories?.filter(filterStories) || [];
   const maxIndex = Math.ceil(filteredStories.length / storiesPerPage);
   const activeIndex = parseInt(params.slug[0], 10) || 1;
   const startIndex = (activeIndex - 1) * storiesPerPage;

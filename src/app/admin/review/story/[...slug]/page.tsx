@@ -54,6 +54,7 @@ export default function Story({ params }: { params: { slug: string } }) {
     const fullDate = new Date(jsUnixTS);
 
     date = `${fullDate.getDate()} ${monthsArray[fullDate.getMonth()]}, ${fullDate.getFullYear()}`
+    console.log(story)
   }
 
   return (
