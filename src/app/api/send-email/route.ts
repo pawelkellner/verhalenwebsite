@@ -15,9 +15,9 @@ export async function POST(request) {
 
     const mailOptions: nodemailer.SendMailOptions = {
         from: process.env.EMAIL_USER,
-        to: 'spolat0750@gmail.com',
+        to: 'smrpawel@gmail.com',
         subject: 'Nieuwe Verhaal Indiening',
-        text: `Een nieuw verhaal genaamd '${storyData.storyTitle}' is ingediend door ${storyData.author}\n\nGelieve het te controleren: http://localhost:3000/admin/review`,
+        text: `Een nieuw verhaal genaamd '${storyData.storyTitle}' is ingediend door ${storyData.author}\n\nGelieve het te controleren: ${process.env.NEXT_PUBLIC_FETCH_API_LINK}/admin/review`,
         attachments: [],
     };
 
