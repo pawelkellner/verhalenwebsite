@@ -1,7 +1,3 @@
-import { cache } from 'react';
-import { collection, getDocs, orderBy, query } from "firebase/firestore";
-import { db } from "./firebase";
-import * as url from "url";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
 export interface Verhaal {
@@ -35,16 +31,6 @@ export interface Verhaal {
     };
 }
 
-export const fetchVerhalen = (async () => {
-    try {
-        const querySnapshot = await getDocs(query(collection(db, 'verhalen'), orderBy('createdAt', 'asc')));
-        const verhalenData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Verhaal));
-        return verhalenData;
-    } catch (error) {
-        console.error("Error fetching documents: ", error);
-    }
-})
-
 export function formatDate(createdAt: {
     seconds: number;
     nanoseconds: number;
@@ -56,4 +42,16 @@ export function formatDate(createdAt: {
         year: "numeric",
     };
     return date.toLocaleDateString("nl-NL", options);
+}
+
+export const sortStories = (stories, underReview) => {
+    return stories?.sort((a, b) => {
+        const dateA = new Date(
+            a.createdAt.seconds * 1000 + a.createdAt.nanoseconds / 1000000
+        ).getTime();
+        const dateB = new Date(
+            b.createdAt.seconds * 1000 + b.createdAt.nanoseconds / 1000000
+        ).getTime();
+        return dateB - dateA;
+    }).filter((item) => item.underReview === underReview)
 }

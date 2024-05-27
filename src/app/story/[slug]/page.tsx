@@ -1,10 +1,11 @@
-// "use client";
-import React from "react";
+"use client";
+import React, {useEffect, useState} from "react";
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-import { fetchVerhalen } from "../../../utils";
+import {Verhaal} from "../../../utils";
+import { formatDate } from "../../../utils";
 import { useAuth } from "../../../auth-context";
 import { deleteStory } from "../../actions";
 
@@ -18,7 +19,11 @@ import Paragraph from "../../../components/typography/paragraph";
 import Heading from "../../../components/typography/heading";
 import LinkButton from "../../../components/link-button/link-button";
 
-export default async function Story({ params }: { params: { slug: string } }) {
+export default function Story({ params }: { params: { slug: string } }) {
+  const [stories, setStories] = useState<Verhaal[]>([]);
+  const [story, setStory] = useState<Verhaal>();
+  const [loading, setLoading] = useState(true);
+
   const { state } = useAuth();
   const router = useRouter();
 
@@ -39,11 +44,21 @@ export default async function Story({ params }: { params: { slug: string } }) {
 
   let date: string = "";
 
-  const slug = params.slug;
-  const verhalen = await fetchVerhalen();
-  const story = verhalen?.find((story) => story.id === slug);
+    useEffect(() => {
+        fetch(`${process.env.NEXT_PUBLIC_FETCH_API_LINK}/api`, {
+            method: "GET",
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setStories(data.body);
+                setStory(data.body?.find((item) => item.id === slug));
+                setLoading(false);
+            });
+    }, []);
 
-  const verhalenIds = verhalen?.map((story) => story.id) || [];
+  const slug = params.slug;
+
+  const verhalenIds = stories?.map((story) => story.id) || [];
   const randomId = verhalenIds[Math.floor(Math.random() * verhalenIds.length)];
 
   if (story) {

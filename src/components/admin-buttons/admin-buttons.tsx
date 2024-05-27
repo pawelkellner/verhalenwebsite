@@ -25,14 +25,14 @@ const AdminButtons = ({ slug, story }) => {
 
   return (
     <div className={styles.story__buttons}>
-      {story.underReview && (
-        <>
-          <Button onClick={() => approved()} variant="primary">
-            Goedkeuren
-          </Button>
-          <Paragraph>Of</Paragraph>
-        </>
-      )}
+        { story?.underReview && (
+            <>
+                <Button onClick={() => approved()} variant="primary">
+                    Goedkeuren
+                </Button>
+                <Paragraph>Of</Paragraph>
+            </>
+        )}
       <LinkButton href={`/admin/review/edit/${slug}`} buttonVariant="secondary">
         Bewerken
       </LinkButton>
