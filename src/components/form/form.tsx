@@ -97,8 +97,8 @@ const Form = () => {
         const isLoggedIn = await isUserLoggedIn();
         if (!isLoggedIn) {
           updatedAuthor.length > 0
-            ? (updatedAuthor += " (gastgebruiker)")
-            : (updatedAuthor += "een gastgebruiker");
+            ? (updatedAuthor += " (gastschrijver)")
+            : (updatedAuthor += "een gastschrijver");
         }
         console.log("here", isLoggedIn);
 
