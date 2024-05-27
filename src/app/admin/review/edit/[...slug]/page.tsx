@@ -35,6 +35,7 @@ export default function Story({ params }: { params: { slug: string } }) {
         />
           { story ? (
             <FormAdmin
+              id={story?.id}
               authorData={story?.author}
               storyTitleData={story?.storyTitle}
               songData={story?.song ? story?.song : ""}

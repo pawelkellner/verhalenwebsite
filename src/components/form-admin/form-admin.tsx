@@ -8,7 +8,7 @@ import lineStyle from "../page-title/styles.module.scss";
 import TextInput from "../text-input/text-input";
 import TextArea from "../text-area/text-area";
 import Button from "../button";
-import { submitStory } from "../../app/actions";
+import { editStory } from "../../app/actions";
 import { getLyrics } from "../../app/actions";
 import dynamic from "next/dynamic";
 import Paragraph from "../typography/paragraph";
@@ -26,6 +26,7 @@ const Editor = dynamic(
 );
 
 const FormAdmin = ({
+  id,
   authorData,
   storyTitleData,
   songData,
@@ -107,7 +108,7 @@ const FormAdmin = ({
           imageUrl = await getDownloadURL(storageRef);
         }
 
-        const response = await submitStory(storyData, imageUrl);
+        await editStory(id, storyData, imageUrl);
 
         setAuthor("");
         setStoryTitle("");
@@ -287,8 +288,7 @@ const FormAdmin = ({
             : "secondary"
         }
         style={{ width: "100%" }}
-        // onClick={addItem}
-        onClick={() => console.log(linkToSongData)}
+        onClick={addItem}
       >
         Aanpassingen opslaan
       </Button>

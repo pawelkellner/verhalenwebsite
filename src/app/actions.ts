@@ -20,6 +20,27 @@ export async function submitStory(storyData, imageUrl) {
     }
 }
 
+export async function editStory(storyId, updatedData, newImageUrl) {
+    try {
+        const docRef = doc(db, "verhalen", storyId);
+        const updatePayload = {
+            ...updatedData,
+            updatedAt: serverTimestamp(),
+        };
+
+        if (newImageUrl) {
+            updatePayload.songImage = newImageUrl;
+        }
+
+        await updateDoc(docRef, updatePayload);
+
+        console.log("Story edited successfully");
+    } catch (e) {
+        console.log(e);
+        return JSON.stringify(e);
+    }
+}
+
 export async function approveStory(story) {
     try {
         const docRef = doc(db, "verhalen", story.id);
