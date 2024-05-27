@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import Header from "../components/header/header";
 import Footer from "../components/footer/footer";
 import { AuthProvider } from "../auth-context";
+import {Analytics} from "@vercel/analytics/react";
 
 export const metadata = {
   title: "SoundStories",
@@ -39,6 +40,7 @@ export default function RootLayout({ children }) {
           <Header />
           {children}
           <Footer />
+          <Analytics/>
         </AuthProvider>
       </body>
     </html>
