@@ -70,6 +70,7 @@ const Form = () => {
 
   const addItem = async (e) => {
     e.preventDefault();
+    setIsSuccess(false);
 
     if (storyTitle === "") {
       setAlertText("Verhaal titel mist");
@@ -120,16 +121,16 @@ const Form = () => {
           imageUrl = await getDownloadURL(storageRef);
         }
 
-        // if (!isLoggedIn) {
-        //   const formData = new FormData();
-        //   formData.append("storyData", JSON.stringify(storyData));
-        //   storyTextFile && formData.append("storyTextFile", storyTextFile);
+        if (!isLoggedIn) {
+          const formData = new FormData();
+          formData.append("storyData", JSON.stringify(storyData));
+          storyTextFile && formData.append("storyTextFile", storyTextFile);
 
-        //   await fetch("/api/send-email", {
-        //     method: "POST",
-        //     body: formData,
-        //   });
-        // }
+          await fetch("/api/send-email", {
+            method: "POST",
+            body: formData,
+          });
+        }
 
         await submitStory(storyData, imageUrl);
 
