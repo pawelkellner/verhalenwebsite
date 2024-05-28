@@ -13,7 +13,7 @@ import PageTitle from "../../../../../components/page-title/page-title";
 import Paragraph from "../../../../../components/typography/paragraph";
 import Heading from "../../../../../components/typography/heading";
 import AdminButtons from "../../../../../components/admin-buttons/admin-buttons";
-import {useStories} from "../../../../../components/posts-provider/postsProvider";
+import { useStories } from "../../../../../components/posts-provider/postsProvider";
 
 export default function Story({ params }: { params: { slug: string } }) {
   const { stories } = useStories();
@@ -38,7 +38,7 @@ export default function Story({ params }: { params: { slug: string } }) {
   const slug = params.slug.toString();
 
   useEffect(() => {
-    if ( stories ) {
+    if (stories) {
       setStory(stories.find((item) => item.id === slug));
     }
   }, [stories]);
@@ -84,6 +84,9 @@ export default function Story({ params }: { params: { slug: string } }) {
           <div className={styles.story__information}>
             <>
               <div className={styles.story__origin}>
+                {story?.email && (
+                  <Paragraph>Schrijver email: {story?.email}</Paragraph>
+                )}
                 {story?.originText && (
                   <Paragraph>{story?.originText}</Paragraph>
                 )}

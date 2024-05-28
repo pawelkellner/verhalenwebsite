@@ -3,6 +3,7 @@ import { StaticImport } from "next/dist/shared/lib/get-img-props";
 export interface Verhaal {
     id: string;
     name: string;
+    email: string;
     storyTitle: string;
     storyText: string | TrustedHTML;
     author: string;
