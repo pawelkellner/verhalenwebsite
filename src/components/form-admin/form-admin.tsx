@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 import "../form/form.scss";
 import lineStyle from "../page-title/styles.module.scss";
@@ -37,7 +37,7 @@ const FormAdmin = ({
   songImageData,
   originTextData,
   storyTextData,
-  // storyTextFileData
+  storyTextFileData,
   songTextData,
 }) => {
   const [author, setAuthor] = useState(authorData);
@@ -59,7 +59,9 @@ const FormAdmin = ({
 
   const [originText, setOriginText] = useState(originTextData);
   const [storyText, setStoryText] = useState<string | undefined>(storyTextData);
-  const [storyTextFile, setStoryTextFile] = useState<File | null>(null);
+  const [storyTextFile, setStoryTextFile] = useState<File | null>(
+    storyTextFileData
+  );
   const [songText, setSongText] = useState<string | undefined>(songTextData);
   3;
 
@@ -115,6 +117,16 @@ const FormAdmin = ({
       setIsLoading(true);
       setAlertText("");
       try {
+        let storyFileUrl: string | null = null;
+        if (storyTextFile) {
+          const storageRef = ref(
+            firebaseStorage,
+            `stories/${storyTextFile.name}`
+          );
+          await uploadBytes(storageRef, storyTextFile);
+          storyFileUrl = await getDownloadURL(storageRef);
+        }
+
         const storyData = {
           author: author,
           email: email,
@@ -122,8 +134,8 @@ const FormAdmin = ({
           song: song,
           songTitle: songTitle,
           originText: originText,
-          // storyTextFile: storyTextFile,
           storyText: storyText,
+          storyFileUrl: storyFileUrl,
           songText: songText,
           underReview: true,
         };
@@ -287,15 +299,34 @@ const FormAdmin = ({
               onChange={(e) => setStoryTextFile(e.target.files[0])}
               accept=".doc, .docx, .rtf, .txt, .pdf"
             />
-            <Button
-              onClick={() => {
-                setManualStoryTextInput(true);
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
               }}
-              variant="underlined"
-              style={{ paddingTop: 10 }}
             >
-              Of schrijf het handmatig
-            </Button>
+              {storyTextFileData && (
+                <Button
+                  onClick={() => {
+                    window.open(storyTextFileData, "_blank");
+                  }}
+                  variant="underlined"
+                  style={{ paddingTop: 10 }}
+                >
+                  Bekijk huidige tekst van schrijver
+                </Button>
+              )}
+              <Button
+                onClick={() => {
+                  setManualStoryTextInput(true);
+                }}
+                variant="underlined"
+                style={{ paddingTop: 10 }}
+              >
+                Terug naar handmatig schrijven
+              </Button>
+            </div>
           </>
         )}
       </div>

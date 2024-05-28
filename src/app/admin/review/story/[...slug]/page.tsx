@@ -14,6 +14,8 @@ import Paragraph from "../../../../../components/typography/paragraph";
 import Heading from "../../../../../components/typography/heading";
 import AdminButtons from "../../../../../components/admin-buttons/admin-buttons";
 import { useStories } from "../../../../../components/posts-provider/postsProvider";
+import Button from "../../../../../components/button";
+import { getFileExtensionFromUrl } from "../../../../../utils";
 
 export default function Story({ params }: { params: { slug: string } }) {
   const { stories } = useStories();
@@ -33,6 +35,11 @@ export default function Story({ params }: { params: { slug: string } }) {
     "november",
     "december",
   ];
+
+  const fileUrl = story?.storyFileUrl;
+  const fileExtension = getFileExtensionFromUrl(fileUrl);
+  const allowedExtensions = ["pdf", "readme", "txt"];
+  const isAllowedFileType = allowedExtensions.includes(fileExtension);
 
   let date: string = "";
   const slug = params.slug.toString();
@@ -73,13 +80,37 @@ export default function Story({ params }: { params: { slug: string } }) {
             <div className={styles.story__titleMobile}>
               <Heading>{story?.storyTitle}</Heading>
             </div>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: story?.storyText
-                  ? story?.storyText
-                  : "Tekst niet beschikbaar, schrijver heeft waarschijnlijk een bestand meegestuurd. Bekijk je mail.",
-              }}
-            />
+            {story?.storyText ? (
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: story?.storyText
+                    ? story?.storyText
+                    : "Tekst niet beschikbaar",
+                }}
+              />
+            ) : (
+              <>
+                <Paragraph variant="sm">
+                  De schrijver van dit verhaal heeft ervoor gekozen om het
+                  verhaal in een bestand in te dienen.
+                </Paragraph>{" "}
+                {story?.storyFileUrl && isAllowedFileType && (
+                  <iframe
+                    src={`${story.storyFileUrl}#toolbar=0`}
+                    style={{ width: "100%", height: "100vh", marginTop: 8 }}
+                  />
+                )}
+                <Button
+                  onClick={() => {
+                    window.open(story?.storyFileUrl, "_blank");
+                  }}
+                  variant="underlined"
+                  style={{ paddingTop: 10 }}
+                >
+                  Open verhaal
+                </Button>
+              </>
+            )}
           </div>
           <div className={styles.story__information}>
             <>
@@ -102,7 +133,7 @@ export default function Story({ params }: { params: { slug: string } }) {
                 <a
                   target="_blank"
                   rel="noreferrer noopener"
-                  href={story.song.url ? story.song.url : ""}
+                  href={story.song ? story.song.url : ""}
                   className={styles.story__spotifyPlayer}
                 >
                   <span>

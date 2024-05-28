@@ -39,6 +39,7 @@ export default function Story({ params }: { params: { slug: string } }) {
             linkToSongData={story?.song ? story?.song.url : ""}
             songImageData={story?.songImage}
             originTextData={story?.originText}
+            storyTextFileData={story?.storyFileUrl}
             storyTextData={story?.storyText}
             songTextData={story?.songText}
           />

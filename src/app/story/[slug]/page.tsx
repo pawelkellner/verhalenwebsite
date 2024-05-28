@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { Verhaal } from "../../../utils";
 import { useAuth } from "../../../auth-context";
 import { deleteStory } from "../../actions";
+import { disApproveStory } from "../../actions";
 
 import styles from "../page.module.scss";
 
@@ -17,7 +18,8 @@ import PageTitle from "../../../components/page-title/page-title";
 import Paragraph from "../../../components/typography/paragraph";
 import Heading from "../../../components/typography/heading";
 import LinkButton from "../../../components/link-button/link-button";
-import {useStories} from "../../../components/posts-provider/postsProvider";
+import { useStories } from "../../../components/posts-provider/postsProvider";
+import { getFileExtensionFromUrl } from "../../../utils";
 
 export default function Story({ params }: { params: { slug: string } }) {
   const { reviewedStories } = useStories();
@@ -46,7 +48,7 @@ export default function Story({ params }: { params: { slug: string } }) {
   const slug = params.slug;
 
   useEffect(() => {
-    if ( reviewedStories ) {
+    if (reviewedStories) {
       setStory(reviewedStories.find((item) => item.id === slug));
     }
   }, [reviewedStories]);
@@ -64,8 +66,18 @@ export default function Story({ params }: { params: { slug: string } }) {
     }, ${fullDate.getFullYear()}`;
   }
 
+  const fileUrl = story?.storyFileUrl;
+  const fileExtension = getFileExtensionFromUrl(fileUrl);
+  const allowedExtensions = ["pdf", "readme", "txt"];
+  const isAllowedFileType = allowedExtensions.includes(fileExtension);
+
   const handleDeleteStory = async () => {
     await deleteStory(story);
+    router.push("/");
+  };
+
+  const handleDisapproveStory = async () => {
+    await disApproveStory(story);
     router.push("/");
   };
 
@@ -89,13 +101,37 @@ export default function Story({ params }: { params: { slug: string } }) {
             <div className={styles.story__titleMobile}>
               <Heading>{story?.storyTitle}</Heading>
             </div>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: story?.storyText
-                  ? story?.storyText
-                  : "Tekst niet beschikbaar",
-              }}
-            />
+            {story?.storyText ? (
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: story?.storyText
+                    ? story?.storyText
+                    : "Tekst niet beschikbaar",
+                }}
+              />
+            ) : (
+              <>
+                <Paragraph variant="sm">
+                  De schrijver van dit verhaal heeft ervoor gekozen om het
+                  verhaal in een bestand in te dienen.
+                </Paragraph>
+                {story?.storyFileUrl && isAllowedFileType && (
+                  <iframe
+                    src={`${story.storyFileUrl}#toolbar=0`}
+                    style={{ width: "100%", height: "100vh", marginTop: 8 }}
+                  />
+                )}
+                <Button
+                  onClick={() => {
+                    window.open(story?.storyFileUrl, "_blank");
+                  }}
+                  variant="underlined"
+                  style={{ paddingTop: 10 }}
+                >
+                  Open verhaal
+                </Button>
+              </>
+            )}
           </div>
           <div className={styles.story__information}>
             <div className={styles.story__origin}>
@@ -167,6 +203,10 @@ export default function Story({ params }: { params: { slug: string } }) {
               <Paragraph>Of</Paragraph>
               <Button onClick={() => handleDeleteStory()} variant="warning">
                 Verhaal verwijderen
+              </Button>
+              <Paragraph>Of</Paragraph>
+              <Button onClick={() => handleDisapproveStory()} variant="warning">
+                Verhaal afkeuren
               </Button>
             </>
           )}

@@ -128,6 +128,16 @@ const Form = () => {
         }
         console.log("here", isLoggedIn);
 
+        let storyFileUrl: string | null = null;
+        if (storyTextFile) {
+          const storageRef = ref(
+            firebaseStorage,
+            `stories/${storyTextFile.name}`
+          );
+          await uploadBytes(storageRef, storyTextFile);
+          storyFileUrl = await getDownloadURL(storageRef);
+        }
+
         const storyData = {
           author: updatedAuthor,
           email: email,
@@ -137,6 +147,7 @@ const Form = () => {
           originText: originText,
           storyText: storyText,
           songText: songText,
+          storyFileUrl: storyFileUrl,
           underReview: isLoggedIn ? false : true,
         };
 
