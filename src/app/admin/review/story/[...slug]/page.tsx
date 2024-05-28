@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
 import { Verhaal } from "../../../../../utils";
-import { formatDate } from "../../../../../utils";
 
 import styles from "../../../../story/page.module.scss";
 
@@ -14,10 +13,11 @@ import PageTitle from "../../../../../components/page-title/page-title";
 import Paragraph from "../../../../../components/typography/paragraph";
 import Heading from "../../../../../components/typography/heading";
 import AdminButtons from "../../../../../components/admin-buttons/admin-buttons";
+import {useStories} from "../../../../../components/posts-provider/postsProvider";
 
 export default function Story({ params }: { params: { slug: string } }) {
+  const { stories } = useStories();
   const [story, setStory] = useState<Verhaal>();
-  const [loading, setLoading] = useState(true);
 
   const monthsArray = [
     "januari",
@@ -35,19 +35,13 @@ export default function Story({ params }: { params: { slug: string } }) {
   ];
 
   let date: string = "";
+  const slug = params.slug.toString();
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_FETCH_API_LINK}/api`, {
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setStory(data.body?.find((item) => item.id === slug));
-        setLoading(false);
-      });
-  }, []);
-
-  const slug = params.slug.toString();
+    if ( stories ) {
+      setStory(stories.find((item) => item.id === slug));
+    }
+  }, [stories]);
 
   if (story) {
     const jsUnixTS =
@@ -57,7 +51,6 @@ export default function Story({ params }: { params: { slug: string } }) {
     date = `${fullDate.getDate()} ${
       monthsArray[fullDate.getMonth()]
     }, ${fullDate.getFullYear()}`;
-    console.log(story);
   }
 
   return (

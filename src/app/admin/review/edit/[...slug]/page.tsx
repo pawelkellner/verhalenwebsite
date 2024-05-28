@@ -7,23 +7,18 @@ import MainLayout from "../../../../../components/main-layout/main-layout";
 import PageTitle from "../../../../../components/page-title/page-title";
 import { Verhaal } from "../../../../../utils";
 import FormAdmin from "../../../../../components/form-admin/form-admin";
+import {useStories} from "../../../../../components/posts-provider/postsProvider";
 
 export default function Story({ params }: { params: { slug: string } }) {
-  const [loading, setLoading] = useState(true);
-  const [story, setStory] = useState<Verhaal>();
-
-  useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_FETCH_API_LINK}/api`, {
-      method: "GET",
-    })
-        .then((res) => res.json())
-        .then((data) => {
-          setLoading(false);
-          setStory(data.body?.find((item) => item.id === slug))
-        });
-  }, []);
+    const { stories } = useStories();
+    const [story, setStory] = useState<Verhaal>();
 
   const slug = params.slug.toString();
+    useEffect(() => {
+        if ( stories ) {
+            setStory(stories.find((item) => item.id === slug));
+        }
+    }, [stories]);
 
   return (
     <>

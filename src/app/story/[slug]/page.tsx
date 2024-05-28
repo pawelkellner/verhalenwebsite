@@ -5,7 +5,6 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import { Verhaal } from "../../../utils";
-import { formatDate } from "../../../utils";
 import { useAuth } from "../../../auth-context";
 import { deleteStory } from "../../actions";
 
@@ -18,11 +17,11 @@ import PageTitle from "../../../components/page-title/page-title";
 import Paragraph from "../../../components/typography/paragraph";
 import Heading from "../../../components/typography/heading";
 import LinkButton from "../../../components/link-button/link-button";
+import {useStories} from "../../../components/posts-provider/postsProvider";
 
 export default function Story({ params }: { params: { slug: string } }) {
-  const [stories, setStories] = useState<Verhaal[]>([]);
+  const { reviewedStories } = useStories();
   const [story, setStory] = useState<Verhaal>();
-  const [loading, setLoading] = useState(true);
 
   const { state } = useAuth();
   const router = useRouter();
@@ -44,21 +43,15 @@ export default function Story({ params }: { params: { slug: string } }) {
 
   let date: string = "";
 
-  useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_FETCH_API_LINK}/api`, {
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setStories(data.body);
-        setStory(data.body?.find((item) => item.id === slug));
-        setLoading(false);
-      });
-  }, []);
-
   const slug = params.slug;
 
-  const verhalenIds = stories?.map((story) => story.id) || [];
+  useEffect(() => {
+    if ( reviewedStories ) {
+      setStory(reviewedStories.find((item) => item.id === slug));
+    }
+  }, [reviewedStories]);
+
+  const verhalenIds = reviewedStories?.map((story) => story.id) || [];
   const randomId = verhalenIds[Math.floor(Math.random() * verhalenIds.length)];
 
   if (story) {

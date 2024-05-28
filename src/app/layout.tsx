@@ -5,6 +5,7 @@ import Header from "../components/header/header";
 import Footer from "../components/footer/footer";
 import { AuthProvider } from "../auth-context";
 import {Analytics} from "@vercel/analytics/react";
+import PostsProvider from "../components/posts-provider/postsProvider";
 
 export const metadata = {
   title: "SoundStories",
@@ -37,10 +38,12 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={font.className}>
         <AuthProvider>
-          <Header />
-          {children}
-          <Footer />
-          <Analytics/>
+          <PostsProvider>
+            <Header />
+            {children}
+            <Footer />
+            <Analytics/>
+          </PostsProvider>
         </AuthProvider>
       </body>
     </html>

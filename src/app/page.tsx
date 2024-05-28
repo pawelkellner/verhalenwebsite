@@ -1,35 +1,19 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 
 import Link from "next/link";
 
 import styles from "./page.module.scss";
-
-import { useState } from "react";
-import {sortStories, Verhaal} from "../utils";
 
 import MainLayout from "../components/main-layout/main-layout";
 import Pagination from "../components/pagination/pagination";
 import PageTitle from "../components/page-title/page-title";
 import StoryCard from "../components/story-card/story-card";
 import Hero from "../components/hero/hero";
+import {useStories} from "../components/posts-provider/postsProvider";
 
 export default function Home() {
-  const [stories, setStories] = useState<Verhaal[]>([]);
-  const [limitedStories, setLimitedStories] = useState<Verhaal[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_FETCH_API_LINK}/api`, {
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setStories(sortStories(data.body, false));
-        setLimitedStories(sortStories(data.body, false).slice(0, 7));
-        setLoading(false);
-      });
-  }, []);
+    const { reviewedStories, loading, limitedStories } = useStories();
 
     const renderSkeletonCards = () => {
         return (
@@ -91,7 +75,7 @@ export default function Home() {
           ))}
         </div>
 
-        {stories?.length && stories?.length > 8 ? (
+        {reviewedStories?.length && reviewedStories?.length > 8 ? (
           <Link href={`/stories/${2}`}>
             <Pagination disabled={true} maxIndex={3} />
           </Link>
