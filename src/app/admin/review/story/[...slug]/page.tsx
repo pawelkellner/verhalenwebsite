@@ -98,24 +98,28 @@ export default function Story({ params }: { params: { slug: string } }) {
                   </Paragraph>
                 </div>
               </div>
-              {story?.songImage ||
-                (story?.song.albumImage && (
-                  <div className={styles.story__spotifyPlayer}>
-                    <span>
-                      <Image
-                        src={
-                          story?.songImage
-                            ? story?.songImage
-                            : story?.song.albumImage
-                        }
-                        alt={"album cover"}
-                        fill
-                      />
-                      <span />
-                      <PlayButtonSvg />
-                    </span>
-                  </div>
-                ))}
+              {(story?.songImage || story?.song) && (
+                <a
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  href={story.song.url ? story.song.url : ""}
+                  className={styles.story__spotifyPlayer}
+                >
+                  <span>
+                    <Image
+                      src={
+                        story?.songImage
+                          ? story?.songImage
+                          : story?.song.albumImage
+                      }
+                      alt={"album cover"}
+                      fill
+                    />
+                    <span />
+                    <PlayButtonSvg />
+                  </span>
+                </a>
+              )}
             </>
           </div>
         </div>
