@@ -53,11 +53,10 @@ const Footer = () => {
             </Link>
           )}
         </div>
+
         <div className="footer__copyright">
-          <Paragraph variant="md">©2024 SoundStories</Paragraph>
-        </div>
-        <div className="footer__logo">
           <LogoSvg />
+          <Paragraph variant="md">©2024 SoundStories</Paragraph>
         </div>
       </div>
     </footer>
