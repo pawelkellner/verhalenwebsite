@@ -26,18 +26,35 @@ export async function submitStory(storyData, imageUrl) {
 export async function editStory(storyId, updatedData, newImageUrl) {
     try {
         const docRef = doc(db, "verhalen", storyId);
-        const updatePayload = {
-            ...updatedData,
-            updatedAt: serverTimestamp(),
-        };
 
-        if (newImageUrl) {
-            updatePayload.songImage = newImageUrl;
+        // Get the document data to find the current image URL
+        const docSnapshot = await getDoc(docRef);
+        if (docSnapshot.exists()) {
+            const storyData = docSnapshot.data();
+            const currentImageUrl = storyData.songImage;
+
+            // Delete the old image from Firebase Storage if a new image URL is provided
+            if (newImageUrl && currentImageUrl) {
+                const imageRef = ref(storage, currentImageUrl);
+                await deleteObject(imageRef);
+                console.log("Old image deleted successfully");
+            }
+
+            const updatePayload = {
+                ...updatedData,
+                updatedAt: serverTimestamp(),
+            };
+
+            if (newImageUrl) {
+                updatePayload.songImage = newImageUrl;
+            }
+
+            await updateDoc(docRef, updatePayload);
+
+            console.log("Story edited successfully");
+        } else {
+            throw new Error("Document does not exist");
         }
-
-        await updateDoc(docRef, updatePayload);
-
-        console.log("Story edited successfully");
     } catch (e) {
         console.log(e);
         return JSON.stringify(e);
