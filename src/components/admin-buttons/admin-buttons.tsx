@@ -8,6 +8,7 @@ import Paragraph from "../typography/paragraph";
 import LinkButton from "../link-button/link-button";
 
 import { approveStory } from "../../app/actions";
+import { disApproveStory } from "../../app/actions";
 import { deleteStory } from "../../app/actions";
 
 const AdminButtons = ({ slug, story }) => {
@@ -19,20 +20,23 @@ const AdminButtons = ({ slug, story }) => {
   };
 
   const disapproved = async () => {
-    await deleteStory(story);
+    story?.underReview
+      ? await deleteStory(story)
+      : await disApproveStory(story);
+
     router.push("/admin/review");
   };
 
   return (
     <div className={styles.story__buttons}>
-        { story?.underReview && (
-            <>
-                <Button onClick={() => approved()} variant="primary">
-                    Goedkeuren
-                </Button>
-                <Paragraph>Of</Paragraph>
-            </>
-        )}
+      {story?.underReview && (
+        <>
+          <Button onClick={() => approved()} variant="primary">
+            Goedkeuren
+          </Button>
+          <Paragraph>Of</Paragraph>
+        </>
+      )}
       <LinkButton href={`/admin/review/edit/${slug}`} buttonVariant="secondary">
         Bewerken
       </LinkButton>

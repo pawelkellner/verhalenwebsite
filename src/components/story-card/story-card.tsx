@@ -13,15 +13,15 @@ import NoteSvg from "../svg/NoteSvg";
 import { ImageError } from "next/dist/server/image-optimizer";
 
 const StoryCard = ({
-     id,
-     title,
-     image,
-     text,
-     author,
-     songName,
-     skeleton,
-    customUrl,
-   }: StoryCardProps) => {
+  id,
+  title,
+  image,
+  text,
+  author,
+  songName,
+  skeleton,
+  customUrl,
+}: StoryCardProps) => {
   const router = useRouter();
 
   const [introText, setIntroText] = useState("");
@@ -63,70 +63,70 @@ const StoryCard = ({
     }
 
     if (!text) {
-      text =
-          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad consequatur dicta dolor earum eveniet excepturi ipsum necessitatibus porro, praesentium quos ratione reprehenderit soluta sunt vero voluptas. Autem dolores et exercitationem, illo ipsa laudantium magni possimus recusandae rerum sit vero voluptas.";
+      text = "Een unieke verhaal geschreven door " + author;
     }
 
     if (typeof text === "string") {
       text = text.replace(/<[^>]*>/g, " ").replace(/&nbsp;/g, " ");
 
       if (typeof text === "string") {
-          newIntroText = text.slice(0, amountOfChars);
-          switch (newIntroText.slice(-1)) {
-            case ",":
-            case ".":
-            case " ":
-              newIntroText = newIntroText.slice(0, newIntroText.length - 1);
-              break;
-          }
+        newIntroText = text.slice(0, amountOfChars);
+        switch (newIntroText.slice(-1)) {
+          case ",":
+          case ".":
+          case " ":
+            newIntroText = newIntroText.slice(0, newIntroText.length - 1);
+            break;
+        }
 
-          newIntroText += "...";
-          setIntroText(newIntroText);
+        newIntroText += "...";
+        setIntroText(newIntroText);
       }
     }
   }
 
   return (
-      <>
-      { !skeleton ? (
-        <button className="unstyled" onClick={() => router.push(customUrl ? customUrl : `/story/${id}`)}>
+    <>
+      {!skeleton ? (
+        <button
+          className="unstyled"
+          onClick={() => router.push(customUrl ? customUrl : `/story/${id}`)}
+        >
           <article className="storycard">
             {image && (
-                <div className="storycard__imageWrapper">
-                  <Image fill src={image} alt={"Image"} />
-                </div>
+              <div className="storycard__imageWrapper">
+                <Image fill src={image} alt={"Image"} />
+              </div>
             )}
             <div className="storycard__content">
               <div>
                 {image && (
-                    <div className="storycard__imageWrapperMobile">
-                      <Image fill src={image} alt={"Image"} />
-                    </div>
+                  <div className="storycard__imageWrapperMobile">
+                    <Image fill src={image} alt={"Image"} />
+                  </div>
                 )}
                 <div
-                    className={`storycard__textWrapper ${
-                        !introText && "skeletonText"
-                    }`}
+                  className={`storycard__textWrapper ${
+                    !introText && "skeletonText"
+                  }`}
                 >
-                  <Heading fontWeight={300}>
-                    {title}
-                  </Heading>
+                  <Heading fontWeight={300}>{title}</Heading>
                   {introText ? (
-                      <Paragraph>
-                        {introText}
-                        <a href="#" className="storycard__readmore">
-                          {" "}
-                          Lees verder
-                        </a>
-                      </Paragraph>
+                    <Paragraph>
+                      {introText}
+                      <a href="#" className="storycard__readmore">
+                        {" "}
+                        Lees verder
+                      </a>
+                    </Paragraph>
                   ) : (
-                      <>
-                        <Paragraph>
-                          Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                          Fuga, quod.
-                        </Paragraph>
-                        <Paragraph>Lorem ipsum dolor.</Paragraph>
-                      </>
+                    <>
+                      <Paragraph>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit. Fuga, quod.
+                      </Paragraph>
+                      <Paragraph>Lorem ipsum dolor.</Paragraph>
+                    </>
                   )}
                 </div>
               </div>
@@ -135,45 +135,41 @@ const StoryCard = ({
                 {author}
               </Paragraph>
               <span className="storycard__song">
-                  <Paragraph>{songName}</Paragraph>
-                  <NoteSvg />
-                </span>
+                <Paragraph>{songName}</Paragraph>
+                <NoteSvg />
+              </span>
             </div>
           </article>
         </button>
-    ) : (
-          <button style={{pointerEvents: 'none'}} className="unstyled" onClick={() => router.push(`/story/${id}`)}>
-            <article className="storycard">
-                  <div className="storycard__imageWrapper">
-                  </div>
-              <div className="storycard__content skeletonText">
-                <div>
-                      <div className="storycard__imageWrapperMobile">
-                      </div>
-                  <div
-                      className={`storycard__textWrapper skeletonText`}
-                  >
-                    <Paragraph>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                      Fuga, quod.
-                    </Paragraph>
-                    <Paragraph>Lorem ipsum dolor.</Paragraph>
-                  </div>
+      ) : (
+        <button
+          style={{ pointerEvents: "none" }}
+          className="unstyled"
+          onClick={() => router.push(`/story/${id}`)}
+        >
+          <article className="storycard">
+            <div className="storycard__imageWrapper"></div>
+            <div className="storycard__content skeletonText">
+              <div>
+                <div className="storycard__imageWrapperMobile"></div>
+                <div className={`storycard__textWrapper skeletonText`}>
+                  <Paragraph>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Fuga, quod.
+                  </Paragraph>
+                  <Paragraph>Lorem ipsum dolor.</Paragraph>
                 </div>
-                <Paragraph>
-                  {/*<span>Geschreven door </span>*/}
-                </Paragraph>
-                <Paragraph>
-                  {author}
-                </Paragraph>
-                <span className="storycard__song skeletonText">
-                  <Paragraph>{songName}</Paragraph>
-                  <NoteSvg />
-                </span>
               </div>
-            </article>
-          </button>
-    )}
+              <Paragraph>{/*<span>Geschreven door </span>*/}</Paragraph>
+              <Paragraph>{author}</Paragraph>
+              <span className="storycard__song skeletonText">
+                <Paragraph>{songName}</Paragraph>
+                <NoteSvg />
+              </span>
+            </div>
+          </article>
+        </button>
+      )}
     </>
   );
 };

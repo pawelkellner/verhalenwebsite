@@ -3,8 +3,10 @@ import { StaticImport } from "next/dist/shared/lib/get-img-props";
 export interface Verhaal {
     id: string;
     name: string;
+    email: string;
     storyTitle: string;
     storyText: string | TrustedHTML;
+    storyFileUrl?: string;
     author: string;
     song: {
         album: string;
@@ -55,3 +57,18 @@ export const sortStories = (stories, underReview) => {
         return dateB - dateA;
     }).filter((item) => item.underReview === underReview)
 }
+
+export const getFileExtensionFromUrl = (url: string | undefined | null): string => {
+    try {
+        if (!url) {
+            throw new Error("URL is undefined or null");
+        }
+        const fileName = url.substring(url.lastIndexOf("/") + 1).split("?")[0];
+        const decodedFileName = decodeURIComponent(fileName);
+        return decodedFileName.split(".").pop()?.toLowerCase() || "";
+    } catch (error) {
+
+        console.error("Error extracting file extension:", error);
+        return "";
+    }
+};

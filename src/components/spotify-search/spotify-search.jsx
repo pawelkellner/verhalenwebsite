@@ -104,8 +104,7 @@ function SpotifyApp({
           }))
         : [];
 
-      setSearchResults([...tracks, ...artists ]);
-
+      setSearchResults([...tracks, ...artists]);
     } catch (error) {
       console.error("Error:", error.message);
     }
@@ -207,7 +206,7 @@ function SpotifyApp({
             onChange={(e) => {
               setSearchQuery(e.target.value);
             }}
-            placeholder="Zoek de artiest van het lied"
+            placeholder="Zoek de titel van het lied"
             style={
               searchResults.length > 0
                 ? {
@@ -397,7 +396,7 @@ function SpotifyApp({
                 />
                 <div className="result-text">
                   <Paragraph fontWeight={400}>{result.name}</Paragraph>
-                  <Paragraph color={theme.grey[400]}>{result.type}</Paragraph>
+                  <Paragraph color={theme.grey[400]}>{result.artist}</Paragraph>
                 </div>
               </li>
             ))}

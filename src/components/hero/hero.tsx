@@ -10,10 +10,10 @@ const Hero = () => {
       <div className="container">
         <div className="hero__contentWrapper">
           <Heading variant="xl" fontWeight={400}>
-            Verhalen geinspireerd door een liedje
+            Verhalen geïnspireerd door een liedje
           </Heading>
           <Paragraph variant="md">
-            Van Tiesto tot de Beach Boys, alle genres mogen. Durf jij ook een
+            Van Tiësto tot de Beach Boys, alle genres mogen. Durf jij ook een
             poging te wagen?
           </Paragraph>
         </div>

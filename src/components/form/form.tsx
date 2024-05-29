@@ -19,6 +19,16 @@ import { storage as firebaseStorage } from "../../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { isUserLoggedIn } from "../../app/actions";
 
+export type SpotifyTrack = {
+  id: string;
+  type: "Track";
+  name: string;
+  artist: string;
+  url: string;
+  album: string;
+  albumImage: string;
+};
+
 const Editor = dynamic(
   () => {
     return import("../editor/editor");
@@ -28,11 +38,13 @@ const Editor = dynamic(
 
 const Form = () => {
   const [author, setAuthor] = useState("");
+  const [email, setEmail] = useState("");
   const [storyTitle, setStoryTitle] = useState("");
   const [checkboxChecked, setCheckboxChecked] = useState(false);
 
   const [songTitle, setSongTitle] = useState("");
-  const [song, setSong] = useState("");
+  const [songImage, setSongImage] = useState<File | null>(null);
+  const [song, setSong] = useState<SpotifyTrack | null>(null);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -41,7 +53,6 @@ const Form = () => {
   const [artistSongs, setArtistSongs] = useState([]);
   const [linkToSong, setLinkToSong] = useState("");
 
-  const [songImage, setSongImage] = useState<File | null>(null);
   const [originText, setOriginText] = useState("");
   const [storyText, setStoryText] = useState<string | undefined>(undefined);
   const [storyTextFile, setStoryTextFile] = useState<File | null>(null);
@@ -60,6 +71,10 @@ const Form = () => {
   const isStoryText =
     (storyText ? storyText?.length > 1 : false) || storyTextFile !== null;
 
+  const isSong =
+    (song?.name ? song?.name.length > 1 : false) ||
+    (songTitle ? songTitle?.length > 1 : false);
+
   async function getSong(res) {
     setSong(res);
     setLinkToSong(res.url);
@@ -70,9 +85,20 @@ const Form = () => {
 
   const addItem = async (e) => {
     e.preventDefault();
+    setIsSuccess(false);
+
+    if (email === "") {
+      setAlertText("Email mist");
+      return;
+    }
 
     if (storyTitle === "") {
       setAlertText("Verhaal titel mist");
+      return;
+    }
+
+    if (!isSong) {
+      setAlertText("Lied mist");
       return;
     }
 
@@ -102,14 +128,26 @@ const Form = () => {
         }
         console.log("here", isLoggedIn);
 
+        let storyFileUrl: string | null = null;
+        if (storyTextFile) {
+          const storageRef = ref(
+            firebaseStorage,
+            `stories/${storyTextFile.name}`
+          );
+          await uploadBytes(storageRef, storyTextFile);
+          storyFileUrl = await getDownloadURL(storageRef);
+        }
+
         const storyData = {
           author: updatedAuthor,
+          email: email,
           storyTitle: storyTitle,
           song: song,
           songTitle: songTitle,
           originText: originText,
           storyText: storyText,
           songText: songText,
+          storyFileUrl: storyFileUrl,
           underReview: isLoggedIn ? false : true,
         };
 
@@ -120,16 +158,16 @@ const Form = () => {
           imageUrl = await getDownloadURL(storageRef);
         }
 
-        // if (!isLoggedIn) {
-        //   const formData = new FormData();
-        //   formData.append("storyData", JSON.stringify(storyData));
-        //   storyTextFile && formData.append("storyTextFile", storyTextFile);
+        if (!isLoggedIn) {
+          const formData = new FormData();
+          formData.append("storyData", JSON.stringify(storyData));
+          storyTextFile && formData.append("storyTextFile", storyTextFile);
 
-        //   await fetch("/api/send-email", {
-        //     method: "POST",
-        //     body: formData,
-        //   });
-        // }
+          await fetch("/api/send-email", {
+            method: "POST",
+            body: formData,
+          });
+        }
 
         await submitStory(storyData, imageUrl);
 
@@ -164,6 +202,14 @@ const Form = () => {
         placeholder="Auteur"
         onChange={(e) => setAuthor(e.target.value)}
         value={author}
+      />
+      <TextInput
+        type="email"
+        name="story_email"
+        label="Je email (wordt nergens gedeeld)"
+        placeholder="Email"
+        onChange={(e) => setEmail(e.target.value)}
+        value={email}
         required
       />
       <TextInput
@@ -202,10 +248,14 @@ const Form = () => {
             value={linkToSong}
           />
         </div>
-        {song !== "" && !manualSongInput && (
+        {song?.name !== "" && !manualSongInput && (
           <Button
             onClick={() => {
-              setManualSongInput(true), setSong("");
+              setManualSongInput(true);
+              setSong(null);
+              setSelectedResult([]);
+              setSearchQuery("");
+              setLinkToSong("");
             }}
             variant="underlined"
             style={{ paddingTop: 10 }}
@@ -216,34 +266,38 @@ const Form = () => {
       </div>
       <div>
         {manualSongInput && (
-          <div className="row">
-            <TextInput
-              type="file"
-              name="song_image"
-              label="Afbeelding voor lied"
-              onChange={(e) => setSongImage(e.target.files[0])}
-              accept="image/png, image/jpeg"
-            />
-            <TextInput
-              type="text"
-              name="song_info"
-              label="Artiest en titel van het liedje"
-              placeholder={"Artiest en titel van het liedje"}
-              onChange={(e) => setSongTitle(e.target.value)}
-              value={songTitle}
-            />
-          </div>
-        )}
-        {manualSongInput && (
-          <Button
-            onClick={() => {
-              setManualSongInput(false), setSongTitle(""), setSongImage(null);
-            }}
-            variant="underlined"
-            style={{ paddingTop: 10 }}
-          >
-            Terug naar de Spotify zoeker
-          </Button>
+          <>
+            <div className="row">
+              <TextInput
+                type="text"
+                name="song_info"
+                label="Artiest en titel van het liedje"
+                placeholder={"Artiest en titel van het liedje"}
+                onChange={(e) => setSongTitle(e.target.value)}
+                value={songTitle}
+                required
+              />
+              <TextInput
+                type="file"
+                name="song_image"
+                label="Afbeelding voor lied"
+                onChange={(e) => setSongImage(e.target.files[0])}
+                accept="image/png, image/jpeg"
+              />
+            </div>
+
+            <Button
+              onClick={() => {
+                setManualSongInput(false);
+                setSongTitle("");
+                setSongImage(null);
+              }}
+              variant="underlined"
+              style={{ paddingTop: 10 }}
+            >
+              Terug naar de Spotify zoeker
+            </Button>
+          </>
         )}
       </div>
       <TextArea
@@ -280,7 +334,8 @@ const Form = () => {
             <TextInput
               type="file"
               name="story_text"
-              label="Verhaal tekst*"
+              label="Upload 
+              document met je verhaal (.doc, .docx, .rtf, .txt en .pdf)*"
               onChange={(e) => setStoryTextFile(e.target.files[0])}
               accept=".doc, .docx, .rtf, .txt, .pdf"
             />

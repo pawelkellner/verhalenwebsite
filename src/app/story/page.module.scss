@@ -32,8 +32,9 @@
     padding-bottom: 50px;
     order: 2;
 
+
     @include mobile {
-      max-width: 450px;
+      max-width: 650px;
     }
 
     @include tablet {

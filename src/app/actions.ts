@@ -54,6 +54,19 @@ export async function approveStory(story) {
     }
 }
 
+export async function disApproveStory(story) {
+    try {
+        const docRef = doc(db, "verhalen", story.id);
+        await updateDoc(docRef, {
+            underReview: true
+        });
+        console.log("Story disapproved successfully")
+    } catch (e) {
+        console.log(e)
+        return JSON.stringify(e)
+    }
+}
+
 export async function deleteStory(story) {
     try {
         const docRef = doc(db, "verhalen", story.id);

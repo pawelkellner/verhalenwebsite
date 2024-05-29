@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 import "../form/form.scss";
 import lineStyle from "../page-title/styles.module.scss";
@@ -12,11 +12,12 @@ import { editStory } from "../../app/actions";
 import { getLyrics } from "../../app/actions";
 import dynamic from "next/dynamic";
 import Paragraph from "../typography/paragraph";
+import { SpotifyTrack } from "../form/form";
 
 import SpotifySearch from "../spotify-search/spotify-search.jsx";
 
 import { storage as firebaseStorage } from "../../firebase";
-import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 const Editor = dynamic(
   () => {
@@ -28,6 +29,7 @@ const Editor = dynamic(
 const FormAdmin = ({
   id,
   authorData,
+  emailData,
   storyTitleData,
   songData,
   songTitleData,
@@ -35,14 +37,16 @@ const FormAdmin = ({
   songImageData,
   originTextData,
   storyTextData,
-  // storyTextFileData
+  storyTextFileData,
   songTextData,
 }) => {
   const [author, setAuthor] = useState(authorData);
+  const [email, setEmail] = useState(emailData);
   const [storyTitle, setStoryTitle] = useState(storyTitleData);
 
   const [songTitle, setSongTitle] = useState(songTitleData);
-  const [song, setSong] = useState(songData);
+  const [songImage, setSongImage] = useState<File | null>(songImageData);
+  const [song, setSong] = useState<SpotifyTrack | null>(songData);
 
   const [searchQuery, setSearchQuery] = useState(
     songData.name + " - " + songData.artist
@@ -53,27 +57,36 @@ const FormAdmin = ({
   const [artistSongs, setArtistSongs] = useState([]);
   const [linkToSong, setLinkToSong] = useState(linkToSongData);
 
-  const [songImage, setSongImage] = useState<File | null>(songImageData);
   const [originText, setOriginText] = useState(originTextData);
   const [storyText, setStoryText] = useState<string | undefined>(storyTextData);
-  const [storyTextFile, setStoryTextFile] = useState<File | null>(null);
+  const [storyTextFile, setStoryTextFile] = useState<File | null>(
+    storyTextFileData
+  );
   const [songText, setSongText] = useState<string | undefined>(songTextData);
   3;
 
-  const [manualSongInput, setManualSongInput] = useState(false);
+  const [manualSongInput, setManualSongInput] = useState(
+    song?.name && song?.name.length > 1 ? false : true
+  );
   const [manualStoryTextInput, setManualStoryTextInput] = useState(
     storyText && storyText.length > 1 ? true : false
   );
 
+  const [alertText, setAlertText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
   const router = useRouter();
 
   const isStoryText =
-    (storyText && storyText?.length > 1) || storyTextFile !== undefined;
+    (storyText ? storyText?.length > 1 : false) || storyTextFile !== null;
+
+  const isSong =
+    (song?.name ? song?.name.length > 1 : false) ||
+    (songTitle ? songTitle?.length > 1 : false);
 
   async function getSong(res) {
+    setLinkToSong(res.url);
     setSong(res);
 
     const lyricResult = await getLyrics(res.artist, res.name);
@@ -83,19 +96,46 @@ const FormAdmin = ({
   const addItem = async (e) => {
     e.preventDefault();
 
-    if (storyTitle === "" || !isStoryText || isLoading) return;
+    if (storyTitle === "") {
+      setAlertText("Verhaal titel mist");
+      return;
+    }
+
+    if (!isSong) {
+      setAlertText("Lied mist");
+      return;
+    }
+
+    if (!isStoryText) {
+      setAlertText("Verhaal tekst mist");
+      return;
+    }
+
+    if (isLoading) return;
     else {
       setIsSuccess(false);
       setIsLoading(true);
+      setAlertText("");
       try {
+        let storyFileUrl: string | null = null;
+        if (storyTextFile) {
+          const storageRef = ref(
+            firebaseStorage,
+            `stories/${storyTextFile.name}`
+          );
+          await uploadBytes(storageRef, storyTextFile);
+          storyFileUrl = await getDownloadURL(storageRef);
+        }
+
         const storyData = {
           author: author,
+          email: email,
           storyTitle: storyTitle,
           song: song,
           songTitle: songTitle,
           originText: originText,
-          // storyTextFile: storyTextFile,
           storyText: storyText,
+          storyFileUrl: storyFileUrl,
           songText: songText,
           underReview: true,
         };
@@ -109,21 +149,6 @@ const FormAdmin = ({
         }
 
         await editStory(id, storyData, imageUrl);
-
-        setAuthor("");
-        setStoryTitle("");
-        setSongTitle("");
-        setSearchResults([]);
-        setSearchQuery("");
-        setSelectedResult([]);
-        setArtistAlbums([]);
-        setArtistSongs([]);
-        setLinkToSong("");
-        setSongImage(null);
-        setOriginText("");
-        setStoryText("");
-        setStoryTextFile(null);
-        setSongText(undefined);
       } catch (e) {
         console.error("error: ", e);
       }
@@ -141,6 +166,14 @@ const FormAdmin = ({
         placeholder="Auteur"
         onChange={(e) => setAuthor(e.target.value)}
         value={author}
+      />
+      <TextInput
+        type="email"
+        name="story_email"
+        label="Schrijver email"
+        placeholder="Email"
+        onChange={(e) => setEmail(e.target.value)}
+        value={email}
         required
       />
       <TextInput
@@ -152,7 +185,6 @@ const FormAdmin = ({
         value={storyTitle}
         required
       />
-      
       <div>
         <div className="row">
           {!manualSongInput && (
@@ -180,10 +212,14 @@ const FormAdmin = ({
             value={linkToSong}
           />
         </div>
-        {song !== "" && !manualSongInput && (
+        {song?.name !== "" && !manualSongInput && (
           <Button
             onClick={() => {
-              setManualSongInput(true), setSong("");
+              setManualSongInput(true);
+              setSong(null);
+              setSelectedResult([]);
+              setSearchQuery("");
+              setLinkToSong("");
             }}
             variant="underlined"
             style={{ paddingTop: 10 }}
@@ -194,34 +230,35 @@ const FormAdmin = ({
       </div>
       <div>
         {manualSongInput && (
-          <div className="row">
-            <TextInput
-              type="file"
-              name="song_image"
-              label="Afbeelding voor lied"
-              onChange={(e) => setSongImage(e.target.files[0])}
-              accept="image/png, image/jpeg"
-            />
-            <TextInput
-              type="text"
-              name="song_info"
-              label="Artiest en titel van het liedje"
-              placeholder={"Artiest en titel van het liedje"}
-              onChange={(e) => setSongTitle(e.target.value)}
-              value={songTitle}
-            />
-          </div>
-        )}
-        {manualSongInput && (
-          <Button
-            onClick={() => {
-              setManualSongInput(false), setSongTitle(""), setSongImage(null);
-            }}
-            variant="underlined"
-            style={{ paddingTop: 10 }}
-          >
-            Terug naar de Spotify zoeker
-          </Button>
+          <>
+            <div className="row">
+              <TextInput
+                type="text"
+                name="song_info"
+                label="Artiest en titel van het liedje"
+                placeholder={"Artiest en titel van het liedje"}
+                onChange={(e) => setSongTitle(e.target.value)}
+                value={songTitle}
+              />
+              <TextInput
+                type="file"
+                name="song_image"
+                label="Afbeelding voor lied"
+                onChange={(e) => setSongImage(e.target.files[0])}
+                accept="image/png, image/jpeg"
+              />
+            </div>
+
+            <Button
+              onClick={() => {
+                setManualSongInput(false), setSongTitle(""), setSongImage(null);
+              }}
+              variant="underlined"
+              style={{ paddingTop: 10 }}
+            >
+              Terug naar de Spotify zoeker
+            </Button>
+          </>
         )}
       </div>
       <TextArea
@@ -262,15 +299,34 @@ const FormAdmin = ({
               onChange={(e) => setStoryTextFile(e.target.files[0])}
               accept=".doc, .docx, .rtf, .txt, .pdf"
             />
-            <Button
-              onClick={() => {
-                setManualStoryTextInput(true);
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
               }}
-              variant="underlined"
-              style={{ paddingTop: 10 }}
             >
-              Of schrijf het handmatig
-            </Button>
+              {storyTextFileData && (
+                <Button
+                  onClick={() => {
+                    window.open(storyTextFileData, "_blank");
+                  }}
+                  variant="underlined"
+                  style={{ paddingTop: 10 }}
+                >
+                  Bekijk huidige tekst van schrijver
+                </Button>
+              )}
+              <Button
+                onClick={() => {
+                  setManualStoryTextInput(true);
+                }}
+                variant="underlined"
+                style={{ paddingTop: 10 }}
+              >
+                Terug naar handmatig schrijven
+              </Button>
+            </div>
           </>
         )}
       </div>
@@ -292,6 +348,13 @@ const FormAdmin = ({
       >
         Aanpassingen opslaan
       </Button>
+      <Button
+        variant={"neutral"}
+        style={{ width: "100%" }}
+        onClick={() => router.push("/admin/review")}
+      >
+        Aanpassingen ongedaan maken
+      </Button>
       <div
         style={{
           width: "100%",
@@ -301,6 +364,7 @@ const FormAdmin = ({
           gap: 32,
         }}
       >
+        {alertText && <Paragraph color="red">{alertText}</Paragraph>}
         {isLoading && (
           <Paragraph variant="sm">
             Een moment, je verhaal wordt opgestuurd

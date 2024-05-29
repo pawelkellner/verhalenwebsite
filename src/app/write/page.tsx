@@ -18,14 +18,10 @@ export const metadata = {
 export default function Write() {
   return (
     <MainLayout className="write__container">
-      <PageTitle title="Schrijf jouw verhaal" paddingBottom />
-      <div className={style.about__section}>
-        <Paragraph variant="sm">
-          Ook je verhaaltje op SoundStories? Stuur het in en ik zet het er -
-          misschien - op!
-        </Paragraph>
-      </div>
-      <br /> <br />
+      <PageTitle
+        title="Ook je verhaaltje op SoundStories? Stuur het in en ik zet het er - misschien - op!"
+        paddingBottom
+      />
       <div className={style.about__section}>
         <Heading variant="sm" fontWeight={300}>
           Eisen
