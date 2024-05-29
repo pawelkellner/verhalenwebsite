@@ -1,9 +1,12 @@
 "use server"
 
-import { addDoc, collection, serverTimestamp, doc, updateDoc, deleteDoc } from "firebase/firestore";
+import { addDoc, collection, serverTimestamp, doc, updateDoc, deleteDoc, getDoc } from "firebase/firestore";
 import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { getStorage, ref, deleteObject } from 'firebase/storage';
 import { app } from '../firebase'; // Assuming the Firebase initialization file is named firebaseConfig.js and it exports the initialized app as 'app'
 import { db } from "../firebase";
+
+const storage = getStorage(app);
 
 export async function submitStory(storyData, imageUrl) {
     try {
@@ -13,10 +16,10 @@ export async function submitStory(storyData, imageUrl) {
             createdAt: serverTimestamp(),
         });
 
-        console.log("Document added successfully", docRef.id)
+        console.log("Document added successfully", docRef.id);
     } catch (e) {
-        console.log(e)
-        return JSON.stringify(e)
+        console.log(e);
+        return JSON.stringify(e);
     }
 }
 
@@ -47,10 +50,10 @@ export async function approveStory(story) {
         await updateDoc(docRef, {
             underReview: false
         });
-        console.log("Story approved successfully")
+        console.log("Story approved successfully");
     } catch (e) {
-        console.log(e)
-        return JSON.stringify(e)
+        console.log(e);
+        return JSON.stringify(e);
     }
 }
 
@@ -60,23 +63,39 @@ export async function disApproveStory(story) {
         await updateDoc(docRef, {
             underReview: true
         });
-        console.log("Story disapproved successfully")
+        console.log("Story disapproved successfully");
     } catch (e) {
-        console.log(e)
-        return JSON.stringify(e)
+        console.log(e);
+        return JSON.stringify(e);
     }
 }
 
 export async function deleteStory(story) {
     try {
         const docRef = doc(db, "verhalen", story.id);
+
+        // Get the document data to find the image URL
+        const docSnapshot = await getDoc(docRef);
+        if (docSnapshot.exists()) {
+            const storyData = docSnapshot.data();
+            const imageUrl = storyData.songImage;
+
+            // Delete the image from Firebase Storage
+            if (imageUrl) {
+                const imageRef = ref(storage, imageUrl);
+                await deleteObject(imageRef);
+                console.log("Image deleted successfully");
+            }
+        }
+
         await deleteDoc(docRef);
-        console.log("Story deleted successfully")
+        console.log("Story deleted successfully");
     } catch (e) {
-        console.log(e)
-        return JSON.stringify(e)
+        console.log(e);
+        return JSON.stringify(e);
     }
 }
+
 
 
 export async function getLyrics(artist, title) {
