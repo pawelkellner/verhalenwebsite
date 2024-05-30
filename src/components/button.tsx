@@ -44,9 +44,9 @@ const Button: FC<ButtonProps> = ({
         };
       case "warning":
         return {
-          background: "none",
+          background: "#ef4444",
           borderColor: "#ef4444",
-          color: "#ef4444",
+          color: theme.white,
         };
       case "disabled":
         return {
