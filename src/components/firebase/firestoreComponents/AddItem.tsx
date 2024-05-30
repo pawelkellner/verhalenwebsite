@@ -33,7 +33,6 @@ export default function AddItem() {
         imageUrl: imageUrl,
         createdAt: serverTimestamp(),
       });
-      console.log("Document written with ID: ", docRef.id);
       setInputName("");
       setInputNumber("");
       setImage(null);

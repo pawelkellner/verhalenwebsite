@@ -1,5 +1,15 @@
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
+export interface SiteContent {
+    id: string;
+    homeHeading: string;
+    homeText: string;
+    homeButton: string;
+    writeContent: string | TrustedHTML;
+    writeCheckboxText: string;
+    aboutContent: string;
+}
+
 export interface Verhaal {
     id: string;
     name: string;

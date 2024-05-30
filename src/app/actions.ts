@@ -14,8 +14,6 @@ export async function submitContent(contentData, contentId) {
 
         const docSnapshot = await getDoc(docRef);
 
-        console.log(docSnapshot)
-
         if (docSnapshot.exists()) {
             const updatePayload = {
                 ...contentData,
@@ -23,17 +21,24 @@ export async function submitContent(contentData, contentId) {
             };
 
             await updateDoc(docRef, updatePayload);
-            console.log("Content edited successfully");
+
+            return JSON.stringify({
+                message: 'Content edited successfully',
+                success: true
+            })
         } else {
             const docRef = await addDoc(collection(db, "siteContent"), {
                 ...contentData,
                 createdAt: serverTimestamp(),
             });
 
-            console.log("Document added successfully", docRef.id);
+            return JSON.stringify({
+                message: 'Content added successfully',
+                success: true
+            })
         }
     } catch (e) {
-        console.log(e);
+        console.error(e);
         return JSON.stringify(e);
     }
 }
@@ -46,7 +51,6 @@ export async function submitStory(storyData, imageUrl) {
             createdAt: serverTimestamp(),
         });
 
-        console.log("Document added successfully", docRef.id);
     } catch (e) {
         console.log(e);
         return JSON.stringify(e);
@@ -67,7 +71,6 @@ export async function editStory(storyId, updatedData, newImageUrl) {
             if (newImageUrl && currentImageUrl) {
                 const imageRef = ref(storage, currentImageUrl);
                 await deleteObject(imageRef);
-                console.log("Old image deleted successfully");
             }
 
             const updatePayload = {
@@ -81,7 +84,6 @@ export async function editStory(storyId, updatedData, newImageUrl) {
 
             await updateDoc(docRef, updatePayload);
 
-            console.log("Story edited successfully");
         } else {
             throw new Error("Document does not exist");
         }
@@ -97,7 +99,6 @@ export async function approveStory(story) {
         await updateDoc(docRef, {
             underReview: false
         });
-        console.log("Story approved successfully");
     } catch (e) {
         console.log(e);
         return JSON.stringify(e);
@@ -110,7 +111,6 @@ export async function disApproveStory(story) {
         await updateDoc(docRef, {
             underReview: true
         });
-        console.log("Story disapproved successfully");
     } catch (e) {
         console.log(e);
         return JSON.stringify(e);
@@ -131,12 +131,10 @@ export async function deleteStory(story) {
             if (imageUrl) {
                 const imageRef = ref(storage, imageUrl);
                 await deleteObject(imageRef);
-                console.log("Image deleted successfully");
             }
         }
 
         await deleteDoc(docRef);
-        console.log("Story deleted successfully");
     } catch (e) {
         console.log(e);
         return JSON.stringify(e);

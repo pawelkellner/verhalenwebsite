@@ -63,7 +63,6 @@ const FormAdmin = ({
     storyTextFileData
   );
   const [songText, setSongText] = useState<string | undefined>(songTextData);
-  3;
 
   const [manualSongInput, setManualSongInput] = useState(
     song?.name && song?.name.length > 1 ? false : true

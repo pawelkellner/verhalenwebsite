@@ -106,7 +106,7 @@ export default function Story({ params }: { params: { slug: string } }) {
                 dangerouslySetInnerHTML={{
                   __html: story?.storyText
                     ? story?.storyText
-                    : "Tekst niet beschikbaar",
+                    : "Aan het laden...",
                 }}
               />
             ) : (

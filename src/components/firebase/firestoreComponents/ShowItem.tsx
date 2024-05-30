@@ -20,7 +20,6 @@ export default function ShowItem() {
       const querySnapshot = await getDocs(query(collection(db, 'verhalen'), orderBy('createdAt', 'asc')));
       const verhalenData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Verhaal));
       setVerhalen(verhalenData);
-      console.log(verhalenData)
     } catch (error) {
       console.error("Error fetching documents: ", error);
     }

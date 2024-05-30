@@ -20,7 +20,6 @@ export default function AuthCreateAccount() {
       .then((userCredential) => {
         updateProfile(userCredential.user, { displayName })
           .then(() => {
-            console.log("created user:", userCredential.user);
             setDisplayName("");
             setEmail("");
             setPassword("");

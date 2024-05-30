@@ -2,23 +2,25 @@ import "./hero.scss";
 import Heading from "../typography/heading";
 import Paragraph from "../typography/paragraph";
 import LinkButton from "../link-button/link-button";
+import {useSiteContent} from "../site-content-provider/siteContentProvider";
 
 const Hero = () => {
+  const { content } = useSiteContent();
+
   return (
     <div className="hero">
       <span className="hero__backgroundblur"></span>
       <div className="container">
         <div className="hero__contentWrapper">
           <Heading variant="xl" fontWeight={400}>
-            Verhalen geïnspireerd door een liedje
+            { content.homeHeading || 'Aan het laden...' }
           </Heading>
           <Paragraph variant="md">
-            Van Tiësto tot de Beach Boys, alle genres mogen. Durf jij ook een
-            poging te wagen?
+            { content.homeText || '' }
           </Paragraph>
         </div>
         <LinkButton href="/write" buttonVariant="primary">
-          Ontdek meer en doe mee!
+          { content.homeButton || 'Aan het laden...'}
         </LinkButton>
       </div>
     </div>

@@ -17,18 +17,15 @@ export default function DeleteItem() {
                 const data = docSnap.data();
                 
                 await deleteDoc(docRef);
-                console.log("Document with ID:", inputId, "deleted successfully");
 
                 if (data.imageUrl) {
                     const storage = getStorage();
                     const imageRef = ref(storage, data.imageUrl);
                     await deleteObject(imageRef);
-                    console.log("Image associated with the document deleted successfully");
                 }
                 
                 setInputId("");
             } else {
-                console.log('No such document!');
             }
         } catch (error) {
             console.error("Error deleting document: ", error);

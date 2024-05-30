@@ -33,7 +33,6 @@ export default function EditItem() {
             if (docSnap.exists()) {
                 setVerhaal({ id: docSnap.id, ...docSnap.data() } as Verhaal);
             } else {
-                console.log('No such document!');
                 setVerhaal(null);
             }
         } catch (error) {
@@ -68,7 +67,6 @@ export default function EditItem() {
                 }
             }
     
-            console.log("Document updated successfully!");
             setVerhaal(null);
             setInputId("");
             setEditedName("");

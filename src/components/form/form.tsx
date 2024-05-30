@@ -18,6 +18,7 @@ import SpotifySearch from "../spotify-search/spotify-search.jsx";
 import { storage as firebaseStorage } from "../../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { isUserLoggedIn } from "../../app/actions";
+import {useSiteContent} from "../site-content-provider/siteContentProvider";
 
 export type SpotifyTrack = {
   id: string;
@@ -37,6 +38,7 @@ const Editor = dynamic(
 );
 
 const Form = () => {
+  const { content } = useSiteContent();
   const [author, setAuthor] = useState("");
   const [email, setEmail] = useState("");
   const [storyTitle, setStoryTitle] = useState("");
@@ -126,7 +128,6 @@ const Form = () => {
             ? (updatedAuthor += " (gastschrijver)")
             : (updatedAuthor += "een gastschrijver");
         }
-        console.log("here", isLoggedIn);
 
         let storyFileUrl: string | null = null;
         if (storyTextFile) {
@@ -373,9 +374,7 @@ const Form = () => {
           required
         />
         <label htmlFor="confirm" style={{ marginTop: -3 }}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam.
+          { content.writeCheckboxText || 'Aan het laden...' }
         </label>
       </div>
       <Button

@@ -1,32 +1,39 @@
 "use client"
-import React, {useState} from "react";
-
-import styles from "./page.module.scss";
+import React, {useEffect, useState} from "react";
 
 import MainLayout from "../../../components/main-layout/main-layout";
 import PageTitle from "../../../components/page-title/page-title";
-import StoryCard from "../../../components/story-card/story-card";
-import {useStories} from "../../../components/posts-provider/postsProvider";
 import TextEditor from "../../../components/editor/editor";
 import TextInput from "../../../components/text-input/text-input";
 import Button from "../../../components/button";
+import style from "./page.module.scss";
 import {isUserLoggedIn, submitContent} from "../../actions";
+import {useSiteContent} from "../../../components/site-content-provider/siteContentProvider";
+import Paragraph from "../../../components/typography/paragraph";
 
 export default function Page() {
-    const { reviewedStories, notReviewedStories, loading } = useStories();
+    const { content } = useSiteContent();
     const [ about, setAbout ] = useState('');
     const [ write, setWrite ] = useState('');
     const [ homeHeading, setHomeHeading ] = useState('');
     const [ homeText, setHomeText ] = useState('');
     const [ homeButton, setHomeButton ] = useState('');
     const [ writeCheckbox, setWriteCheckbox ] = useState('');
-    const [ contentId, setContentId ] = useState('')
+    const [ loading, setLoading ] = useState(false);
+    const [ successMessage, setSuccessMessage ] = useState(false);
+    const [ alertText, setAlertText ] = useState('');
+
+    useEffect(() => {
+        setHomeHeading(content.homeHeading);
+        setHomeText(content.homeText);
+        setHomeButton(content.homeButton);
+        setWriteCheckbox(content.writeCheckboxText);
+    },[content])
 
     const isAboutText = about ? about?.length > 1 : false
     const isWriteText = write ? write?.length > 1 : false
 
     const parseData = (formData) => {
-        console.log(formData.get('homeHeading'))
         const parsedObj = {
             homeHeading: formData.get('homeHeading'),
             homeText: formData.get('homeText'),
@@ -45,17 +52,48 @@ export default function Page() {
         const data = new FormData(e.target)
         const dataObj = parseData(data);
 
-        console.log('hallo')
+        if ( !homeHeading ) {
+            setAlertText('Home heading mist!')
+            return;
+        }
+
+        if ( !homeText ) {
+            setAlertText('Home tekst mist!')
+            return;
+        }
+
+        if ( !homeButton ) {
+            setAlertText('Home button tekst mist!')
+            return;
+        }
+
+        if ( !isAboutText ) {
+            setAlertText('Over Soundstories tekst mist!')
+            return;
+        }
+
+        if ( !writeCheckbox ) {
+            setAlertText('Schrijven checkbox tekst mist!')
+            return;
+        }
+
+        if ( !isWriteText ) {
+            setAlertText('Schrijven omschrijving tekst mist!')
+            return;
+        }
 
         try {
+            setAlertText('');
             const isLoggedIn = await isUserLoggedIn();
 
             if ( isLoggedIn ) {
-                await submitContent(dataObj, contentId);
+                const response = await submitContent(dataObj, content.id ? content.id : 'rdalkwfnaoi');
+                setLoading(true)
 
-                console.log('hllo')
-            } else {
-                console.log('Not logged in')
+                if ( JSON.parse(response).success ) {
+                    setLoading(false);
+                    setSuccessMessage(true);
+                }
             }
         } catch (e) {
             console.error(e)
@@ -74,16 +112,16 @@ export default function Page() {
         <>
             <MainLayout>
                 <PageTitle title="Content beheer" />
-                <form onSubmit={editContent}>
+                <form onSubmit={editContent} className={style.form__styling}>
                     <TextInput name={'homeHeading'} type={'text'} label={'Home heading'} value={homeHeading || ''} onChange={(e) => { setHomeHeading(e.target.value) }}/>
                     <TextInput name={'homeText'} type={'text'} label={'Home tekst'} value={homeText || ''} onChange={(e) => { setHomeText(e.target.value) }}/>
                     <TextInput name={'homeButton'} type={'text'} label={'Home button'} value={homeButton || ''} onChange={(e) => { setHomeButton(e.target.value) }}/>
-                    <TextEditor placeholder={'...'} label={'Over ons'} value={about || ''} onChange={setAboutData}/>
+                    <TextEditor placeholder={'...'} label={'Over ons'} value={content.aboutContent || about || ''} onChange={setAboutData}/>
                     <TextInput name={'writeCheckbox'} type={'text'} label={'Schrijven - checkbox'} value={writeCheckbox || ''} onChange={(e) => { setWriteCheckbox(e.target.value) }}/>
-                    <TextEditor placeholder={'...'} label={'Schrijven - omschrijving'} value={write || ''} onChange={setWriteData}/>
+                    <TextEditor placeholder={'...'} label={'Schrijven - omschrijving'} value={content.writeContent || write || ''} onChange={setWriteData}/>
                     <Button
                         variant={
-                            homeHeading === "" || homeText === "" || homeButton === "" || writeCheckbox === "" || !isAboutText || !isWriteText
+                            homeHeading === "" || homeText === "" || homeButton === "" || writeCheckbox === "" || !isAboutText || !isWriteText || loading
                                 ? "disabled"
                                 : "secondary"
                         }
@@ -91,6 +129,12 @@ export default function Page() {
                     >
                         Pas content aan
                     </Button>
+                    {alertText && <Paragraph color="red">{alertText}</Paragraph>}
+                    { successMessage && (
+                        <Paragraph variant="sm">
+                            Aanpassingen zijn opgeslagen!
+                        </Paragraph>
+                    )}
                 </form>
             </MainLayout>
         </>

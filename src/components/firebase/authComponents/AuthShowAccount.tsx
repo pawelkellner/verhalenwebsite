@@ -18,10 +18,8 @@ export default function AuthShowAccount() {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
                 setUser(user);
-                console.log("User is signed in");
             } else {
                 setUser(null);
-                console.log("User is not signed in");
             }
             setLoading(false);
         });
@@ -34,7 +32,6 @@ export default function AuthShowAccount() {
         signOut(auth)
             .then(() => {
                 setUser(null);
-                console.log("User signed out successfully");
             })
             .catch((error) => {
                 console.error("Error signing out:", error);
