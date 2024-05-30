@@ -7,6 +7,7 @@ export interface ButtonProps {
     | "primary"
     | "secondary"
     | "neutral"
+    | "alert"
     | "warning"
     | "disabled"
     | "underlined"
@@ -42,11 +43,17 @@ const Button: FC<ButtonProps> = ({
           borderColor: theme.grey[100],
           color: theme.grey[500],
         };
-      case "warning":
+        case "alert":
         return {
           background: "none",
           borderColor: "#ef4444",
           color: "#ef4444",
+        };
+      case "warning":
+        return {
+          background: "#ef4444",
+          borderColor: "#ef4444",
+          color: theme.white,
         };
       case "disabled":
         return {
