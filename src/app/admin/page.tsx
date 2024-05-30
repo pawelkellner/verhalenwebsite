@@ -19,8 +19,10 @@ export default function AuthLogin() {
   const router = useRouter();
 
   useEffect(() => {
-    checkAuth();
-  }, []);
+    if (state.isUserAuthenticated) {
+      router.replace("/admin/review");
+    }
+  }, [state.isUserAuthenticated]);
 
   async function login() {
     await authLogin(email, password);
@@ -33,18 +35,6 @@ export default function AuthLogin() {
     dispatch({
       type: ActionTypes.AUTHENTICATE_USER,
       value: true,
-    });
-  }
-
-  useEffect(() => {
-    console.log("HERE2", state.isUserAuthenticated);
-  }, [state.isUserAuthenticated]);
-
-  async function checkAuth() {
-    const response = await isUserLoggedIn();
-    dispatch({
-      type: ActionTypes.AUTHENTICATE_USER,
-      value: response !== false,
     });
   }
 
