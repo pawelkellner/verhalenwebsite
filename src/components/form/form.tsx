@@ -193,6 +193,11 @@ const Form = () => {
     }
   };
 
+  const handleSongRemoved = () => {
+    setLinkToSong("");
+    setSongText(undefined)
+  }
+
   return (
     <div className="inputs__group">
       <TextInput
@@ -237,6 +242,7 @@ const Form = () => {
               setArtistAlbums={setArtistAlbums}
               artistSongs={artistSongs}
               setArtistSongs={setArtistSongs}
+              onSongRemoved={handleSongRemoved}
             />
           )}
           <TextInput

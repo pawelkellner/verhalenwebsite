@@ -18,6 +18,7 @@ function SpotifyApp({
   setArtistAlbums,
   artistSongs,
   setArtistSongs,
+  onSongRemoved,
 }) {
   // Variables that do not need state (always the same)
   const clientId = "7dc0428f34154a42a4e4a26571e8b410";
@@ -270,6 +271,9 @@ function SpotifyApp({
                   setSelectedResult([]);
                   setArtistAlbums([]);
                   setArtistSongs([]);
+                  if (onSongRemoved) {
+                    onSongRemoved();
+                  }
                 }}
               >
                 <svg
