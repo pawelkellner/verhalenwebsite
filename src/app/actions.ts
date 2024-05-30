@@ -8,6 +8,36 @@ import { db } from "../firebase";
 
 const storage = getStorage(app);
 
+export async function submitContent(contentData, contentId) {
+    try {
+        const docRef = doc(db, "siteContent", contentId);
+
+        const docSnapshot = await getDoc(docRef);
+
+        console.log(docSnapshot)
+
+        if (docSnapshot.exists()) {
+            const updatePayload = {
+                ...contentData,
+                updatedAt: serverTimestamp(),
+            };
+
+            await updateDoc(docRef, updatePayload);
+            console.log("Content edited successfully");
+        } else {
+            const docRef = await addDoc(collection(db, "siteContent"), {
+                ...contentData,
+                createdAt: serverTimestamp(),
+            });
+
+            console.log("Document added successfully", docRef.id);
+        }
+    } catch (e) {
+        console.log(e);
+        return JSON.stringify(e);
+    }
+}
+
 export async function submitStory(storyData, imageUrl) {
     try {
         const docRef = await addDoc(collection(db, "verhalen"), {

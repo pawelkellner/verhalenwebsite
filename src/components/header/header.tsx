@@ -75,7 +75,10 @@ const Header = () => {
         {(router === "/" || router.includes("stories")) && <Search />}
         <div className={styles.nav__buttons}>
           {state.isUserAuthenticated && (
-            <LinkButton href="/admin/review">Beheerder paneel</LinkButton>
+              <>
+                <LinkButton href="/admin/review">Beheerder paneel</LinkButton>
+                <LinkButton href="/admin/content">Content beheer</LinkButton>
+              </>
           )}
 
           <LinkButton href="/about">Over SoundStories</LinkButton>
