@@ -21,19 +21,23 @@ const AdminButtons = ({ slug, story }) => {
     router.push("/admin/review");
   };
 
-  const awaitDisapproval = async () => {
+  const disApproved = async () => {
+    await disApproveStory(story);
+    router.push("/admin/review");
+  };
+
+  const awaitDelete = async () => {
     setAwaitConfirmation(true);
   };
 
-  const disapproved = async () => {
+  const deleteVerhaal = async () => {
     story?.underReview
-      ? await deleteStory(story)
-      : await disApproveStory(story);
+    await deleteStory(story)
 
     router.push("/admin/review");
   };
 
-  const cancelDisapproval = () => {
+  const cancelDelete = () => {
     setAwaitConfirmation(false);
   };
 
@@ -42,20 +46,27 @@ const AdminButtons = ({ slug, story }) => {
       {awaitConfirmation ? (
         <>
           <Paragraph>Weet je zeker dat je dit verhaal wilt verwijderen?</Paragraph>
-          <Button onClick={() => disapproved()} variant="warning">
+          <Button onClick={() => deleteVerhaal()} variant="warning">
             Verwijderen
           </Button>
           <Paragraph></Paragraph>
-          <Button onClick={() => cancelDisapproval()} variant="secondary">
+          <Button onClick={() => cancelDelete()} variant="secondary">
             Terug
           </Button>
         </>
       ) : (
         <>
-          {story?.underReview && (
+          {story?.underReview ? (
             <>
               <Button onClick={() => approved()} variant="primary">
                 Goedkeuren
+              </Button>
+              <Paragraph>Of</Paragraph>
+            </>
+          ) : (
+            <>
+              <Button onClick={() => disApproved()} variant="alert">
+                Afkeuren
               </Button>
               <Paragraph>Of</Paragraph>
             </>
@@ -64,7 +75,7 @@ const AdminButtons = ({ slug, story }) => {
             Bewerken
           </LinkButton>
           <Paragraph>Of</Paragraph>
-          <Button onClick={() => awaitDisapproval()} variant="warning">
+          <Button onClick={() => awaitDelete()} variant="warning">
             Verwijderen
           </Button>
         </>
