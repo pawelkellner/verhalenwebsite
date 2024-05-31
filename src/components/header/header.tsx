@@ -105,18 +105,29 @@ const Header = () => {
         <div className={styles.nav__hamburgerMenu}>
           <div className="container">
             <a>
-              <LinkButton href="/about">Over SoundStories</LinkButton>
+              <LinkButton href="/about" onClick={() => toggleMenu()}>
+                Over SoundStories
+              </LinkButton>
             </a>
             <a>
-              <LinkButton href="/write">Schrijven</LinkButton>
+              <LinkButton href="/write" onClick={() => toggleMenu()}>
+                Schrijven
+              </LinkButton>
             </a>
             {state.isUserAuthenticated && (
               <>
                 <a>
-                  <LinkButton href="/admin/review">Beheerder paneel</LinkButton>
+                  <LinkButton href="/admin/review" onClick={() => toggleMenu()}>
+                    Beheerder paneel
+                  </LinkButton>
                 </a>
                 <a>
-                  <LinkButton href="/admin/content">Content beheer</LinkButton>
+                  <LinkButton
+                    href="/admin/content"
+                    onClick={() => toggleMenu()}
+                  >
+                    Content beheer
+                  </LinkButton>
                 </a>
               </>
             )}
