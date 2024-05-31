@@ -102,11 +102,16 @@ export default function Page() {
     try {
       setAlertText("");
       const isLoggedIn = await isUserLoggedIn();
+      let contentId = "rdalkwfnaoi";
+
+      if ( content?.id ) {
+        contentId = content?.id
+      }
 
       if (isLoggedIn) {
         const response = await submitContent(
           dataObj,
-          content.id ? content.id : "rdalkwfnaoi"
+          contentId
         );
         setLoading(true);
 
