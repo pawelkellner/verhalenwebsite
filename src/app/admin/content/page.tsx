@@ -110,15 +110,12 @@ export default function Page() {
       const isLoggedIn = await isUserLoggedIn();
       let contentId = "rdalkwfnaoi";
 
-      if ( content?.id ) {
-        contentId = content?.id
+      if (content?.id) {
+        contentId = content?.id;
       }
 
       if (isLoggedIn) {
-        const response = await submitContent(
-          dataObj,
-          contentId
-        );
+        const response = await submitContent(dataObj, contentId);
         setLoading(true);
 
         if (JSON.parse(response).success) {

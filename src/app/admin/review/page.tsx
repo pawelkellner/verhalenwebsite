@@ -14,20 +14,27 @@ import { isUserLoggedIn } from "../../actions";
 export default function Page() {
   const { reviewedStories, notReviewedStories, loading } = useStories();
   const router = useRouter();
+  const { state } = useAuth();
 
   useEffect(() => {
-    authCheck()
-  }, []);
-
-  const authCheck = async () => {
-    const user = await isUserLoggedIn()
-    if (user !== false) {
-      console.log("user is logged in,", user)
-    } else {
-      console.log("not logged in")
-      // router.replace("/admin");
+    if (!state.isUserAuthenticated) {
+      router.replace("/admin");
+      return;
     }
-  }
+  }, []);
+  // useEffect(() => {
+  //   authCheck();
+  // }, []);
+
+  // const authCheck = async () => {
+  //   const user = await isUserLoggedIn();
+  //   if (user !== false) {
+  //     console.log("user is logged in,", user);
+  //   } else {
+  //     console.log("not logged in");
+  //     // router.replace("/admin");
+  //   }
+  // };
 
   const renderSkeletonCards = () => {
     return (
@@ -64,27 +71,27 @@ export default function Page() {
   };
 
   function renderPostsSection(posts, loading) {
-      return (
-        <div className={styles.cards__container}>
-          {loading && renderSkeletonCards()}
-          {posts?.map((story, index) => (
-            <StoryCard
-              key={index}
-              id={story.id}
-              title={story.storyTitle}
-              image={story.song ? story.song.albumImage : story.songImage}
-              text={story.storyText}
-              author={story.author}
-              songName={
-                story?.song
-                  ? `${story?.song.name} - ${story?.song.artist}`
-                  : story?.songTitle
-              }
-              customUrl={`/admin/review/story/${story.id}`}
-            />
-          ))}
-        </div>
-      );
+    return (
+      <div className={styles.cards__container}>
+        {loading && renderSkeletonCards()}
+        {posts?.map((story, index) => (
+          <StoryCard
+            key={index}
+            id={story.id}
+            title={story.storyTitle}
+            image={story.song ? story.song.albumImage : story.songImage}
+            text={story.storyText}
+            author={story.author}
+            songName={
+              story?.song
+                ? `${story?.song.name} - ${story?.song.artist}`
+                : story?.songTitle
+            }
+            customUrl={`/admin/review/story/${story.id}`}
+          />
+        ))}
+      </div>
+    );
   }
 
   return (
