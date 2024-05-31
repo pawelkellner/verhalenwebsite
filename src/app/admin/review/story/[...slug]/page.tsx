@@ -57,7 +57,8 @@ export default function Story({ params }: { params: { slug: string } }) {
     if (user !== false) {
       console.log("user is logged in,", user)
     } else {
-      router.replace("/admin");
+      console.log("not logged in")
+      // router.replace("/admin");
     }
   }
 
