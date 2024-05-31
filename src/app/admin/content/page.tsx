@@ -41,10 +41,10 @@ export default function Page() {
       return;
     }
 
-    setHomeHeading(content.homeHeading);
-    setHomeText(content.homeText);
-    setHomeButton(content.homeButton);
-    setWriteCheckbox(content.writeCheckboxText);
+    setHomeHeading(content?.homeHeading);
+    setHomeText(content?.homeText);
+    setHomeButton(content?.homeButton);
+    setWriteCheckbox(content?.writeCheckboxText);
   }, [content, state.isUserAuthenticated, router]);
 
   const isAboutText = about ? about?.length > 1 : false;
@@ -164,7 +164,7 @@ export default function Page() {
             <TextEditor
               placeholder={"..."}
               label={"Over ons"}
-              value={content.aboutContent || about || ""}
+              value={content?.aboutContent || about || ""}
               onChange={setAboutData}
             />
             <TextInput
@@ -179,7 +179,7 @@ export default function Page() {
             <TextEditor
               placeholder={"..."}
               label={"Schrijven - omschrijving"}
-              value={content.writeContent || write || ""}
+              value={content?.writeContent || write || ""}
               onChange={setWriteData}
             />
             <Button
