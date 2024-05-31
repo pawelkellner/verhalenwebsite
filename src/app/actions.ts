@@ -164,7 +164,9 @@ export async function authLogin(email, password) {
     try {
         const getUser = await signInWithEmailAndPassword(auth, email, password);
         const userEmail = getUser.user.email
-        return userEmail
+        return JSON.stringify({
+            success: true
+        })
     } catch (error) {
         console.log(error.message);
     }
