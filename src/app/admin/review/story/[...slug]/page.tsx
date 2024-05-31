@@ -18,12 +18,11 @@ import Button from "../../../../../components/button";
 import { getFileExtensionFromUrl } from "../../../../../utils";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../../../../auth-context";
-import { useCheckAuth } from "../../../../../utils";
+import { isUserLoggedIn } from "../../../../actions";
 
 export default function Story({ params }: { params: { slug: string } }) {
   const { stories } = useStories();
   const router = useRouter();
-  const { state } = useAuth();
   const [story, setStory] = useState<Verhaal>();
 
   const monthsArray = [
@@ -48,18 +47,19 @@ export default function Story({ params }: { params: { slug: string } }) {
 
   let date: string = "";
   const slug = params.slug.toString();
-  const { checkAuth } = useCheckAuth();
 
   useEffect(() => {
-    checkAuth();
+    authCheck()
   }, []);
 
-  useEffect(() => {
-    if (!state.isUserAuthenticated) {
+  const authCheck = async () => {
+    const user = await isUserLoggedIn()
+    if (user !== false) {
+      console.log("user is logged in,", user)
+    } else {
       router.replace("/admin");
-      return;
     }
-  }, [state.isUserAuthenticated]);
+  }
 
   useEffect(() => {
     if (stories) {
@@ -77,7 +77,6 @@ export default function Story({ params }: { params: { slug: string } }) {
     }, ${fullDate.getFullYear()}`;
   }
 
-  if (state.isUserAuthenticated)
     return (
       <>
         <MainLayout>
