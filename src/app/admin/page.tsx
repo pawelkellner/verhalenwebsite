@@ -27,11 +27,7 @@ export default function AuthLogin() {
   async function login() {
       const response = await authLogin(email, password);
 
-      if (typeof response === 'string') {
-        if (JSON.parse(response).success ) {
-          router.replace("/admin/review");
-        }
-      }
+      router.replace("/admin/review");
   }
 
   async function loginWithCredentials() {
