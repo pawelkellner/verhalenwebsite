@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 
 import MainLayout from "../../../components/main-layout/main-layout";
 import PageTitle from "../../../components/page-title/page-title";
-import TextEditor from "../../../components/editor/editor";
 import TextInput from "../../../components/text-input/text-input";
 import Button from "../../../components/button";
 import style from "./page.module.scss";
@@ -12,6 +11,14 @@ import { useSiteContent } from "../../../components/site-content-provider/siteCo
 import Paragraph from "../../../components/typography/paragraph";
 import { useAuth } from "../../../auth-context";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
+
+const TextEditor = dynamic(
+    () => {
+      return import("../../../components/editor/editor");
+    },
+    { ssr: false }
+);
 
 export default function Page() {
   const { state } = useAuth();
