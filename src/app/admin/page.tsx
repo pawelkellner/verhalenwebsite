@@ -25,7 +25,6 @@ export default function AuthLogin() {
   }, [state.isUserAuthenticated]);
 
   async function login() {
-    try {
       const response = await authLogin(email, password);
 
       if (typeof response === 'string') {
@@ -33,9 +32,6 @@ export default function AuthLogin() {
           router.replace("/admin/review");
         }
       }
-    } catch (e) {
-      console.error(e);
-    }
   }
 
   async function loginWithCredentials() {
