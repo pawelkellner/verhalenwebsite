@@ -94,14 +94,15 @@ export default function Page() {
     );
   }
 
-  return (
-    <>
-      <MainLayout>
-        <PageTitle title="Niet gekeurde verhalen" />
-        {renderPostsSection(notReviewedStories, loading)}
-        <PageTitle title="Goedgekeurde verhalen" />
-        {renderPostsSection(reviewedStories, loading)}
-      </MainLayout>
-    </>
-  );
+  if (state.isUserAuthenticated)
+    return (
+      <>
+        <MainLayout>
+          <PageTitle title="Niet gekeurde verhalen" />
+          {renderPostsSection(notReviewedStories, loading)}
+          <PageTitle title="Goedgekeurde verhalen" />
+          {renderPostsSection(reviewedStories, loading)}
+        </MainLayout>
+      </>
+    );
 }
