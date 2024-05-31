@@ -11,6 +11,7 @@ import Heading from "../typography/heading";
 import Paragraph from "../typography/paragraph";
 import NoteSvg from "../svg/NoteSvg";
 import { ImageError } from "next/dist/server/image-optimizer";
+import Link from "next/link";
 
 const StoryCard = ({
   id,
@@ -88,9 +89,10 @@ const StoryCard = ({
   return (
     <>
       {!skeleton ? (
-        <button
+        <Link
           className="unstyled"
-          onClick={() => router.push(customUrl ? customUrl : `/story/${id}`)}
+          // onClick={() => router.push(customUrl ? customUrl : `/story/${id}`)}
+          href={customUrl ? customUrl : `/story/${id}`}
         >
           <article className="storycard">
             {image && (
@@ -140,7 +142,7 @@ const StoryCard = ({
               </span>
             </div>
           </article>
-        </button>
+        </Link>
       ) : (
         <button
           style={{ pointerEvents: "none" }}
