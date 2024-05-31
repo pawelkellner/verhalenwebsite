@@ -104,16 +104,21 @@ const Header = () => {
       {isMenuOpen && (
         <div className={styles.nav__hamburgerMenu}>
           <div className="container">
-            <a href="/about">
-              <Paragraph variant="sm">Over SoundStories</Paragraph>
+            <a>
+              <LinkButton href="/about">Over SoundStories</LinkButton>
             </a>
-            <a href="/write">
-              <Paragraph variant="sm">Schrijven</Paragraph>
+            <a>
+              <LinkButton href="/write">Schrijven</LinkButton>
             </a>
             {state.isUserAuthenticated && (
-              <a href="/admin/review">
-                <Paragraph variant="sm">Beheerder paneel</Paragraph>
-              </a>
+              <>
+                <a>
+                  <LinkButton href="/admin/review">Beheerder paneel</LinkButton>
+                </a>
+                <a>
+                  <LinkButton href="/admin/content">Content beheer</LinkButton>
+                </a>
+              </>
             )}
           </div>
         </div>
