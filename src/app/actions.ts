@@ -160,10 +160,12 @@ export async function getLyrics(artist, title) {
 export async function authLogin(email, password) {
 
     const auth = getAuth(app);
+    console.log("after login", auth.currentUser)
 
     try {
         const getUser = await signInWithEmailAndPassword(auth, email, password);
         const userEmail = getUser.user.email
+        console.log("after login password", userEmail)
         return userEmail
     } catch (error) {
         console.log(error.message);
@@ -171,6 +173,7 @@ export async function authLogin(email, password) {
 }
 
 export async function isUserLoggedIn() {
+    console.log("isUserLoggedIn called")
     try {
         const auth = getAuth(app);
         if (auth.currentUser !== null) {

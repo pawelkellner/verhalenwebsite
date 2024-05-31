@@ -16,6 +16,7 @@ import AdminButtons from "../../../../../components/admin-buttons/admin-buttons"
 import { useStories } from "../../../../../components/posts-provider/postsProvider";
 import Button from "../../../../../components/button";
 import { getFileExtensionFromUrl } from "../../../../../utils";
+import { isUserLoggedIn } from "../../../../actions";
 
 export default function Story({ params }: { params: { slug: string } }) {
   const { stories } = useStories();
@@ -45,6 +46,15 @@ export default function Story({ params }: { params: { slug: string } }) {
   const slug = params.slug.toString();
 
   useEffect(() => {
+    authCheck()
+  }, []);
+
+  const authCheck = async () => {
+    const user = await isUserLoggedIn()
+    console.log("Is user logged in?", user)
+  }
+
+  useEffect(() => {
     if (stories) {
       setStory(stories.find((item) => item.id === slug));
     }
@@ -64,6 +74,7 @@ export default function Story({ params }: { params: { slug: string } }) {
     <>
       <MainLayout>
         <PageTitle
+     
           title={
             story?.storyTitle ? story.storyTitle : "Titel niet beschikbaar"
           }
@@ -112,7 +123,7 @@ export default function Story({ params }: { params: { slug: string } }) {
               </>
             )}
           </div>
-          <div className={styles.story__information}>
+          <div className={styles.story__information }>
             <>
               <div className={styles.story__origin}>
                 {story?.email && (
@@ -173,6 +184,7 @@ export default function Story({ params }: { params: { slug: string } }) {
           </div>
         </MainLayout>
       </div>
+      <div onClick={() => authCheck()}>click me</div>
       <MainLayout>
         <AdminButtons slug={slug} story={story} />
       </MainLayout>
