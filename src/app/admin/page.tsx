@@ -31,13 +31,14 @@ export default function AuthLogin() {
   }, [state.isUserAuthenticated]);
 
   async function login() {
-      const response = await authLogin(email, password);
-
-      router.replace("/admin/review");
+    const response = await authLogin(email, password);
+    localStorage.setItem("isUserAuthenticated", "true");
+    router.replace("/admin/review");
   }
 
   async function loginWithCredentials() {
     await authLogin("testemail@m.com", "testpassword");
+    localStorage.setItem("isUserAuthenticated", "true");
     router.replace("/admin/review");
     dispatch({
       type: ActionTypes.AUTHENTICATE_USER,

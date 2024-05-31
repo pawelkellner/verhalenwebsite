@@ -1,6 +1,18 @@
 "use client";
-import React, { createContext, useReducer, useContext, Dispatch } from "react";
-import { reducer, initialState, Action, State } from "./store/auth-reducer";
+import React, {
+  createContext,
+  useReducer,
+  useContext,
+  Dispatch,
+  useEffect,
+} from "react";
+import {
+  reducer,
+  initialState,
+  Action,
+  State,
+  ActionTypes,
+} from "./store/auth-reducer";
 
 interface AuthContextType {
   state: State;
@@ -14,6 +26,17 @@ const AuthContext = createContext<AuthContextType>({
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    const isUserAuthenticated =
+      localStorage.getItem("isUserAuthenticated") === "true";
+    if (isUserAuthenticated) {
+      dispatch({
+        type: ActionTypes.AUTHENTICATE_USER,
+        value: true,
+      });
+    }
+  }, []);
 
   return (
     <AuthContext.Provider value={{ state, dispatch }}>

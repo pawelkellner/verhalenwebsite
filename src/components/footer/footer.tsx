@@ -15,8 +15,8 @@ const Footer = () => {
 
   async function logoutUser() {
     await authLogout();
+    localStorage.removeItem("isUserAuthenticated");
     dispatch({ type: ActionTypes.AUTHENTICATE_USER, value: false });
-
     router.push("/");
   }
 
