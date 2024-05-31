@@ -51,6 +51,7 @@ export default function Story({ params }: { params: { slug: string } }) {
   useEffect(() => {
     if (!state.isUserAuthenticated) {
       router.replace("/admin");
+      return;
     }
   }, [state.isUserAuthenticated, router]);
 
