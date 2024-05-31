@@ -24,6 +24,7 @@ export default function Story({ params }: { params: { slug: string } }) {
   const { stories } = useStories();
   const router = useRouter();
   const [story, setStory] = useState<Verhaal>();
+  const { state } = useAuth();
 
   const monthsArray = [
     "januari",
@@ -49,18 +50,11 @@ export default function Story({ params }: { params: { slug: string } }) {
   const slug = params.slug.toString();
 
   useEffect(() => {
-    authCheck()
-  }, []);
-
-  const authCheck = async () => {
-    const user = await isUserLoggedIn()
-    if (user !== false) {
-      console.log("user is logged in,", user)
-    } else {
-      console.log("not logged in")
-      // router.replace("/admin");
+    if (!state.isUserAuthenticated) {
+      router.replace("/admin");
+      return;
     }
-  }
+  }, []);
 
   useEffect(() => {
     if (stories) {
@@ -78,124 +72,122 @@ export default function Story({ params }: { params: { slug: string } }) {
     }, ${fullDate.getFullYear()}`;
   }
 
-    return (
-      <>
-        <MainLayout>
-          <PageTitle
-            title={
-              story?.storyTitle ? story.storyTitle : "Titel niet beschikbaar"
-            }
-            songTitle={
-              story?.song
-                ? `${story?.song.name} - ${story?.song.artist}`
-                : story?.songTitle
-            }
-            paddingBottom={true}
-            storyPage={true}
-          />
-          <div className={styles.story__content}>
-            <div className={styles.story__story}>
-              <div className={styles.story__titleMobile}>
-                <Heading>{story?.storyTitle}</Heading>
-              </div>
-              {story?.storyText ? (
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: story?.storyText
-                      ? story?.storyText
-                      : "Tekst niet beschikbaar",
-                  }}
-                />
-              ) : (
-                <>
-                  <Paragraph variant="sm">
-                    De schrijver van dit verhaal heeft ervoor gekozen om het
-                    verhaal in een bestand in te dienen.
-                  </Paragraph>{" "}
-                  {story?.storyFileUrl && isAllowedFileType && (
-                    <iframe
-                      src={`${story.storyFileUrl}#toolbar=0`}
-                      style={{ width: "100%", height: "100vh", marginTop: 8 }}
-                    />
-                  )}
-                  <Button
-                    onClick={() => {
-                      window.open(story?.storyFileUrl, "_blank");
-                    }}
-                    variant="underlined"
-                    style={{ paddingTop: 10 }}
-                  >
-                    Open verhaal
-                  </Button>
-                </>
-              )}
+  return (
+    <>
+      <MainLayout>
+        <PageTitle
+          title={
+            story?.storyTitle ? story.storyTitle : "Titel niet beschikbaar"
+          }
+          songTitle={
+            story?.song
+              ? `${story?.song.name} - ${story?.song.artist}`
+              : story?.songTitle
+          }
+          paddingBottom={true}
+          storyPage={true}
+        />
+        <div className={styles.story__content}>
+          <div className={styles.story__story}>
+            <div className={styles.story__titleMobile}>
+              <Heading>{story?.storyTitle}</Heading>
             </div>
-            <div className={styles.story__information}>
-              <>
-                <div className={styles.story__origin}>
-                  {story?.email && (
-                    <Paragraph>Schrijver email: {story?.email}</Paragraph>
-                  )}
-                  {story?.originText && (
-                    <Paragraph>{story?.originText}</Paragraph>
-                  )}
-                  <div className={styles.story__author}>
-                    <Paragraph>
-                      Verhaal geschreven door {story?.author}
-                    </Paragraph>
-
-                    <Paragraph>
-                      Gepubliceerd op {date ? date : "Niet beschikbaar"}
-                    </Paragraph>
-                  </div>
-                </div>
-                {(story?.songImage || story?.song) && (
-                  <a
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    href={story.song ? story.song.url : ""}
-                    className={styles.story__spotifyPlayer}
-                  >
-                    <span>
-                      <Image
-                        src={
-                          story?.songImage
-                            ? story?.songImage
-                            : story?.song.albumImage
-                        }
-                        alt={"album cover"}
-                        fill
-                      />
-                      <span />
-                      <PlayButtonSvg />
-                    </span>
-                  </a>
-                )}
-              </>
-            </div>
-          </div>
-        </MainLayout>
-        <div className={styles.story__lyricsWrapper}>
-          <MainLayout>
-            <div>
-              <Paragraph variant="md">
-                Songtekst van &apos;
-                {story?.song ? story?.song.name : story?.songTitle}&apos;
-              </Paragraph>
+            {story?.storyText ? (
               <div
                 dangerouslySetInnerHTML={{
-                  __html: story?.songText
-                    ? story?.songText
-                    : "Songtekst niet beschikbaar",
+                  __html: story?.storyText
+                    ? story?.storyText
+                    : "Tekst niet beschikbaar",
                 }}
-                className={styles.story__lyrics}
               />
-            </div>
-          </MainLayout>
+            ) : (
+              <>
+                <Paragraph variant="sm">
+                  De schrijver van dit verhaal heeft ervoor gekozen om het
+                  verhaal in een bestand in te dienen.
+                </Paragraph>{" "}
+                {story?.storyFileUrl && isAllowedFileType && (
+                  <iframe
+                    src={`${story.storyFileUrl}#toolbar=0`}
+                    style={{ width: "100%", height: "100vh", marginTop: 8 }}
+                  />
+                )}
+                <Button
+                  onClick={() => {
+                    window.open(story?.storyFileUrl, "_blank");
+                  }}
+                  variant="underlined"
+                  style={{ paddingTop: 10 }}
+                >
+                  Open verhaal
+                </Button>
+              </>
+            )}
+          </div>
+          <div className={styles.story__information}>
+            <>
+              <div className={styles.story__origin}>
+                {story?.email && (
+                  <Paragraph>Schrijver email: {story?.email}</Paragraph>
+                )}
+                {story?.originText && (
+                  <Paragraph>{story?.originText}</Paragraph>
+                )}
+                <div className={styles.story__author}>
+                  <Paragraph>Verhaal geschreven door {story?.author}</Paragraph>
+
+                  <Paragraph>
+                    Gepubliceerd op {date ? date : "Niet beschikbaar"}
+                  </Paragraph>
+                </div>
+              </div>
+              {(story?.songImage || story?.song) && (
+                <a
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  href={story.song ? story.song.url : ""}
+                  className={styles.story__spotifyPlayer}
+                >
+                  <span>
+                    <Image
+                      src={
+                        story?.songImage
+                          ? story?.songImage
+                          : story?.song.albumImage
+                      }
+                      alt={"album cover"}
+                      fill
+                    />
+                    <span />
+                    <PlayButtonSvg />
+                  </span>
+                </a>
+              )}
+            </>
+          </div>
         </div>
+      </MainLayout>
+      <div className={styles.story__lyricsWrapper}>
         <MainLayout>
-          <AdminButtons slug={slug} story={story} />
+          <div>
+            <Paragraph variant="md">
+              Songtekst van &apos;
+              {story?.song ? story?.song.name : story?.songTitle}&apos;
+            </Paragraph>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: story?.songText
+                  ? story?.songText
+                  : "Songtekst niet beschikbaar",
+              }}
+              className={styles.story__lyrics}
+            />
+          </div>
         </MainLayout>
-      </>
-    );
+      </div>
+      <MainLayout>
+        <AdminButtons slug={slug} story={story} />
+      </MainLayout>
+    </>
+  );
 }

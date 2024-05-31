@@ -46,12 +46,14 @@ export default function Page() {
       router.replace("/admin");
       return;
     }
+  }, []);
 
+  useEffect(() => {
     setHomeHeading(content?.homeHeading);
     setHomeText(content?.homeText);
     setHomeButton(content?.homeButton);
     setWriteCheckbox(content?.writeCheckboxText);
-  }, [content, state.isUserAuthenticated, router]);
+  }, [content, state.isUserAuthenticated]);
 
   const isAboutText = about ? about?.length > 1 : false;
   const isWriteText = write ? write?.length > 1 : false;
