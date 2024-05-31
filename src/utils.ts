@@ -1,4 +1,7 @@
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
+import { useAuth } from "./auth-context";
+import { ActionTypes } from "./store/auth-reducer";
+import { isUserLoggedIn } from "./app/actions";
 
 export interface SiteContent {
     id: string;
@@ -81,4 +84,19 @@ export const getFileExtensionFromUrl = (url: string | undefined | null): string 
         console.error("Error extracting file extension:", error);
         return "";
     }
+};
+
+export const useCheckAuth = () => {
+    const { dispatch } = useAuth();
+
+    const checkAuth = async () => {
+        const response = await isUserLoggedIn();
+        console.log("RESPOSE", response)
+        dispatch({
+            type: ActionTypes.AUTHENTICATE_USER,
+            value: response !== false,
+        });
+    };
+
+    return { checkAuth };
 };

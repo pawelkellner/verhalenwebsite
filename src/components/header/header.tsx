@@ -6,8 +6,7 @@ import Link from "next/link";
 import styles from "./styles.module.scss";
 
 import { useAuth } from "../../auth-context";
-import { ActionTypes } from "../../store/auth-reducer";
-import { isUserLoggedIn } from "../../app/actions";
+import { useCheckAuth } from "../../utils";
 import Heading from "../typography/heading";
 import Paragraph from "../typography/paragraph";
 import Button from "../button";
@@ -19,7 +18,8 @@ import LogoSvg from "../svg/LogoSvg";
 const Header = () => {
   const router = usePathname();
 
-  const { state, dispatch } = useAuth();
+  const { state } = useAuth();
+  const { checkAuth } = useCheckAuth();
 
   const [isWhite, setIsWhite] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -29,14 +29,6 @@ const Header = () => {
   useEffect(() => {
     checkAuth();
   }, [router]);
-
-  const checkAuth = async () => {
-    const response = await isUserLoggedIn();
-    dispatch({
-      type: ActionTypes.AUTHENTICATE_USER,
-      value: response !== false,
-    });
-  };
 
   useEffect(() => {
     if (router !== "/") {

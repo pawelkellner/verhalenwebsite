@@ -18,6 +18,7 @@ import Button from "../../../../../components/button";
 import { getFileExtensionFromUrl } from "../../../../../utils";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../../../../auth-context";
+import { useCheckAuth } from "../../../../../utils";
 
 export default function Story({ params }: { params: { slug: string } }) {
   const { stories } = useStories();
@@ -47,6 +48,11 @@ export default function Story({ params }: { params: { slug: string } }) {
 
   let date: string = "";
   const slug = params.slug.toString();
+  const { checkAuth } = useCheckAuth();
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
 
   useEffect(() => {
     if (!state.isUserAuthenticated) {

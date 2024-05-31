@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 
 import Link from "next/link";
 
@@ -10,44 +10,50 @@ import Pagination from "../components/pagination/pagination";
 import PageTitle from "../components/page-title/page-title";
 import StoryCard from "../components/story-card/story-card";
 import Hero from "../components/hero/hero";
-import {useStories} from "../components/posts-provider/postsProvider";
+import { useStories } from "../components/posts-provider/postsProvider";
+import { useCheckAuth } from "../utils";
 
 export default function Home() {
-    const { reviewedStories, loading, limitedStories } = useStories();
+  const { reviewedStories, loading, limitedStories } = useStories();
+  const { checkAuth } = useCheckAuth();
 
-    const renderSkeletonCards = () => {
-        return (
-            <>
-                <StoryCard
-                    key={1}
-                    id={"idoski"}
-                    title={"Lorem ipsum dolor sit amet"}
-                    text={"Lorem ipsum dolor sit amet"}
-                    author={"Lorem ipsum"}
-                    songName={"Lorem ipsum dolor"}
-                    skeleton={true}
-                />
-                <StoryCard
-                    key={2}
-                    id={"idoski"}
-                    title={"Lorem ipsum dolor sit amet"}
-                    text={"Lorem ipsum dolor sit amet"}
-                    author={"Lorem ipsum"}
-                    songName={"Lorem ipsum dolor"}
-                    skeleton={true}
-                />
-                <StoryCard
-                    key={3}
-                    id={"idoski"}
-                    title={"Lorem ipsum dolor sit amet"}
-                    text={"Lorem ipsum dolor sit amet"}
-                    author={"Lorem ipsum"}
-                    songName={"Lorem ipsum dolor"}
-                    skeleton={true}
-                />
-            </>
-        );
-    };
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
+  const renderSkeletonCards = () => {
+    return (
+      <>
+        <StoryCard
+          key={1}
+          id={"idoski"}
+          title={"Lorem ipsum dolor sit amet"}
+          text={"Lorem ipsum dolor sit amet"}
+          author={"Lorem ipsum"}
+          songName={"Lorem ipsum dolor"}
+          skeleton={true}
+        />
+        <StoryCard
+          key={2}
+          id={"idoski"}
+          title={"Lorem ipsum dolor sit amet"}
+          text={"Lorem ipsum dolor sit amet"}
+          author={"Lorem ipsum"}
+          songName={"Lorem ipsum dolor"}
+          skeleton={true}
+        />
+        <StoryCard
+          key={3}
+          id={"idoski"}
+          title={"Lorem ipsum dolor sit amet"}
+          text={"Lorem ipsum dolor sit amet"}
+          author={"Lorem ipsum"}
+          songName={"Lorem ipsum dolor"}
+          skeleton={true}
+        />
+      </>
+    );
+  };
 
   return (
     <>
@@ -55,9 +61,7 @@ export default function Home() {
       <MainLayout>
         <PageTitle noTopPadding title="Recente verhalen" />
         <div className={styles.cards__container}>
-          {loading && (
-            renderSkeletonCards()
-          )}
+          {loading && renderSkeletonCards()}
           {limitedStories?.map((story, index) => (
             <StoryCard
               key={index}

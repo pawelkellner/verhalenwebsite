@@ -9,11 +9,17 @@ import StoryCard from "../../../components/story-card/story-card";
 import { useStories } from "../../../components/posts-provider/postsProvider";
 import { useAuth } from "../../../auth-context";
 import { useRouter } from "next/navigation";
+import { useCheckAuth } from "../../../utils";
 
 export default function Page() {
   const { reviewedStories, notReviewedStories, loading } = useStories();
   const router = useRouter();
   const { state } = useAuth();
+  const { checkAuth } = useCheckAuth();
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
 
   useEffect(() => {
     if (!state.isUserAuthenticated) {

@@ -10,15 +10,21 @@ import FormAdmin from "../../../../../components/form-admin/form-admin";
 import { useStories } from "../../../../../components/posts-provider/postsProvider";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../../../../auth-context";
+import { useCheckAuth } from "../../../../../utils";
 
 export default function Story({ params }: { params: { slug: string } }) {
   const { stories } = useStories();
   const router = useRouter();
   const { state } = useAuth();
+  const { checkAuth } = useCheckAuth();
 
   const [story, setStory] = useState<Verhaal>();
 
   const slug = params.slug.toString();
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
 
   useEffect(() => {
     if (!state.isUserAuthenticated) {
