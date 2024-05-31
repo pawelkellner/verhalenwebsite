@@ -13,14 +13,14 @@ const Hero = () => {
       <div className="container">
         <div className="hero__contentWrapper">
           <Heading variant="xl" fontWeight={400}>
-            { content.homeHeading || 'Aan het laden...' }
+            { content?.homeHeading || 'Aan het laden...' }
           </Heading>
           <Paragraph variant="md">
-            { content.homeText || '' }
+            { content?.homeText || '' }
           </Paragraph>
         </div>
         <LinkButton href="/write" buttonVariant="primary">
-          { content.homeButton || 'Aan het laden...'}
+          { content?.homeButton || 'Aan het laden...'}
         </LinkButton>
       </div>
     </div>
