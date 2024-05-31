@@ -24,7 +24,8 @@ export default function Page() {
     if (user !== false) {
       console.log("user is logged in,", user)
     } else {
-      router.replace("/admin");
+      console.log("not logged in")
+      // router.replace("/admin");
     }
   }
 
