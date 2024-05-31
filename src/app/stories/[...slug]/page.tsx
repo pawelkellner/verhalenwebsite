@@ -10,7 +10,7 @@ import Pagination from "../../../components/pagination/pagination";
 import PageTitle from "../../../components/page-title/page-title";
 import StoryCard from "../../../components/story-card/story-card";
 import { useStories } from "../../../components/posts-provider/postsProvider";
-import { useCheckAuth } from "../../../utils";
+// import { useCheckAuth } from "../../../utils";
 
 export default function Page({
   params,
@@ -18,13 +18,13 @@ export default function Page({
   params: { slug: { index: string; searchTerm?: string } };
 }) {
   const { reviewedStories, loading, limitedStories } = useStories();
-  const { checkAuth } = useCheckAuth();
+  // const { checkAuth } = useCheckAuth();
   const storiesPerPage = 8;
   const searchTerm = params.slug[1];
 
-  useEffect(() => {
-    checkAuth();
-  }, []);
+  // useEffect(() => {
+  //   checkAuth();
+  // }, []);
 
   const filterStories = (story: Verhaal) => {
     if (!searchTerm) {

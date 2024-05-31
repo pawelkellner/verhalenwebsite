@@ -9,7 +9,7 @@ import MainLayout from "../../components/main-layout/main-layout";
 import PageTitle from "../../components/page-title/page-title";
 import Form from "../../components/form/form";
 import { useSiteContent } from "../../components/site-content-provider/siteContentProvider";
-import { useCheckAuth } from "../../utils";
+// import { useCheckAuth } from "../../utils";
 
 // export const metadata = {
 //   title: "Schrijf je eigen verhaal",
@@ -18,11 +18,11 @@ import { useCheckAuth } from "../../utils";
 
 export default function Write() {
   const { content } = useSiteContent();
-  const { checkAuth } = useCheckAuth();
+  // const { checkAuth } = useCheckAuth();
 
-  useEffect(() => {
-    checkAuth();
-  }, []);
+  // useEffect(() => {
+  //   checkAuth();
+  // }, []);
 
   return (
     <MainLayout className="write__container">

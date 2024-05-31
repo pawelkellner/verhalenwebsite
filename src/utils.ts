@@ -86,17 +86,17 @@ export const getFileExtensionFromUrl = (url: string | undefined | null): string 
     }
 };
 
-export const useCheckAuth = () => {
-    const { dispatch } = useAuth();
-
-    const checkAuth = async () => {
-        const response = await isUserLoggedIn();
-        console.log("RESPOSE", response)
-        dispatch({
-            type: ActionTypes.AUTHENTICATE_USER,
-            value: response !== false,
-        });
-    };
-
-    return { checkAuth };
-};
+// export const useCheckAuth = () => {
+//     const { dispatch } = useAuth();
+//
+//     const checkAuth = async () => {
+//         const response = await isUserLoggedIn();
+//         console.log("RESPOSE", response)
+//         dispatch({
+//             type: ActionTypes.AUTHENTICATE_USER,
+//             value: response !== false,
+//         });
+//     };
+//
+//     return { checkAuth };
+// };
