@@ -12,17 +12,19 @@ import Paragraph from "../../../components/typography/paragraph";
 import { useAuth } from "../../../auth-context";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
+import { useCheckAuth } from "../../../utils";
 
 const TextEditor = dynamic(
-    () => {
-      return import("../../../components/editor/editor");
-    },
-    { ssr: false }
+  () => {
+    return import("../../../components/editor/editor");
+  },
+  { ssr: false }
 );
 
 export default function Page() {
   const { state } = useAuth();
   const router = useRouter();
+  const { checkAuth } = useCheckAuth();
 
   const { content } = useSiteContent();
   const [about, setAbout] = useState("");
@@ -34,6 +36,10 @@ export default function Page() {
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState(false);
   const [alertText, setAlertText] = useState("");
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
 
   useEffect(() => {
     if (!state.isUserAuthenticated) {

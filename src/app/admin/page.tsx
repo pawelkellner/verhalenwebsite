@@ -9,14 +9,20 @@ import MainLayout from "../../components/main-layout/main-layout";
 import textInputStyles from "../../components/text-input/text-input.module.scss";
 import { ActionTypes } from "../../store/auth-reducer";
 import { useAuth } from "../../auth-context";
+import { useCheckAuth } from "../../utils";
 
 export default function AuthLogin() {
   const { state, dispatch } = useAuth();
+  const { checkAuth } = useCheckAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const router = useRouter();
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
 
   useEffect(() => {
     if (state.isUserAuthenticated) {

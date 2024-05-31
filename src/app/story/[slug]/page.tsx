@@ -20,8 +20,10 @@ import Heading from "../../../components/typography/heading";
 import LinkButton from "../../../components/link-button/link-button";
 import { useStories } from "../../../components/posts-provider/postsProvider";
 import { getFileExtensionFromUrl } from "../../../utils";
+import { useCheckAuth } from "../../../utils";
 
 export default function Story({ params }: { params: { slug: string } }) {
+  const { checkAuth } = useCheckAuth();
   const { reviewedStories } = useStories();
   const [story, setStory] = useState<Verhaal>();
 
@@ -46,6 +48,10 @@ export default function Story({ params }: { params: { slug: string } }) {
   let date: string = "";
 
   const slug = params.slug;
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
 
   useEffect(() => {
     if (reviewedStories) {
