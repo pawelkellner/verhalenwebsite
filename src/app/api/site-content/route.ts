@@ -5,7 +5,7 @@ import { SiteContent } from "../../../utils";
 export async function GET(request: Request) {
     console.log(request)
     try {
-        const querySnapshot = await getDocs(query(collection(db, 'siteContent'), orderBy('createdAt', 'asc')));
+        const querySnapshot = await getDocs(query(collection(db, 'siteContent'), orderBy('updatedAt', 'asc')));
         const siteData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as SiteContent));
 
         return new Response(JSON.stringify({
