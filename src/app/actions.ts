@@ -84,6 +84,9 @@ export async function editStory(storyId, updatedData, newImageUrl) {
 
             await updateDoc(docRef, updatePayload);
 
+            return JSON.stringify({
+               success: true
+            });
         } else {
             throw new Error("Document does not exist");
         }

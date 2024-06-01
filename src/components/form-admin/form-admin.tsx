@@ -45,7 +45,7 @@ const FormAdmin = ({
   const [storyTitle, setStoryTitle] = useState(storyTitleData);
 
   const [songTitle, setSongTitle] = useState(songTitleData);
-  const [songImage, setSongImage] = useState<File | null>(songImageData);
+  const [songImage, setSongImage] = useState<File | null>(null);
   const [song, setSong] = useState<SpotifyTrack | null>(songData);
 
   const [searchQuery, setSearchQuery] = useState(
@@ -134,6 +134,7 @@ const FormAdmin = ({
           songTitle: songTitle,
           originText: originText,
           storyText: storyText,
+          linkToSong: linkToSong,
           storyFileUrl: storyFileUrl,
           songText: songText,
           underReview: true,
@@ -147,12 +148,18 @@ const FormAdmin = ({
           imageUrl = await getDownloadURL(storageRef);
         }
 
-        await editStory(id, storyData, imageUrl);
+        const response = await editStory(id, storyData, imageUrl);
+
+        if ( JSON.parse(response).success ) {
+          setIsLoading(false);
+          setIsSuccess(true);
+        }
       } catch (e) {
+        setIsSuccess(false);
+        setIsLoading(true);
+        setAlertText("Er is iets mis gegaan. Probeer later overnieuw!");
         console.error("error: ", e);
       }
-      setIsLoading(false);
-      setIsSuccess(true);
     }
   };
 
