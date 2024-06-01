@@ -148,7 +148,7 @@ export default function Story({ params }: { params: { slug: string } }) {
                   <a
                     target="_blank"
                     rel="noreferrer noopener"
-                    href={story.song ? story.song.url : ""}
+                    href={story.song?.url ?? story.linkToSong}
                     className={styles.story__spotifyPlayer}
                   >
                     <span>

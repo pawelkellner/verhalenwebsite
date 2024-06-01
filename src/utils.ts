@@ -31,7 +31,7 @@ export interface Verhaal {
     songText: string | TrustedHTML;
     songImage?: string | StaticImport;
     songOrigin: string;
-    // linkToSong: string | StaticImport;
+    linkToSong: string;
     quoteAuthor: string;
     quoteText: string;
     originText: string;

@@ -81,6 +81,7 @@ const Form = () => {
     setSong(res);
     setLinkToSong(res.url);
 
+
     const lyricResult = await getLyrics(res.artist, res.name);
     setSongText(lyricResult || undefined);
   }
@@ -150,6 +151,7 @@ const Form = () => {
           songText: songText,
           storyFileUrl: storyFileUrl,
           underReview: isLoggedIn ? false : true,
+          linkToSong: linkToSong,
         };
 
         let imageUrl: string | null = null;
