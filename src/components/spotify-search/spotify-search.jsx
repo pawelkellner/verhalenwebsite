@@ -207,7 +207,7 @@ function SpotifyApp({
             onChange={(e) => {
               setSearchQuery(e.target.value);
             }}
-            placeholder="Zoek de titel van het lied"
+            placeholder="Zoek de artiest van het lied"
             style={
               searchResults.length > 0
                 ? {
