@@ -109,7 +109,7 @@ export default function Page() {
 
     try {
       setAlertText("");
-      const isLoggedIn = await isUserLoggedIn();
+      const isLoggedIn = state.isUserAuthenticated;
       let contentId = "rdalkwfnaoi";
 
       if (content?.id) {
