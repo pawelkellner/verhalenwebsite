@@ -20,11 +20,10 @@ function SpotifyApp({
   setArtistSongs,
   onSongRemoved,
 }) {
-  // Variables that do not need state (always the same)
-  const clientId = "7dc0428f34154a42a4e4a26571e8b410";
-  const clientSecret = "5b33db7a5ee84ca5893cac234137cda9";
+  
+  const clientId = "d418e50fc5b448ba98c0d202eaf53a4b";
+  const clientSecret = "233c9636997845cc97af2e251bcfa26d";
 
-  // Variables that need state
   const [accessToken, setAccessToken] = useState("");
 
   useEffect(() => {
