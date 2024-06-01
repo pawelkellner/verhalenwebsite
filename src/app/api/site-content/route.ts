@@ -31,26 +31,9 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-    const data = await request.json();
-
     try {
-        let imageUrl: string | null = null;
-
-        if (data.songImage) {
-            const storage = getStorage();
-            const storageRef = ref(storage, data.songImage.name);
-            await uploadBytes(storageRef, data.songImage);
-            imageUrl = await getDownloadURL(storageRef);
-        }
-
-        const docRef = await addDoc(collection(db, "verhalen"), {
-            ...data.story,
-            songImage: imageUrl,
-            createdAt: serverTimestamp()
-        });
-
         return new Response(JSON.stringify({
-            message: `Document written with ID: ${docRef.id}`
+            message: `Empty post route`
         }), {
             headers: {
                 "Content-Type": "application/json",
