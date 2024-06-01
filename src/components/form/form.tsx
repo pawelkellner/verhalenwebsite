@@ -212,7 +212,7 @@ const Form = () => {
       <TextInput
         type="email"
         name="story_email"
-        label="Je email (wordt nergens gedeeld)"
+        label="E-mail (om eventueel contact op te nemen over je verhaaltje, wordt nergens gedeeld)"
         placeholder="Email"
         onChange={(e) => setEmail(e.target.value)}
         value={email}
@@ -407,9 +407,9 @@ const Form = () => {
         {isSuccess && (
           <>
             <Paragraph variant="sm">
-              Je verhaal is verstuurd en zal zo snel mogelijk goed- of afgekeurd
-              worden. Intussentijd, kan je nog een verhaal schrijven of verhalen
-              van andere gebruikers lezen
+              Je verhaal is verstuurd en zal zo snel mogelijk worden gelezen. In
+              de tussentijd kan je nog een verhaal schrijven of verhalen van
+              andere schrijvers lezen.
             </Paragraph>
             <Button
               onClick={(e) => {
