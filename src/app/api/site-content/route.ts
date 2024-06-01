@@ -1,10 +1,8 @@
-import {collection, getDocs, query, orderBy, addDoc, serverTimestamp} from "firebase/firestore";
+import {collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { SiteContent } from "../../../utils";
-import {getDownloadURL, getStorage, ref, uploadBytes} from "firebase/storage";
 
 export async function GET(request: Request) {
-    console.log(request)
     try {
         const querySnapshot = await getDocs(query(collection(db, 'siteContent'), orderBy('updatedAt', 'asc')));
         const siteData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as SiteContent));
