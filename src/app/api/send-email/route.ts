@@ -15,7 +15,7 @@ export async function POST(request) {
 
     const mailOptions: nodemailer.SendMailOptions = {
         from: process.env.EMAIL_USER,
-        to: 'test@test.com', // CHANGE TO CLIENT EMAIL
+        to: 'inge@soundstories.nl', // CHANGE TO CLIENT EMAIL
         subject: 'Nieuwe Verhaal Indiening',
         text: `Een nieuw verhaal genaamd '${storyData.storyTitle}' is ingediend door ${storyData.author}\n\nGelieve het te controleren: ${process.env.NEXT_PUBLIC_FETCH_API_LINK}/admin/review`,
         attachments: [],
