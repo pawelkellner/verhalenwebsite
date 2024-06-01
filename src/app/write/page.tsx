@@ -9,20 +9,9 @@ import MainLayout from "../../components/main-layout/main-layout";
 import PageTitle from "../../components/page-title/page-title";
 import Form from "../../components/form/form";
 import { useSiteContent } from "../../components/site-content-provider/siteContentProvider";
-// import { useCheckAuth } from "../../utils";
-
-// export const metadata = {
-//   title: "Schrijf je eigen verhaal",
-//   description: "Schrijf je eigen verhaal",
-// };
 
 export default function Write() {
   const { content } = useSiteContent();
-  // const { checkAuth } = useCheckAuth();
-
-  // useEffect(() => {
-  //   checkAuth();
-  // }, []);
 
   return (
     <MainLayout className="write__container">

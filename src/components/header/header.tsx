@@ -6,9 +6,7 @@ import Link from "next/link";
 import styles from "./styles.module.scss";
 
 import { useAuth } from "../../auth-context";
-// import { useCheckAuth } from "../../utils";
 import Heading from "../typography/heading";
-import Paragraph from "../typography/paragraph";
 import Button from "../button";
 import LinkButton from "../link-button/link-button";
 import Search from "../search/search";
@@ -19,16 +17,11 @@ const Header = () => {
   const router = usePathname();
 
   const { state } = useAuth();
-  // const { checkAuth } = useCheckAuth();
 
   const [isWhite, setIsWhite] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [eventAdded, setEventAdded] = useState(false);
   const [scrollHeight, setScrollHeight] = useState(0);
-
-  // useEffect(() => {
-  //   checkAuth();
-  // }, [router]);
 
   useEffect(() => {
     if (router !== "/") {

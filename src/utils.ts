@@ -1,7 +1,4 @@
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
-import { useAuth } from "./auth-context";
-import { ActionTypes } from "./store/auth-reducer";
-import { isUserLoggedIn } from "./app/actions";
 
 export interface SiteContent {
     id: string;
@@ -46,19 +43,6 @@ export interface Verhaal {
     };
 }
 
-export function formatDate(createdAt: {
-    seconds: number;
-    nanoseconds: number;
-}): string {
-    const date = new Date(createdAt.seconds * 1000);
-    const options: Intl.DateTimeFormatOptions = {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-    };
-    return date.toLocaleDateString("nl-NL", options);
-}
-
 export const sortStories = (stories, underReview) => {
     return stories?.sort((a, b) => {
         const dateA = new Date(
@@ -85,18 +69,3 @@ export const getFileExtensionFromUrl = (url: string | undefined | null): string 
         return "";
     }
 };
-
-// export const useCheckAuth = () => {
-//     const { dispatch } = useAuth();
-//
-//     const checkAuth = async () => {
-//         const response = await isUserLoggedIn();
-//         console.log("RESPOSE", response)
-//         dispatch({
-//             type: ActionTypes.AUTHENTICATE_USER,
-//             value: response !== false,
-//         });
-//     };
-//
-//     return { checkAuth };
-// };
