@@ -34,7 +34,7 @@ export default function PostsProvider({children}) {
                 setStories(data.body);
                 setReviewedStories(sortStories(data.body, false));
                 setNotReviewedStories(sortStories(data.body, true));
-                setLimitedStories(sortStories(data.body, false).slice(0, 7));
+                setLimitedStories(sortStories(data.body, false).slice(0, 8));
                 setLoading(false);
             });
     }, []);
