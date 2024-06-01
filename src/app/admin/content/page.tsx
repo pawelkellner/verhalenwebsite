@@ -6,13 +6,12 @@ import PageTitle from "../../../components/page-title/page-title";
 import TextInput from "../../../components/text-input/text-input";
 import Button from "../../../components/button";
 import style from "./page.module.scss";
-import { isUserLoggedIn, submitContent } from "../../actions";
+import { submitContent } from "../../actions";
 import { useSiteContent } from "../../../components/site-content-provider/siteContentProvider";
 import Paragraph from "../../../components/typography/paragraph";
 import { useAuth } from "../../../auth-context";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
-// import { useCheckAuth } from "../../../utils";
 
 const TextEditor = dynamic(
   () => {
@@ -24,7 +23,6 @@ const TextEditor = dynamic(
 export default function Page() {
   const { state } = useAuth();
   const router = useRouter();
-  // const { checkAuth } = useCheckAuth();
 
   const { content } = useSiteContent();
   const [about, setAbout] = useState("");
@@ -36,10 +34,6 @@ export default function Page() {
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState(false);
   const [alertText, setAlertText] = useState("");
-
-  // useEffect(() => {
-  //   checkAuth();
-  // }, []);
 
   useEffect(() => {
     if (!state.isUserAuthenticated) {

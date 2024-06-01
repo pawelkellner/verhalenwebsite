@@ -18,7 +18,6 @@ import Button from "../../../../../components/button";
 import { getFileExtensionFromUrl } from "../../../../../utils";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../../../../auth-context";
-import { isUserLoggedIn } from "../../../../actions";
 
 export default function Story({ params }: { params: { slug: string } }) {
   const { stories } = useStories();

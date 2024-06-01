@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 
 import { Verhaal } from "../../../utils";
 
@@ -10,21 +10,15 @@ import Pagination from "../../../components/pagination/pagination";
 import PageTitle from "../../../components/page-title/page-title";
 import StoryCard from "../../../components/story-card/story-card";
 import { useStories } from "../../../components/posts-provider/postsProvider";
-// import { useCheckAuth } from "../../../utils";
 
 export default function Page({
   params,
 }: {
   params: { slug: { index: string; searchTerm?: string } };
 }) {
-  const { reviewedStories, loading, limitedStories } = useStories();
-  // const { checkAuth } = useCheckAuth();
+  const { reviewedStories } = useStories();
   const storiesPerPage = 8;
   const searchTerm = params.slug[1];
-
-  // useEffect(() => {
-  //   checkAuth();
-  // }, []);
 
   const filterStories = (story: Verhaal) => {
     if (!searchTerm) {

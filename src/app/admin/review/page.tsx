@@ -9,7 +9,6 @@ import StoryCard from "../../../components/story-card/story-card";
 import { useStories } from "../../../components/posts-provider/postsProvider";
 import { useAuth } from "../../../auth-context";
 import { useRouter } from "next/navigation";
-import { isUserLoggedIn } from "../../actions";
 
 export default function Page() {
   const { reviewedStories, notReviewedStories, loading } = useStories();
@@ -22,19 +21,6 @@ export default function Page() {
       return;
     }
   }, []);
-  // useEffect(() => {
-  //   authCheck();
-  // }, []);
-
-  // const authCheck = async () => {
-  //   const user = await isUserLoggedIn();
-  //   if (user !== false) {
-  //     console.log("user is logged in,", user);
-  //   } else {
-  //     console.log("not logged in");
-  //     // router.replace("/admin");
-  //   }
-  // };
 
   const renderSkeletonCards = () => {
     return (

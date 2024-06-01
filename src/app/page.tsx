@@ -11,15 +11,9 @@ import PageTitle from "../components/page-title/page-title";
 import StoryCard from "../components/story-card/story-card";
 import Hero from "../components/hero/hero";
 import { useStories } from "../components/posts-provider/postsProvider";
-// import { useCheckAuth } from "../utils";
 
 export default function Home() {
   const { reviewedStories, loading, limitedStories } = useStories();
-  // const { checkAuth } = useCheckAuth();
-
-  // useEffect(() => {
-  //   checkAuth();
-  // }, []);
 
   const renderSkeletonCards = () => {
     return (
