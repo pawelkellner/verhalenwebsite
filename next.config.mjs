@@ -20,6 +20,12 @@ const nextConfig = {
         port: "",
         pathname: "/v0/b/verhalenwebsite-c2e81.appspot.com/o/*",
       },
+      {
+        protocol: "https",
+        hostname: "firebasestorage.googleapis.com",
+        port: "",
+        pathname: "/v0/b/soundstories-f4487.appspot.com/o/*",
+      },
     ],
   },
   experimental: {
