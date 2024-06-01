@@ -2,11 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
 import { getAuth } from "firebase/auth";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-import { getFirestore } from "firebase/firestore";
-
-// require('dotenv').config();
+import { initializeFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -20,6 +16,14 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-export { app };
-export const db = getFirestore(app);
+
+// Initialize Firestore with settings
+const db = initializeFirestore(app, {
+  cacheSizeBytes: -1, // Disable Firestore cache
+  experimentalForceLongPolling: true, // Ensure data freshness
+});
+
+// Initialize Storage and Auth
 export const storage = getStorage(app);
+export const auth = getAuth(app);
+export { app, db };
