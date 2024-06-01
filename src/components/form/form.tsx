@@ -150,7 +150,7 @@ const Form = () => {
           storyText: storyText,
           songText: songText,
           storyFileUrl: storyFileUrl,
-          underReview: isLoggedIn ? false : true,
+          underReview: true,
           linkToSong: linkToSong,
         };
 
